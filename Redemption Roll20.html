@@ -1110,6 +1110,28 @@
 				</fieldset>		
 			</div>		
 			
+			<div class="bleedPanel" style="width:100%;clear:both;margin-top:25px;">
+				<label>Bleeds</label>
+				<button type="action" name="act_applyBleeds" style="margin-left:15px;">Apply Bleeds</button>
+				<button type="action" name="act_clearBleeds" style="margin-left:5px;">Clear All</button>
+				<span style="margin-left:15px;font-size:.9em;">Total / round: <input type="number" name="attr_bleedTotal" value="0" readonly="true" style="width:45px;"></span>
+				<div style="border-radius:10px;border:1px solid black;padding:5px;margin-top:3px;">
+					<div>
+						<span style="font-size:.85em;display:inline-block;width:255px;">Source</span>
+						<span style="font-size:.85em;display:inline-block;width:60px;">Damage</span>
+						<span style="font-size:.85em;display:inline-block;">Severity (resolve difficulty)</span>
+					</div>
+					<fieldset class="repeating_bleeds">
+						<input type="text" name="attr_bleedSource" style="width:250px;">
+						<input type="number" name="attr_bleedDamage" value="0" min="0" style="width:50px;">
+						<select name="attr_bleedSeverity" style="width:110px;">
+							<option value="Minor">Minor</option>
+							<option value="Moderate">Moderate</option>
+							<option value="Major">Major</option>
+						</select>
+					</fieldset>
+				</div>
+			</div>
 		</div>
 		
 
@@ -4619,6 +4641,95 @@
 		});
 	});
 	
+	/* ---- Bleeds (Character tab) ----
+	   Bleeds do damage at the start of each combat round. "Apply Bleeds" sums the
+	   repeating_bleeds damage and applies it: if the ACTIVE armor has Force Field left, the
+	   FF soaks the whole hit (floored at 0, NO overflow to Body); otherwise the total comes
+	   off the character's Body. Severity (Minor/Moderate/Major) is the resolve-roll difficulty,
+	   display-only for now. Regeneration (Force-Field regen + Major body regen) is a later
+	   iteration. */
+	function recalcBleedTotal() {
+		getSectionIDs("bleeds", function(ids) {
+			if(ids.length === 0) { setAttrs({ bleedTotal: 0 }); return; }
+			let fields = ids.map(function(id) { return "repeating_bleeds_" + id + "_bleedDamage"; });
+			getAttrs(fields, function(v) {
+				let total = 0;
+				fields.forEach(function(f) { total += parseInt(v[f]) || 0; });
+				setAttrs({ bleedTotal: total });
+			});
+		});
+	}
+
+	on("change:repeating_bleeds remove:repeating_bleeds sheet:opened", function() {
+		recalcBleedTotal();
+	});
+
+	on("clicked:applyBleeds", function() {
+		getSectionIDs("bleeds", function(bleedIds) {
+			let bleedFields = bleedIds.map(function(id) { return "repeating_bleeds_" + id + "_bleedDamage"; });
+			getAttrs(bleedFields.concat(["BodyCurr"]), function(bv) {
+				let total = 0;
+				bleedFields.forEach(function(f) { total += parseInt(bv[f]) || 0; });
+				if(total <= 0) { return; }
+				let body = parseInt(bv.BodyCurr) || 0;
+
+				getSectionIDs("armor", function(armorIds) {
+					if(armorIds.length === 0) {
+						setAttrs({ BodyCurr: Math.max(0, body - total) });
+						return;
+					}
+					let names = [];
+					armorIds.forEach(function(id) {
+						names.push("repeating_armor_" + id + "_armorActive",
+								   "repeating_armor_" + id + "_armorForceFieldCurr",
+								   "repeating_armor_" + id + "_armorBodyCurr");
+					});
+					getAttrs(names, function(av) {
+						let activeId = null;
+						for(var i = 0; i < armorIds.length; i++) {
+							let a = av["repeating_armor_" + armorIds[i] + "_armorActive"];
+							if(a === "on" || a === "1") { activeId = armorIds[i]; break; }
+						}
+						if(activeId === null) {
+							// no active armor -> bleeds hit the character's Body directly
+							setAttrs({ BodyCurr: Math.max(0, body - total) });
+							return;
+						}
+						let ffName = "repeating_armor_" + activeId + "_armorForceFieldCurr";
+						let abName = "repeating_armor_" + activeId + "_armorBodyCurr";
+						let ff = parseInt(av[ffName]) || 0;
+						let armorBody = parseInt(av[abName]) || 0;
+
+						if(ff > 0) {
+							// Force Field up: soaks the whole hit, no overflow (a dying FF eats it all).
+							let u = {};
+							u[ffName] = Math.max(0, ff - total);
+							setAttrs(u);
+							return;
+						}
+						// Force Field down: the armor's Body track absorbs first, overflow spilling to the character's Body.
+						let overflow = Math.max(0, total - armorBody);
+						let u = {};
+						u[abName] = Math.max(0, armorBody - total);
+						if(overflow > 0) { u.BodyCurr = Math.max(0, body - overflow); }
+						setAttrs(u);
+					});
+				});
+			});
+		});
+	});
+
+	function clearAllBleeds() {
+		getSectionIDs("bleeds", function(ids) {
+			ids.forEach(function(id) { removeRepeatingRow("repeating_bleeds_" + id); });
+			setAttrs({ bleedTotal: 0 });
+		});
+	}
+
+	on("clicked:clearBleeds", function() {
+		clearAllBleeds();
+	});
+
 	on("clicked:btnRefresh", function() {
 		console.log("Refresh Activated");
 		
@@ -4702,7 +4813,9 @@
 		});
 		
 		sleep(300);
-	
+
+		// A Refresh also clears any active bleeds - they don't carry across scenes.
+		clearAllBleeds();
 
 	});
 
