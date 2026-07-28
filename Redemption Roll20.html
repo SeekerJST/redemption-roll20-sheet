@@ -1,0 +1,5270 @@
+<input type="hidden" class="sheet-tabstoggle" name="attr_sheetTab"  value="character"  />
+<div>
+    <button type="action" name="act_character" >Character</button>
+    <button type="action" name="act_starship" >Starship</button>
+	<button type="action" name="act_unit" >Unit</button>
+    <button type="action" name="act_configuration" >Tag Journal</button>
+    <div class="automationToggle" title="Master switch for optional Mod (API) script features, like the missile 'Apply Salvo' button. Leave OFF unless your game has the Redemption Mod scripts installed (they need Pro).">
+        <span class="Attribute" style="width:auto;margin-right:5px;">Use Automation</span>
+        <label class="switch">
+            <input type="checkbox" class="useAutomation" name="attr_useAutomation" value="1">
+            <span class="slider round"></span>
+        </label>
+    </div>
+</div>
+
+
+<div class="sheet-character">
+	<div class="cutCornerWrap">
+	<div class="TopPanel">
+		<div style="width:804px;position:fixed;">
+			<span style="font-size:.85em;display:inline;margin-right:245px;margin-left:85px;">
+				Description 
+			</span>		
+			<span style="font-size:.85em;display:inline;margin-right:20px;">
+				Rank
+			</span>						
+			<span style="font-size:.85em;display:inline;margin-right:10px;">
+				Invoke/Condemn
+			</span>						
+			<span style="font-size:.85em;display:inline;margin-right:0px;">
+				Locked
+			</span>						
+		</div>	
+		<div div style="width:804px;position:fixed;">
+			<div style="display:flex;float:left;width:600px;height:100%">
+		
+				<div> 
+					<span class="Attribute">Concept </span>
+					<input type="text" class="tagText" name="attr_Concept" style="width:300px"></input>
+					<input type="number" name="attr_ConceptRank" value="3" disabled="true">
+
+					<div class="radioTag">
+						<label>
+							<input type="radio" value="1" name="attr_ConceptUse">
+							<span>&#9650;</span></input>
+						</label>
+						<label>
+							<input type="radio" value="0" name="attr_ConceptUse" checked>
+							<span>&#8861;</span>
+						</label>    
+						<label>
+							<input type="radio" value="-1" name="attr_ConceptUse">
+							<span>&#9660;</span>
+						</label>     
+				  </div>
+						
+					<label class="switch">
+					  <input type="checkbox" name=attr_ConceptStatus>
+					  <span class="slider round"></span>
+					</label>
+				</div>
+				<div> 
+					<span class="Attribute">Trouble </span>
+					<input type="text" class="tagText" name="attr_Trouble" style="width:300px"></input>
+					<input type="number" name="attr_TroubleRank" value="2" disabled="true">
+
+					<div class="radioTag">
+						<label>
+							<input type="radio" value="1" name="attr_TroubleUse">
+							<span>&#9650;</span></input>
+						</label>
+						<label>
+							<input type="radio" value="0" name="attr_TroubleUse" checked>
+							<span>&#8861;</span>
+						</label>    
+						<label>
+							<input type="radio" value="-1" name="attr_TroubleUse">
+							<span>&#9660;</span>
+						</label>     
+				  </div>
+						
+					<label class="switch">
+					  <input type="checkbox" name=attr_TroubleStatus>
+					  <span class="slider round"></span>
+					</label>
+				</div>		
+				
+				<div> 
+					<span class="Attribute">Race </span>
+					<input type="text" class="tagText" name="attr_Race" style="width:300px"></input>
+					<input type="number" name="attr_RaceRank" value="1" min="1" max="3">
+
+					<div class="radioTag">
+						<label>
+							<input type="radio" value="1" name="attr_RaceUse">
+							<span>&#9650;</span></input>
+						</label>
+						<label>
+							<input type="radio" value="0" name="attr_RaceUse" checked>
+							<span>&#8861;</span>
+						</label>    
+						<label>
+							<input type="radio" value="-1" name="attr_RaceUse">
+							<span>&#9660;</span>
+						</label>     
+				  </div>
+						
+					<label class="switch">
+					  <input type="checkbox" name=attr_RaceStatus>
+					  <span class="slider round"></span>
+					</label>
+				</div>				
+				<div style="margin-left:85px;">
+					<span style="font-size:.85em;display:inline;">
+						Racial Psionic Discount
+					</span> 
+					<label class="switch">
+					  <input type="checkbox" name="attr_PsionicDiscount">
+					  <span class="slider round"></span>
+					</label>					
+				</div>
+			</div>
+			<div style="display:flex;float:left;width:200px;">
+				<div> 
+					<span class="Attribute" style="width:131px">XP </span>
+					<input type="number" name="attr_XP" value="0" min="0"> 
+				</div>
+				<div>
+					<span class="Attribute" style="width:131px">
+						<button type="action" name="act_btnRefresh">
+							Refresh
+						</button>
+					</span>
+					<input type="number" name="attr_RefreshRating" value="0" readonly="true">
+				</div>
+				<div>
+					<span style="display:inline-block;margin-right:3px;">
+						AP:
+					</span>
+					<input type="number" name="attr_APCount" value="0" min="0">
+					<span style="display:inline-block">
+						Temp AP: 
+					</span>
+					<input type="number" name="attr_TempAPCount" value="0" min="0">
+				</div>
+				<div> 
+					<span style="display:inline-block">
+						WP:
+					</span>
+					<input type="number" name="attr_WPCount" value="0" min="0">
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<div style="display:flex;margin-top:25px;width:860px;">
+		<div class="cutCornerWrap">
+		<div class="AttributePanel">
+			<label>Stats
+				(
+					<input type="hidden" name="attr_availAttrib" value="10">
+					<input type="number" name="attr_usedAttrib" value="0" readonly="true">
+				)
+			</label>
+			<div>
+				<span class="Attribute">Kinestetic: </span><input type="number" min="3" max="7" title="@{Kinestetic}" name="attr_Kinestetic" value="3" onkeydown="return false">
+			</div>
+			<div>
+				<span class="Attribute">Logical: </span><input type="number" min="3" max="7" title="@{Logical}" name="attr_Logical" value="3">
+			</div>
+			<div>
+				<span class="Attribute">Interpersonal: </span><input type="number" min="3" max="7" title="@{Interpersonal}" name="attr_Interpersonal" value="3">
+			</div>
+			<div>			
+				<span class="Attribute">Introspection: </span><input type="number" min="3" max="7" title="@{Introspection}" name="attr_Introspection" value="3">
+			</div>
+			<div>			
+				<span class="Attribute">Spatial: </span><input type="number" min="3" max="7" name="attr_Spatial" title="@{Spatial}" value="3">
+			</div>
+			<div>			
+				<span class="Attribute">Verbal: </span><input type="number" min="3" max="7" name="attr_Verbal" title="@{Verbal}" value="3">
+			</div>
+			<div class="FreePointsPanel"> 
+				<label>Free Points: 
+					(
+						<input type="hidden" name="attr_availFP" value="35">
+						<input type="number" name="attr_usedFP" value="0" readonly="true">
+					)
+				</label> 
+				<div>
+					<span class="Attribute">Tags/Refresh: </span><input type="number" name="attr_TagsFP" value="0" min="0">
+				</div>				
+				<div>
+					<span class="Attribute">Stats: </span><input type="number" name="attr_AttribFP" value="0" min="0">
+				</div>
+				<div>
+					<span class="Attribute">Skills: </span><input type="number" name="attr_SkillsFP" value="0" min="0">
+				</div>				
+				<div>
+					<span class="Attribute">Body: </span><input type="number" name="attr_BodyFP" value="0" min="0">
+				</div>	
+				<div>
+					<span class="Attribute">Income (L): </span><input type="number" name="attr_IncomeLimFP" value="0" min="0">
+				</div>					
+				<div>
+					<span class="Attribute">Income (U): </span><input type="number" name="attr_IncomeFP" value="0" min="0">
+				</div>									
+				<div>
+					<span class="Attribute">Gear: </span><input type="number" name="attr_GearFP" value="0" min="0">
+				</div>
+			</div>
+		</div>
+		</div>
+		<div class="cutCornerWrap">
+		<div class="StatusPanel">
+			<div>
+				<div style="width:98%;margin:5px;padding-bottom:2px;border-bottom:1px black solid;">
+					<label style="display:inline;">
+						Body
+					</label>
+					<span>
+						Max: 
+						<input name="attr_BodyMaxHdn" type="hidden" value="15" >
+						<input name="attr_BodyMax" type="number" value="15" readonly="true">
+					</span>
+					<span>
+						Current: 
+						<input name="attr_BodyCurr" type="number" value="15">
+					</span>
+					<span>
+						Damage Penalty: 
+						<input name="attr_TNPenaltyHdn" type="hidden" value="0" >
+						<input name="attr_TNPenalty" type="number" value="0" readonly="true">
+					</span>
+					<div class="woundButton">
+						<button name="act_btnWound" type="action">
+							Take A Wound
+						</button>
+					</div>
+					<input name="attr_WoundLevelHdn" type="hidden" value="0" class="sheet-woundLevel"> 
+					<input name="attr_WoundRankID" type="hidden" value="">
+				</div>
+				<div style="width:98%;margin:5px;padding-bottom:2px;border-bottom:1px black solid;">
+					<label style="display:inline;">
+						Strain
+					</label>
+					<span>
+						Permanent: 
+						<input name="attr_StrainPerm" type="hidden" value="0" >
+						<input name="attr_StrainPermVisible" type="number" value="0" readonly="true" min="0">
+					</span>
+					<span>
+						Current: 
+						<input name="attr_StrainCurr" type="number" value="0" min="0" >
+					</span>
+					<span>
+						Committed: 
+						<input name="attr_StrainCommit" type="number" value="0" min="0">
+					</span> 
+
+				</div>
+			</div>
+			<div style="width:98%;margin:5px;">
+				<label style="display:inline">
+					Defensive margin: 
+					<input name="attr_DefMargin" type="number" value="0">
+					
+					<input type="hidden" name="attr_weaponFirefightTN" value="0">
+					<input type="hidden" name="attr_weaponHeavyWeaponsTN" value="0">
+					<input type="hidden" name="attr_weaponGunneryTN" value="0" class="gunnery">
+					<input type="hidden" name="attr_weaponMeleeTN" value="0">
+					
+					<input type="hidden" name="attr_CoverTN value="0"> 
+					<input type="hidden" name="attr_EvasionTN value="0" class="evasion">
+					<input type="hidden" name="attr_HideTN value="0">
+					
+					<input type="hidden" name="attr_armorActiveBody">
+					<input type="hidden" name="attr_armorActiveRating">
+					<input type="hidden" name="attr_armorActiveType">
+				</label>
+				<button type="action" name="act_Cover">
+					Take Cover
+				</button>
+				<button type="action" name="act_Evasion">
+					Evade
+				</button>
+				<button type="action" name="act_Stealth">
+					Hide
+				</button>
+			</div>
+		</div>
+		</div>
+		<div class="cutCornerWrap">
+		<div class="TagPanel">
+			<label class="Attribute">
+				Tags
+			</label>
+			<input type="hidden" name="attr_PersonalTagHidden" value="0">
+			<input type="hidden" name="attr_GroupTagHidden" value="0">
+			
+			<input type="hidden" name="attr_PersonalTagsUsed" value="0">
+			<input type="hidden" name="attr_GroupTagsUsed" value="0">
+
+			<input type="hidden" name="attr_invokedTags" value="">
+			<input type="hidden" name="attr_condemnedTags" value="">
+
+			<span class="spanSubTitle">Personal (</span><input type="number" name="attr_PersonalTagCount" value="0" readonly="true"><span class="Attribute">) </span>
+			<span class="spanSubTitle">Group (</span><input type="number" name="attr_GroupTagCount" value="0" readonly="true"><span class="Attribute">) </span>
+			<hr>
+			<div>
+				<span style="font-size:.85em;display:inline;margin-right:220px;">
+					Description 
+				</span>		
+				<span style="font-size:.85em;display:inline;margin-right:25px;">
+					Rank
+				</span>						
+				<span style="font-size:.85em;display:inline;margin-right:50px;">
+					Type
+				</span>		
+				<span style="font-size:.85em;display:inline;margin-right:12px;">
+					Invoke/Condemn
+				</span>						
+				<span style="font-size:.85em;display:inline;margin-right:0px;">
+					Locked
+				</span>						
+			</div>
+			<fieldset class="repeating_tags">
+				<input type="text" class="tagText" name="attr_tagText" ></input>
+				<select class="tagRank" name="attr_tagRank"> 
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+				</select>
+				<select class="tagType" name="attr_tagType">
+					<option value="Equipment">Equipment</option>
+					<option value="Free">Free</option>
+					<option value="Group">Group</option>
+					<option value="Personal">Personal</option>
+					<option value="Psionic">Psionic</option>
+					<option value="Psigear">Psigear</option>
+					<option value="Wound">Wound</option>
+				</select>
+
+				<div class="radioTag">
+					<label>
+						<input type="radio" value="1" name="attr_tagUse">
+						<span>&#9650;</span></input>
+					</label>
+					<label>
+						<input type="radio" value="0" name="attr_tagUse" checked>
+						<span>&#8861;</span>
+					</label>    
+					<label>
+						<input type="radio" value="-1" name="attr_tagUse">
+						<span>&#9660;</span>
+					</label>     
+			  </div>
+					
+				<label class="switch">
+				  <input type="checkbox" name=attr_tagStatus>
+				  <span class="slider round"></span>
+				</label>			
+				
+			</fieldset>
+		</div>
+		</div>
+	</div>
+	<div class="RollDiffPanel">
+		<div >
+			<label class="inline-label">Roll Difficulty:</label> 
+			<div class="radioTag">
+			<label title="Automatic">
+				<input type="radio" value="0" name="attr_rollDifficulty" style="padding-left:3px;"/>
+				<span class="rollDiff">Automatic </span>
+			</label>
+			<label title="Easy">
+				<input type="radio" value="3" name="attr_rollDifficulty" style="padding-left:3px;"/>
+				<span class="rollDiff">Easy </span>
+			</label>
+			<label title="Standard">
+				<input type="radio" value="6" name="attr_rollDifficulty" checked="true" style="padding-left:3px;"/>
+				<span class="rollDiff">Standard </span>
+			</label >
+			<label title="Hard">
+				<input type="radio" value="9" name="attr_rollDifficulty" style="padding-left:3px;"/>
+				<span class="rollDiff">Difficult </span>
+			</label>
+			<label title="Impossible">
+				<input type="radio" value="12" name="attr_rollDifficulty" style="padding-left:3px;"/>
+				<span class="rollDiff">Impossible </span>
+			</label>
+			</div>
+			<input type="hidden" name="attr_invokeMod" value="0"></input>
+			<input type="hidden" name="attr_rollString" value="3d8"></input> 
+			
+		</div>
+	</div>
+	<div class="cutCornerWrap">
+	<div class="bottomPanel">
+		<input type="hidden" class="sheet-tabsBottomtoggle" name="attr_sheetBottomTab"  value="tabSkills"  />
+		<div style="margin-bottom:5px;">
+			<button type="action" name="act_tabSkills" >Skills</button>
+			<button type="action" name="act_tabEquipment" >Equipment</button>
+			<button type="action" name="act_tabCombat" >Combat</button>
+		</div>
+		<div class="tabSkills">		
+		
+			<div class="AbilitiesPanel">
+				<label class="inline-label" style="width:200px">
+					Abilities
+				</label>
+				<div style="float:left;margin-left:25px;">
+					<button type="roll" name="act_detectionRoll" class="abilityRoll"
+							value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Detection}}{{roll=[[@{detTN} - @{rollString}) > 0]]}} )">
+						Detection
+					</button>
+					<input type="number" min="0" max="4" name="attr_detMod" value="0"> <input type="number" name="attr_DetValue" value="0" readonly="true">
+					<input type="hidden" name="attr_DetTN" value="0">
+				</div>
+				<div style="float:left;margin-left:25px;">
+					<button type="roll" name="act_discernRoll" class="abilityRoll"
+							value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Discern}}{{roll=[[@{disTN} - @{rollString}) > 0]]}} )">
+						Discern
+					</button>
+					<input type="number" min="0" max="4" name="attr_disMod" value="0"> 
+					<input type="number" name="attr_DisValue" value="0" readonly="true">
+					<input type="hidden" name="attr_DisTN" value="0">
+				</div>
+				<div style="float:left;margin-left:25px;">
+					<button type="roll" name="act_initRoll" class="abilityRoll" 
+							value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Initiative}}{{roll=[[(floor((@{spatial}+@{logical}+@{kinestetic})/3))+@{initMod}+@{invokeMod}+d8&{tracker}]]}}")>
+						Initiative
+					</button>
+					<input type="number" min="0" max="4" name="attr_initMod" value="0">
+				</div>
+				
+				<div class="SkillPanel" >
+					<label>Skills 
+						(
+							<input type="hidden" name="attr_SkillCountHidden" value="25">
+							<input type="hidden" name="attr_SkillUsedHidden" value="0">
+							<input type="number" name="attr_SkillCount" value="0" readonly="true">
+						)
+					</label>
+					<input type="hidden" name="attr_SkillSwitchTN">
+					<input type="hidden" name="attr_SkillSwitchFlag">
+
+					<div class="skillGroupDivider">
+						<span style="font-size:.85em">Group</span>
+						<div>
+								<span style="font-size:.85em;display:inline;margin-right:95px;margin-left:80px;">
+									Skill Name 
+								</span>						
+								<span style="font-size:.85em;display:inline;margin-right:118px;">
+									Stat Combo
+								</span>
+								<span style="font-size:.85em;display:inline;margin-right:131px;">
+									Specialty
+								</span>						
+								<span style="font-size:.85em;display:inline;margin-right:15px;">
+									Ranks
+								</span>
+								<span style="font-size:.85em;display:inline;margin-right:22px;">
+									Mod
+								</span>							
+								<span style="font-size:.85em;display:inline;margin-right:32px;">
+									TN
+								</span>
+								<span style="font-size:.85em;display:inline;">
+									Switch
+								</span>							
+						</div>					
+						<div>
+							<button type="roll" name="attr_grp1SkillRoll" class="skillRoll"
+									value="&{template:redemption}{{title=@{grp1SkillName}}}{{roll=[[(@{grp1SkillHidden} - @{rollString}) > 0]]}}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}} )">
+									Roll
+							</button>
+							<select name="attr_grp1SkillName" class="skillName">
+								<option value=""> </option>
+								<option value="animal ken">Animal Ken</option>
+								<option value="athletics">Athletics</option>
+								<option value="clairvoyance">Clairvoyance</option>
+								<option value="command">Command</option>
+								<option value="computers">Computers</option>
+								<option value="diplomacy">Diplomacy</option>
+								<option value="drive">Drive</option>
+								<option value="engineering">Engineering</option>
+								<option value="energy">Energy Manipulation</option>
+								<option value="firearms">Firearms</option>
+								<option value="gunnery">Gunnery</option>
+								<option value="heavy">Heavy Weapons</option>
+								<option value="medicine">Medicine</option>
+								<option value="meditation">Meditation</option>
+								<option value="melee">Melee</option>
+								<option value="mind">Mind Control</option>
+								<option value="necromancy">Necromancy</option>
+								<option value="organize">Organize</option> 
+								<option value="persuade">Persuade</option>
+								<option value="pilot">Pilot</option>
+								<option value="profession">Profession</option>
+								<option value="science">Science</option>
+								<option value="socialize">Socialize</option>
+								<option value="stealth">Stealth</option>
+								<option value="survival">Survival</option>
+								<option value="tactics">Tactics</option>
+								<option value="telekinesis">Telekinesis</option>
+								<option value="telepathy">Telepathy</option>
+								<option value="teleportation">Teleportation</option>
+							</select>
+							<input type="hidden" name="attr_grp1SkillCombo" value="">
+							<input type="text" class="skillInfo" name="attr_grp1SkillInfo" value="" readonly="true">		
+							<input type="text" class="skillSpecialty" name="attr_grp1Specialty" value="">
+							<select name="attr_grp1SkillSecondary" style="display:none">
+								<option value="kinestetic">Logical + Kinestetic</option>
+								<option value="interpersonal">Logical + Interpersonal</option>
+								<option value="introspection">Logical + Introspection</option>
+								<option value="spatial">Logical + Spatial</option>
+								<option value="verbal" selected> Logical + Verbal</option>
+							</select>
+							<input type="number" min="0" max="7" name="attr_grp1SkillRank" value="0">
+							<input type="number" min="0" max="4" name="attr_grp1SkillMod" value="0">
+							<input type="hidden" name="attr_grp1SkillHidden" value="0">
+							<input type="number" max="24" name="attr_grp1SkillTarget" value="0" readonly="true">				
+							<label class="switch">
+							  <input type="checkbox" name="attr_grp1SkillSwitch">
+							  <span class="slider round"></span>
+							</label>						
+						</div>
+						<div>
+							<button type="roll" name="attr_grp2SkillRoll" class="skillRoll"
+									value="&{template:redemption}{{title=@{grp2SkillName}}}{{roll=[[(@{grp2SkillHidden} - @{rollString}) > 0]]}}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}} )">
+									Roll
+							</button>
+							<select name="attr_grp2SkillName" class="skillName">
+								<option value=""> </option>
+								<option value="animal ken">Animal Ken</option>
+								<option value="athletics">Athletics</option>
+								<option value="clairvoyance">Clairvoyance</option>
+								<option value="command">Command</option>
+								<option value="computers">Computers</option>
+								<option value="diplomacy">Diplomacy</option>
+								<option value="drive">Drive</option>
+								<option value="engineering">Engineering</option>
+								<option value="energy">Energy Manipulation</option>
+								<option value="firearms">Firearms</option>
+								<option value="gunnery">Gunnery</option>
+								<option value="heavy">Heavy Weapons</option>
+								<option value="medicine">Medicine</option>
+								<option value="meditation">Meditation</option>
+								<option value="melee">Melee</option>
+								<option value="mind">Mind Control</option>
+								<option value="necromancy">Necromancy</option>
+								<option value="organize">Organize</option> 
+								<option value="persuade">Persuade</option>
+								<option value="pilot">Pilot</option>
+								<option value="profession">Profession</option>
+								<option value="science">Science</option>
+								<option value="socialize">Socialize</option>
+								<option value="stealth">Stealth</option>
+								<option value="survival">Survival</option>
+								<option value="tactics">Tactics</option>
+								<option value="telekinesis">Telekinesis</option>
+								<option value="telepathy">Telepathy</option>
+								<option value="teleportation">Teleportation</option>
+							</select>
+							<input type="hidden" name="attr_grp2SkillCombo" value="">
+							<input type="text" class="skillInfo" name="attr_grp2SkillInfo" value="" readonly="true">		
+							<input type="text" class="skillSpecialty" name="attr_grp2Specialty" value="">
+							<select name="attr_grp1SkillSecondary" style="display:none">
+								<option value="kinestetic">Logical + Kinestetic</option>
+								<option value="interpersonal">Logical + Interpersonal</option>
+								<option value="introspection">Logical + Introspection</option>
+								<option value="spatial">Logical + Spatial</option>
+								<option value="verbal" selected> Logical + Verbal</option>
+							</select>
+							<input type="number" min="0" max="7" name="attr_grp2SkillRank" value="0">
+							<input type="number" min="0" max="4" name="attr_grp2SkillMod" value="0">
+							<input type="hidden" name="attr_grp2SkillHidden" value="0">
+							<input type="number" max="24" name="attr_grp2SkillTarget" value="0" readonly="true">				
+							<label class="switch">
+							  <input type="checkbox" name="attr_grp2SkillSwitch">
+							  <span class="slider round"></span>
+							</label>							
+						</div>	
+						<div>
+							<button type="roll" name="attr_grp3SkillRoll" class="skillRoll"
+									value="&{template:redemption}{{title=@{grp3SkillName}}}{{roll=[[(@{grp3SkillHidden} - @{rollString}) > 0]]}}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}} )">
+									Roll
+							</button>
+							<select name="attr_grp3SkillName" class="skillName">
+								<option value=""> </option>
+								<option value="animal ken">Animal Ken</option>
+								<option value="athletics">Athletics</option>
+								<option value="clairvoyance">Clairvoyance</option>
+								<option value="command">Command</option>
+								<option value="computers">Computers</option>
+								<option value="diplomacy">Diplomacy</option>
+								<option value="drive">Drive</option>
+								<option value="engineering">Engineering</option>
+								<option value="energy">Energy Manipulation</option>
+								<option value="firearms">Firearms</option>
+								<option value="gunnery">Gunnery</option>
+								<option value="heavy">Heavy Weapons</option>
+								<option value="medicine">Medicine</option>
+								<option value="meditation">Meditation</option>
+								<option value="melee">Melee</option>
+								<option value="mind">Mind Control</option>
+								<option value="necromancy">Necromancy</option>
+								<option value="organize">Organize</option> 
+								<option value="persuade">Persuade</option>
+								<option value="pilot">Pilot</option>
+								<option value="profession">Profession</option>
+								<option value="science">Science</option>
+								<option value="socialize">Socialize</option>
+								<option value="stealth">Stealth</option>
+								<option value="survival">Survival</option>
+								<option value="tactics">Tactics</option>
+								<option value="telekinesis">Telekinesis</option>
+								<option value="telepathy">Telepathy</option>
+								<option value="teleportation">Teleportation</option>
+							</select>
+							<input type="hidden" name="attr_grp3SkillCombo" value="">
+							<input type="text" class="skillInfo" name="attr_grp3SkillInfo" value="" readonly="true">							
+							<input type="text" class="skillSpecialty" name="attr_grp3Specialty" value="">
+							<div class="SecondaryAttribute">
+							<select name="attr_grp3SkillSecondary" >
+								<option value="kinestetic">Logical + Kinestetic</option>
+								<option value="interpersonal">Logical + Interpersonal</option>
+								<option value="introspection">Logical + Introspection</option>
+								<option value="spatial">Logical + Spatial</option>
+								<option value="verbal" selected> Logical + Verbal</option>
+							</select>
+							</div>
+							<input type="number" min="0" max="7" name="attr_grp3SkillRank" value="0">
+							<input type="number" min="0" max="4" name="attr_grp3SkillMod" value="0">
+							<input type="hidden" name="attr_grp3SkillHidden" value="0">
+							<input type="number" max="24" name="attr_grp3SkillTarget" value="0" readonly="true">				
+							<label class="switch">
+							  <input type="checkbox" name="attr_grp3SkillSwitch">
+							  <span class="slider round"></span>
+							</label>						
+						</div>				
+					</div>						
+				</div>
+			</div>
+			<span style="font-size:.75em">Personal</span>
+			<div>
+				<fieldset class="repeating_skills">
+					<input type="hidden" name=attr_skillNameHdn" class="skillNameHdn" value="">
+					<button type="roll" name="attr_skillRoll" class="skillRoll"
+							value="&{template:redemption}{{title=@{skillName}}}{{roll=[[(@{skillHidden} - @{rollString}) > 0]]}}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}} )">
+							Roll
+					</button>
+					<select name="attr_skillName" class="skillName">
+						<option value=""> </option>
+						<option value="animal ken">Animal Ken</option>
+						<option value="athletics">Athletics</option>
+						<option value="clairvoyance">Clairvoyance</option>
+						<option value="command">Command</option>
+						<option value="computers">Computers</option>
+						<option value="diplomacy">Diplomacy</option>
+						<option value="drive">Drive</option>
+						<option value="engineering">Engineering</option>
+						<option value="energy">Energy Manipulation</option>
+						<option value="firearms">Firearms</option>
+						<option value="gunnery">Gunnery</option>
+						<option value="heavy">Heavy Weapons</option>
+						<option value="medicine">Medicine</option>
+						<option value="meditation">Meditation</option>
+						<option value="melee">Melee</option>
+						<option value="mind">Mind Control</option>
+						<option value="necromancy">Necromancy</option>
+						<option value="organize">Organize</option> 
+						<option value="persuade">Persuade</option>
+						<option value="pilot">Pilot</option>
+						<option value="profession">Profession</option>
+						<option value="science">Science</option>
+						<option value="socialize">Socialize</option>
+						<option value="stealth">Stealth</option>
+						<option value="survival">Survival</option>
+						<option value="tactics">Tactics</option>
+						<option value="telekinesis">Telekinesis</option>
+						<option value="telepathy">Telepathy</option>
+						<option value="teleportation">Teleportation</option>
+					</select>
+					<input type="hidden" name="attr_skillCombo" value="">
+					<div class="SkillInfoDiv">
+						<input type="text" class="skillInfo" name="attr_skillInfo" value="" readonly="true">						
+					</div>
+					<div class="SecondaryAttribute">
+						<select name="attr_skillSecondary" style="width:175px">
+							<option value="kinestetic">Logical+Kinestetic</option>
+							<option value="interpersonal">Logical+Interpersonal</option>
+							<option value="introspection">Logical+Introspection</option>
+							<option value="spatial">Logical+Spatial</option>
+							<option value="verbal" selected>Logical+Verbal</option>
+						</select>
+					</div>
+					<input type="text" class="skillSpecialty" name="attr_specialty" value="">
+					<input type="number" min="0" max="7" name="attr_skillRank" value="0">
+					<input type="number" min="0" max="4" name="attr_skillMod" value="0">
+					<input type="hidden" name="attr_skillHidden" value="0">
+					<input type="number" max="24" name="attr_skillTarget" value="0" readonly="true">
+					<label class="switch">
+					  <input type="checkbox" name="attr_skillSwitch">
+					  <span class="slider round"></span>
+					</label>					
+				</fieldset>			
+			</div>
+			
+				
+		</div>		
+	
+		<div class="tabEquipment">
+			<div style="width:100%;display:block;"> 
+
+
+				<label style="display:inline;width:400px;margin-right:275px;">
+					Equipment List (
+					<input type="hidden" name="attr_CCCountHdn" value="0">
+					<input type="number" name="attr_CCCount" readonly="true" value="0">
+					)
+				</label>
+
+				<span style="font-size:.85em;display:inline">
+					Tasks
+				</span>
+			</div>
+			
+				<div style="width:100%">
+					<div class="cutCornerWrap">
+					<div class="EquipmentListPanel">
+						<div>
+							<span style="font-size:.85em;display:inline;margin-right:160px;">
+								Name 
+							</span>
+							<span style="font-size:.85em;display:inline;margin-right:35px;">
+								CC
+							</span>
+							<span style="font-size:.85em;display:inline;margin-right:20px;">
+								CR
+							</span>
+						</div>
+						<div>
+							<input type="text" name="attr_EquipmentListOne" style="width:190px">
+							<input type="number" name="attr_EquipmentCCOne" min="0">
+							<span style="display:inline">
+								/
+							</span>	
+							<input type="number" name="attr_EquipmentCROne" min="0">
+						</div>
+						<div>
+							<input type="text" name="attr_EquipmentListTwo" style="width:190px">
+							<input type="number" name="attr_EquipmentCCTwo" min="0">
+							<span style="display:inline">
+								/
+							</span>	
+							<input type="number" name="attr_EquipmentCRTwo" min="0">
+						</div>
+						<div>
+							<input type="text" name="attr_EquipmentListThree" style="width:190px">
+							<input type="number" name="attr_EquipmentCCThree" min="0">					
+							<span style="display:inline">
+								/
+							</span>	
+							<input type="number" name="attr_EquipmentCRThree" min="0">					
+						</div>
+						<div>					
+							<input type="text" name="attr_EquipmentListFour" style="width:190px">
+							<input type="number" name="attr_EquipmentCCFour" min="0">					
+							<span style="display:inline">
+								/
+							</span>	
+							<input type="number" name="attr_EquipmentCRFour" min="0">					
+						</div>
+						<div>					
+							<input type="text" name="attr_EquipmentListFive" style="width:190px">
+							<input type="number" name="attr_EquipmentCCFive" min="0">					
+							<span style="display:inline">
+								/
+							</span>	
+							<input type="number" name="attr_EquipmentCRFive" min="0">					
+						</div>
+						<div>					
+							<input type="text" name="attr_EquipmentListSix" style="width:190px">
+							<input type="number" name="attr_EquipmentCCSix" min="0">					
+							<span style="display:inline">
+								/
+							</span>	
+							<input type="number" name="attr_EquipmentCRSix" min="0">					
+						</div>
+						<div>					
+							<input type="text" name="attr_EquipmentListSeven" style="width:190px">
+							<input type="number" name="attr_EquipmentCCSeven" min="0">					
+							<span style="display:inline">
+								/
+							</span>	
+							<input type="number" name="attr_EquipmentCRSeven" min="0">					
+						</div>
+						<div>					
+							<input type="text" name="attr_EquipmentListEight" style="width:190px">
+							<input type="number" name="attr_EquipmentCCEight" min="0">					
+							<span style="display:inline">
+								/
+							</span>	
+							<input type="number" name="attr_EquipmentCREight" min="0">					
+						</div>
+						<div>					
+							<input type="text" name="attr_EquipmentListNine" style="width:190px">
+							<input type="number" name="attr_EquipmentCCNine" min="0">					
+							<span style="display:inline">
+								/
+							</span>	
+							<input type="number" name="attr_EquipmentCRNine" min="0">					
+						</div>
+						<div>					
+							<input type="text" name="attr_EquipmentListTen" style="width:190px">
+							<input type="number" name="attr_EquipmentCCTen" min="0">					
+							<span style="display:inline">
+								/
+							</span>	
+							<input type="number" name="attr_EquipmentCRTen" min="0">					
+						</div>				
+					</div>
+					</div>
+					<div class="cutCornerWrapRight">
+					<div class="EquipmentListTasks">
+						<div>
+							<span style="font-size:.85em;display:inline;margin-right:120px;">
+								Task Name 
+							</span>
+							<span style="font-size:.85em;display:inline;margin-right:35px;">
+								TN
+							</span>
+						</div>					
+						<fieldset class="repeating_tasks">
+							<input type="text" class="skillSpecialty" name="attr_TaskName" value="">
+							<input type="number" max="24" name="attr_taskTarget" value="0" >
+							<button type="roll" name="attr_taskRoll" class="skillRoll"
+									value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=@{TaskName}}}{{roll=[[(@{taskTarget} - @{rollString}) > 0]]}} )">
+									Roll
+							</button>
+						</fieldset>
+					</div>
+					</div>
+					
+				</div>
+			
+		</div>
+	
+		<div class="tabCombat">
+			<div style="float:left;width:310px;">
+				<label>
+					Armor
+				</label>
+				<fieldset class="repeating_armor">
+					<div style="width:300px;border-radius:10px;border: 1px solid black;">
+						<div class="armorBlock">
+							<span style="font-weight:bold;margin-right:25px;">
+								Name
+								<input type="text" name="attr_armorName" style="width:130px;">
+							</span> 
+							<label class="switch">
+								<input type="checkbox" name="attr_armorActive">
+								<span class="slider round"></span>
+							</label>
+							<span style="font-size:.85em;display:inline;">
+								Active
+							</span>
+						</div>
+						<div class="armorBlock">
+							<span style="font-weight:bold;margin-right:25px;">
+								Protection
+							</span><br>
+							<span style="display:inline-block;margin-bottom:3px;">
+								<span style="display: inline-block;width:90px">Armor Type</span>
+								<select name="attr_armorType"  style="width:95px;">
+									<option value="Firefight">Firefight</option>
+									<option value="Battlefield">Battlefield</option>
+									<option value="Hull">Hull</option>
+								</select>								
+								<span style="display: inline-block;width:90px">Armor Rating</span>
+								<input type="number" name="attr_armorValueCurr"  min="0">
+								/
+								<input type="number" name="attr_armorValue"  min="0">
+
+							</span style="display:inline-block;margin-bottom:3px;"><br>
+							<span style="display:inline-block;margin-bottom:3px;">
+								<span style="display: inline-block;width:90px">Body </span>
+								<input type="number" name="attr_armorBodyCurr" value="0" min="0" >
+								/
+								<input type="number" name="attr_armorBody" value="0" min="0">
+								 
+<!-- 								<button type="action" name="act_btnArmorRepair">
+									Repair
+								</button>  -->
+							</span><br>
+							<span>
+								<span style="display: inline-block;width:90px">Force fields</span>
+								<input type="number" name="attr_armorForceFieldCurr" min="0">
+								/
+								<input type="number" name="attr_armorForceField" min="0">
+<!-- 								<button type="action" name="act_btnForceFieldRestore">
+									Restore
+								</button>  -->								
+							</span>
+						</div>
+						<div class="armorBlock">
+							<span style="font-weight:bold;margin-right:15px;">
+								Power Slots
+								<select name="attr_armorPowerType" style="width:100px">
+									<option value="minor">Minor</option>
+									<option value="moderate">Moderate</option>
+									<option value="major">Major</option>
+								</select>
+							</span><br>
+							<span style="width:100px;">
+								Total:
+								<input type="number" name="attr_armorPowerSlots">
+							</span>
+							<span style="width:100px">
+								Used: 
+								<input type="number" name="attr_armorPowerSlotsUsed">
+							</span>
+							<span style="width:100px">
+								Fuel: 
+								<input type="number" name="attr_armorFuel">
+							</span>
+						</div>
+						<div class="armorBlock"> 
+							<span style="font-weight:bold;margin-right:15px;">
+								Capabilities
+							</span><br>
+							<span>
+								Life Support: 
+								<select style="width:100px">
+									<option value="None">None</option>
+									<option value="Partial">Partial</option>
+									<option value="Full">Full</option>
+								</select>
+							</span><br>
+							<span>
+								Links:
+								<input type="number" name="attr_armorLinks" value="0" min="0">
+							</span>
+							<span>
+								Used: 
+								<input type="number" name="attr_armorLinks" value="0" min="0">
+							</span> 
+						</div>	
+						<div class="armorBlock">
+							<span style="font-weight:bold;margin-right:15px;">
+								Limitations
+							</span><br>		
+							<input type="text" name="attr_armorLimitations" style="width:275px">
+						</div>
+						<div class="armorBlock">
+							<span style="font-weight:bold;margin-right:25px;">
+								Notes<br>
+								<textarea name="attr_armorNotes" style="width:275px;height:75px;">
+								</textarea>
+							</span> 
+						</div>						
+					</div>
+				</fieldset>	
+			</div>
+			<div style="float:left;width:492px;">
+				<label>
+					Weapons
+				</label>
+				<fieldset class="repeating_weapons">
+					<input type="hidden" name="attr_weaponAttackTN" value="0">
+					<input type="hidden" name="attr_weaponSecAttackTN" value="0">
+					<div style="border-radius:10px;border: 1px solid black;">
+							<div class="weaponBlock">
+								<span style="font-weight:bold;margin-right:15px;">
+									Name
+								</span> 
+								<span>
+									<input type="text" name="attr_weaponName" style="width:175px;">
+								</span>
+								<span style="margin-righ:3px;">
+									Ammo
+									<input type="number" name="attr_weaponAmmo">
+								</span>
+							</div>
+							<div class="weaponBlockFlex" >
+								<div style="float:left";>
+									<button type="roll" name="act_weaponAttack" class="weaponAttackButton"
+											value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Attack Roll at @{target|Defender|token_name}}}{{roll=[[@{weaponAttackTN} - (@{rollString})]] vs [[@{target|Defender|DefMargin}]]}}{{damage=@{weaponMultiplier}}}{{dtype=@{weaponType}}}{{scale=@{weaponScale}}}">
+										Attack
+									</button>
+
+								</div>
+								<div style="border: 1px solid gray;border-radius:10px;padding:5px;float:left;width:400px;">											
+									<span> 
+										Damage Multiplier
+										<input type="number" name="attr_weaponMultiplier" value="1" min="1">							
+									</span>								
+									<select name="attr_weaponType" style="width:100px">
+										<option value="Energy">Energy</option>
+										<option value="Kinetic" selected>Kinetic</option>
+										<option value="Melee">Melee</option>
+										<option value="Exotic">Exotic</option>
+									</select>
+									<select name="attr_weaponScale" style="width:100px">
+										<option value="Firefight">Firefight</option>
+										<option value="Battlefield">Battlefield</option>
+										<option value="Space">Space</option>
+									</select>
+
+									<br>
+									<span>
+										Bleed
+										<input type="number" name="attr_weaponBleed">
+										<select name="attr_weaponBleedType" style="width:100px">
+											<option value=""> </option>
+											<option value="Minor">Minor</option>
+											<option value="Moderate">Moderate</option>
+											<option value="Major">Major</option>
+										</select>										
+									</span>
+									<span>
+										Area
+										<select name="attr_weaponAreaType" style="width:75px">
+											<option value=""> </option>
+											<option value=" "> </option>
+											<option value="Sudden">Sudden</option>
+											<option value="Sustained">Sustained</option>
+										</select>								
+										<select name="attr_weaponAreaSpread" style="width:75px">
+											<option value=""> </option>
+											<option value="Small">Small</option>
+											<option value="Medium">Medium</option>
+											<option value="Large">Large</option>
+										</select>
+								</div>
+								
+							</div>
+							<div class="weaponBlockFlex" >
+								<div style="float:left";>
+									<button type="roll" name="act_weaponSecAttack" class="weaponAttackButton"
+											value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Second Attack Roll at @{target|Defender|token_name}}}{{roll=[[@{weaponSecAttackTN} - (@{rollString})]] vs [[@{target|Defender|DefMargin}]]}}{{damage=@{weaponSecMultiplier}}}{{dtype=@{weaponSecType}}}{{scale=@{weaponSecScale}}}">
+										Second<br>Attack
+									</button>
+
+								</div>
+								<div style="border: 1px solid gray;border-radius:10px;padding:5px;float:left;width:400px;">											
+									<span> 
+										Damage Multiplier
+										<input type="number" name="attr_weaponSecMultiplier" value="1" min="1">							
+									</span>								
+									<select name="attr_weaponSecType" style="width:100px">
+										<option value="Energy">Energy</option>
+										<option value="Kinetic" selected>Kinetic</option>
+										<option value="Melee">Melee</option>
+										<option value="Exotic">Exotic</option>
+									</select>
+									<select name="attr_weaponSecScale" style="width:100px">
+										<option value="Firefight">Firefight</option>
+										<option value="Battlefield">Battlefield</option>
+										<option value="Space">Space</option>
+									</select>
+
+									<br>
+									<span>
+										Bleed
+										<input type="number" name="attr_weaponSecBleed">
+										<select name="attr_weaponSecBleedType" style="width:100px">
+											<option value=""> </option>
+											<option value="Minor">Minor</option>
+											<option value="Moderate">Moderate</option>
+											<option value="Major">Major</option>
+										</select>										
+									</span>
+									<span>
+										Area
+										<select name="attr_weaponSecAreaType" style="width:75px">
+											<option value=""> </option>
+											<option value=" "> </option>
+											<option value="Sudden">Sudden</option>
+											<option value="Sustained">Sustained</option>
+										</select>								
+										<select name="attr_weaponSecAreaSpread" style="width:75px">
+											<option value=""> </option>
+											<option value="Small">Small</option>
+											<option value="Medium">Medium</option>
+											<option value="Large">Large</option>
+										</select>
+								</div>
+								
+							</div>						
+							<div class="weaponBlock">
+								<span style="font-weight:bold;margin-right:22px;">
+										Counters
+								</span>
+								<span>
+									<input type="text" name="attr_weaponCounters" style="width:375px">
+								</span>
+							</div>
+							<div class="weaponBlock">
+								<span style="font-weight:bold;margin-right:10px;">
+										Limitations
+								</span>
+								<span>
+									<input type="text" name="attr_weaponLimitations" style="width:375px">
+								</span>
+							</div>						
+					</div>
+				</fieldset>		
+			</div>		
+			
+		</div>
+		
+
+		
+	</div>
+	</div>
+</div>
+	
+	</div>
+</div>
+
+<div class="sheet-starship">
+	<div class="cutCornerWrap">
+	<div class="TopPanel">
+		<div style="display:flex;float:left;width:804px;height:100%">
+			<div style="float:left;width:650px;">
+				<label>
+					Structure
+				</label>
+			</div>
+			<div style="float:right;width:154px;">
+				<span style="font-size:.85em;display:inline;">
+					Size
+					<select name="attr_starshipSize" style="width:85px;">
+						<option value="1">Small</option>
+						<option value="2">Medium</option>
+						<option value="3" selected>Large</option>
+						<option value="4">Huge</option>
+						<option value="5">Colossal</option>
+					</select>
+				</span>
+			</div>
+		</div>
+		<div style="display:flex;float:left;width:804px;height:100%;margin-bottom:5px;">
+			<div style="float:left;display:inline;margin-right:20px">
+				<span style="font-size:1.25em;display:inline;margin-right:0px;">
+					Max Body 
+					<input type="number" name="attr_starshipBody" value="0" style="width:75px;">
+					<input type="hidden" name="attr_starshipCurrBodyHdn">
+				</span>
+			</div>
+			<div style="float:left;display:inline;margin-right:20px;">
+				<input type="range" name="attr_starshipCurrBody" min="0" max="100" value="0" style="width:225px;">
+			</div>
+			<div style="float:left;display:inline;margin-right:20px;">
+				<input type="number" name="attr_starshipBodyIncrement" min="0", value="0">
+				<button type="action" name="act_addStarshipBody">&#10133;</button>
+				<button type="action" name="act_subStarshipBody">&#10134;</button>
+			</div>	
+			<div style="float:left;display:inline;margin-right:20px"> 
+			<span style="font-size:1.25em;display:inline;margin-right:0px;">
+				Heat 
+				<input type="number" name="attr_starshipHeat" value="0" style="width:50px;" readonly="true">
+				<input type="hidden" name="attr_starshipCurrHeatHdn" value="0">
+				<input type="number" name="attr_starshipHeatIncrement" min="0", value="0">
+				<button type="action" name="act_addStarshipHeat">&#10133;</button>
+				<button type="action" name="act_subStarshipHeat">&#10134;</button>				
+			</span>
+			</div>
+		</div>
+<!--  		<div style="display:flex;float:left;width:804px;height:100%;margin-bottom:5px;">
+			<div style="float:left;display:inline;margin-right:20px">
+				<span style="font-size:1.25em;display:inline;margin-right:0px;">
+					Heat 
+					<input type="number" name="attr_starshiHeat" value="0" style="width:100px;">
+					<input type="hidden" name="attr_starshipCurrHeatHdn">
+				</span>
+			</div>
+			<div style="float:left;display:inline;margin-right:20px;">
+				<input type="range" name="attr_starshipCurrBody" min="0" max="100" value="0" style="width:300px;">
+			</div>
+			<div style="float:left;display:inline;margin-right:20px;">
+				<input type="number" name="attr_starshipHeatIncrement" min="0", value="0">
+				<button type="action" name="act_addStarshipHeat">&#10133;</button>
+				<button type="action" name="act_subStarshipHeat">&#10134;</button>
+
+			</div>			
+		</div>	 -->	 
+		<div style="display:flex;float:left;width:804px;height:100%">
+			<span class="Attribute" style="width:175px;">
+				Hull Rating
+				<input type="number" name="attr_starshipHull" value="0">
+			</span>				
+			
+			<span class="Attribute" style="width:175px;">
+				Shrouded
+				<input type="checkbox" class="plainCheckbox" name="attr_starshipShroudHull" value="0">
+			</span>
+			
+			<span class="Attribute" style="width:175px;">
+				Force Field 
+				<input type="number" name="attr_starshipForceField" value="0">
+			</span>
+			<span class="Attribute" style="width:200px;">
+				Force Field Regeneration 
+				<input type="number" name="attr_starshipFFRegen" value="0">
+			</span>
+		</div>
+	</div>
+	</div>
+	<div class="cutCornerWrap">
+	<div class="TopPanel">
+		<div style="display:flex;float:left;width:804px;height:100%">
+		<label>
+			Power
+		</label>
+		</div>
+		<div style="display:flex;float:left;width:804px;height:100%;">
+			<div style="float:left;display:inline;margin-right:25px;">
+				<span style="font-size:1.25em;display:inline;margin-right:0px;">
+					Power Slots (Major)
+					
+					<input type="number" min="0" max="12" value="0" name="attr_starshipPowerSlots" >
+					<input type="hidden" name = "attr_starshipPowerSlotsUsed">
+				</span>	
+			</div>
+			<input type="hidden" class="sheet-starshippowerslots" value="One" name="attr_starshipPowerSlotsHdn">
+			<div class="PowerSlotOne">
+				<div>
+					<label> 
+						<input type="checkbox" class="plainCheckbox" name="attr_starshipPowerSlotOne">
+					</label>
+				</div>
+			</div>
+			<div class="PowerSlotTwo">
+				<div>
+					<label> 
+						<input type="checkbox" class="plainCheckbox" name="attr_starshipPowerSlotTwo">
+					</label>
+				</div>
+			</div>	
+			<div class="PowerSlotThree">
+				<div>
+					<label> 
+						<input type="checkbox" class="plainCheckbox" name="attr_starshipPowerSlotThree">
+					</label>
+				</div>
+			</div>
+			<div class="PowerSlotFour">
+				<div>
+					<label> 
+						<input type="checkbox" class="plainCheckbox" name="attr_starshipPowerSlotFour">
+					</label>
+				</div>
+			</div>			
+			<div class="PowerSlotFive">
+				<div>
+					<label> 
+						<input type="checkbox" class="plainCheckbox" name="attr_starshipPowerSlotFive">
+					</label>
+				</div>
+			</div>		
+			<div class="PowerSlotSix">
+				<div>
+					<label> 
+						<input type="checkbox" class="plainCheckbox" name="attr_starshipPowerSlotSix">
+					</label>
+				</div>
+			</div>			
+			<div class="PowerSlotSeven">
+				<div>
+					<label> 
+						<input type="checkbox" class="plainCheckbox" name="attr_starshipPowerSlotSeven">
+					</label>
+				</div>
+			</div>			
+			<div class="PowerSlotEight">
+				<div>
+					<label> 
+						<input type="checkbox" class="plainCheckbox" name="attr_starshipPowerSlotEight">
+					</label>
+				</div>
+			</div>			
+			<div class="PowerSlotNine">
+				<div>
+					<label> 
+						<input type="checkbox" class="plainCheckbox" name="attr_starshipPowerSlotNine">
+					</label>
+				</div>
+			</div>			
+			<div class="PowerSlotTen">
+				<div>
+					<label> 
+						<input type="checkbox" class="plainCheckbox" name="attr_starshipPowerSlotTen">
+					</label>
+				</div>
+			</div>			
+			<div class="PowerSlotEleven">
+				<div>
+					<label> 
+						<input type="checkbox" class="plainCheckbox" name="attr_starshipPowerSlotEleven">
+					</label>
+				</div>
+			</div>			
+			<div class="PowerSlotTwelve">
+				<div>
+					<label> 
+						<input type="checkbox" class="plainCheckbox" name="attr_starshipPowerSlotTwelve">
+					</label>
+				</div>
+			</div>			
+		
+			<div style="float:right"> 
+				<span style="font-size:1.25em;display:inline;margin-right:0px;">
+					Life Support Capacity
+					<input type="number" min="0" name="attr_starshipLifeSupport" value="0">
+				</span>
+			</div> 		
+		</div>
+
+		<div style="display:flex;float:left;width:804px;height:100%;margin-bottom:5px;">
+			<div style="float:left;display:inline;margin-right:20px;">
+				<span style="font-size:1.25em;display:inline;">
+					Max Fuel 
+					<input type="number" name="attr_starshipMaxFuel" min="0" value="0">
+					<input type="hidden" name="attr_starshipCurrFuelHdn">
+				<span>
+			</div>
+			<div style="float:left;display:inline;margin-right:20px;">
+				<input type="range" name="attr_starshipCurrFuel" min="0" max="100" value="0" style="width:300px;">
+			</div>
+			<div style="float:left;display:inline;margin-right:20px;">
+				<input type="number" name="attr_starshipFuelIncrement" min="0", value="0">
+				<button type="action" name="act_addFuel">&#10133;</button>
+				<button type="action" name="act_subFuel">&#10134;</button>
+
+			</div>
+		</div>
+		<div style="display:flex;float:left;width:804px;height:100%">
+		
+			<div style="float:left;margin-right:10px;">
+				<span style="font-size:1.25em;display:inline;margin-right:0px;">
+					Drives
+				</span>
+			</div>
+			<div style="float:left">
+				<fieldset class="repeating_starshipDrives">
+					<span style="font-size:.85em;display:inline;margin-right:0px;">
+						<input type="text" name="attr_starshipDriveName" style="width:150px">
+					</span>
+					<span style="font-size:.95em;display:inline;margin-right:0px;">
+						Scale 
+						<select style="width:100px"> 
+							<option value="Minor">Minor</option>
+							<option value="Moderate">Moderate</option>
+							<option value="Major">Major</option>
+						</select>
+					<span>
+					<span style="font-size:.95em;display:inline;margin-right:0px;">
+						Maneuver 
+						<input type="number" min="0" max="4" value="0">
+					</span>
+					<span style="font-size:.95em;display:inline;margin-right:0px;">
+						Limitations 
+						<input type="text" name="attr_starshipDriveLim" style="width:200px">
+					</span>
+				</fieldset> 
+			</div>
+			
+		</div>
+	</div>	
+	</div>
+	<div class="cutCornerWrap">
+	<div class="TopPanel">
+	
+		<div style="width:100%">
+			<label class="Attribute"> 
+				Computers
+			</label> 
+			<span style="font-size:.95em;display:inline;margin-right:0px;"> 
+				Rank 
+				<input type="number" min="0" max="6" value="0" name="attr_starshipCompRank">
+				<select name="attr_starshipCompScope" style="width:90px;">
+					<option value="Minor">Minor</option>
+					<option value="Moderate">Moderate</option>
+					<option value="Major">Major</option>
+				</select>
+			</span>		
+		</div>
+		<div style="width:100%">
+			<div style="width:380px;margin:5px;float:left;border: 1px solid black;border-radius:10px;padding:5px;">
+
+				<span style="font-size:1.25em;display:block;">
+					Communications
+				</span>
+				<div style="float:left;width:150px">
+					<span style="font-size:.85em;display:inline;margin-right:0px;width:150px;"> 
+						Name
+					</span>
+				</div>
+				<div style="float:left;width:105px">				
+					<span style="font-size:.85em;display:inline;margin-right:0px;width:100px;"> 
+						Scale
+					</span>
+				</div>
+				<div style="float:left;width:100px">				
+					<span style="font-size:.85em;display:inline;margin-right:25px;width:50px;"> 
+						Resource
+					</span>
+				</div>
+				<div style="display:bock;width:100%">
+					<fieldset class="repeating_starshipComms">
+						<input type="text" style="width:145px;margin-left:5px;" name="attr_starshipCommsName"> 
+						<select style="width:95px;margin-left:5px;" name="attr_starshipCommsScale">
+							<option value="Minor">Minor</option>
+							<option value="Moderate">Moderate</option>
+							<option value="Major">Major</option>
+						</select>
+						<input type="number" min="0" name="attr_starshipCommsResource">
+					</fieldset>
+				</div>
+			</div>
+			<div style="width:380px;float:right;margin:5px;border:1px black solid;border-radius:10px;padding:5px;">
+				<span style="font-size:1.25em;display:block;"> 
+					Tasks
+				</span>
+				<div style="width:100%"> 
+					<span style="font-size:.85em;display:inline;margin-right:175px;width:50px;">
+						Name
+					</span>
+					<span style="font-size:.85em;display:inline;margin-right:25px;width:50px;">
+						TN 
+					</span>
+				</div>
+				<fieldset class="repeating_starshipTasks"> 
+					<input type="text" style="width:200px" name="attr_starshipTaskName"> 
+					<input type="number" min="0" max="24" name="attr_starshipTaskRank">
+					<button name="act_starshipTaskRoll" type="roll" class="skillRoll" value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=@{starshipTaskName}}}{{roll=[[(@{starshipTaskRank} - @{rollString}) > 0]]}} )">
+						Roll
+					</button>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+	</div>
+	
+		<div class="RollDiffPanel">
+			<div >
+				<label class="inline-label">Roll Difficulty:</label> 
+				<div class="radioTag">
+				<label title="Automatic">
+					<input type="radio" value="0" name="attr_starshipRollDifficulty" style="padding-left:3px;"/>
+					<span class="rollDiff">Automatic </span>
+				</label>
+				<label title="Easy">
+					<input type="radio" value="3" name="attr_starshipRollDifficulty" style="padding-left:3px;"/>
+					<span class="rollDiff">Easy </span>
+				</label>
+				<label title="Standard">
+					<input type="radio" value="6" name="attr_starshipRollDifficulty" checked="true" style="padding-left:3px;"/>
+					<span class="rollDiff">Standard </span>
+				</label >
+				<label title="Hard">
+					<input type="radio" value="9" name="attr_starshipRollDifficulty" style="padding-left:3px;"/>
+					<span class="rollDiff">Difficult </span>
+				</label>
+				<label title="Impossible">
+					<input type="radio" value="12" name="attr_starshipRollDifficulty" style="padding-left:3px;"/>
+					<span class="rollDiff">Impossible </span>
+				</label>
+				</div>
+				<input type="hidden" name="attr_invokeMod" value="0"></input>
+				<input type="hidden" name="attr_rollString" value="3d8"></input> 
+				
+			</div>
+		</div>	
+	
+	<div class="cutCornerWrap">
+	<div class="TopPanel">
+		<label>
+			Combat
+		</label>
+		<div style="width:100%">
+			<div style="display:flex;float:left;margin-bottom:15px;"">
+				<button type="roll" name="act_starshipInitRoll" class="abilityRoll" 
+						value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Initiative}}{{roll=[[@{starshipInitMod}+@{invokeMod}+d8&amp;{tracker}]]}}")>
+					Initiative
+				</button>
+				<input type="number" min="0" max="10" name="attr_starshipInitMod" value="0">
+			</div>
+			<div style="display:flex;float:left;margin-left:15px;margin-bottom:15px;"> 
+				<span style="font-size:1.25em;display:inline;">
+					Evasive Margin: 
+					<input type="number" value="0" min="0" name="attr_starshipEvasion">
+				</span>
+				<button name=act_starshipEvade" type="action">Evade</button>
+			</div>
+			<div style="display:flex;float:left;margin-left:15px;margin-bottom:15px;"> 
+				<span style="font-size:1.25em;display:inline;">
+					Counter Missile Margin: 
+					<input type="number" value="0" min="0" name="attr_starshipIntercept">
+				</span>
+				<button name=act_starshipInterception" type="action">Intercept</button> 
+			</div>			
+		</div>
+		<div style="display:flex;float:left;width:492px;height:100%">
+			<span style="font-size:1.25em;display:block;"> 
+				Direct Fire Weapons
+			</span>
+			<fieldset class="repeating_starshipWeapons"> 
+				<div style="border-radius:10px;border: 1px solid black;">
+					<div class="weaponBlock">
+						<span style="font-weight:bold;margin-right:15px;">
+							Name
+							<input type="text" name="attr_starshipWeaponName" style="width:175px;">
+						</span> 	
+						<span style="font-weight:bold;margin-right:3px;">
+							Hungry
+						</span>
+						<label class="switch" style="margin-right:15px;">
+						  <input type="checkbox" name="attr_starshipWeaponHungry">
+						  <span class="slider round"></span>
+						</label>							
+						<span style="font-weight:bold;margin-right:15px;float:right;">
+							Ammo
+							<input type="number" name="attr_starhshipWeaponAmmo">
+						</span>							
+					</div>
+					<div class="weaponBlockFlex" >
+						<div style="float:left";>
+							<button type="roll" name="act_starshipWeaponAttack" class="weaponStarshipAttackButton"
+							value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=@{starshipWeaponName} fired at @{target|Defender|token_name}}}{{roll=[[(@{weaponGunneryTN} - @{rollString})]] vs [[@{target|Defender|DefMargin}]]}}{{damage=@{starshipWeaponMultiplier}}}{{dtype=@{weaponType}}}{{scale=Space}} )">
+								Attack
+							</button>
+
+						</div>		
+						<div style="border: 1px solid gray;border-radius:10px;padding:5px;float:left;width:400px;">											
+							<span> 
+								Damage Multiplier
+								<input type="number" name="attr_starshipWeaponMultiplier" value="1" min="1">							
+							</span>								
+							<select name="attr_weaponType" style="width:100px">
+								<option value="Energy">Energy</option>
+								<option value="Kinetic" selected>Kinetic</option>
+								<option value="Melee">Melee</option>
+								<option value="Exotic">Exotic</option>
+							</select>
+							<br>
+							<span>
+								Bleed
+								<input type="number" name="attr_starshipWeaponBleed">
+								<select name="attr_weaponBleedType" style="width:100px">
+									<option value=""> </option>
+									<option value="Minor">Minor</option>
+									<option value="Moderate">Moderate</option>
+									<option value="Major">Major</option>
+								</select>										
+							</span>
+							<span>
+								Area
+								<select name="attr_starshipWeaponAreaType" style="width:75px">
+									<option value=""> </option>
+									<option value=" "> </option>
+									<option value="Sudden">Sudden</option>
+									<option value="Sustained">Sustained</option>
+								</select>								
+								<select name="attr_starshipWeaponAreaSpread" style="width:75px">
+									<option value=""> </option>
+									<option value="Small">Small</option>
+									<option value="Medium">Medium</option>
+									<option value="Large">Large</option>
+								</select>
+						</div>						
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div style="display:flex;float:left;margin-left:5px;width:305px;">
+			<span style="font-size:1.25em;display:block;"> 
+				Missiles
+			</span>
+			<div style="border-radius:10px;border: 1px solid black;padding:5px;">
+				<div style="display:block;">
+					<div style="float:right">
+						<span style="font-weight:bold;">
+							Salvo 
+							<input type="number" name="attr_starshipMissileSalvo" min="0" value="0">
+						</span>
+						<br>
+						<button type="roll" name="act_starshipMissileAttack" class="weaponStarshipAttackButton" style="float:right;"
+						value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Missiles (@{starshipMissileSalvo}) launched at @{target|Defender|token_name}}}{{roll=[[(@{weaponGunneryTN} - @{rollString})]] vs [[@{target|Defender|DefMargin} + @{target|Defender|starshipIntercept} - @{starshipMissileSalvo} ]]}}{{apply=[Apply Salvo](!missiledrain @{target|Defender|token_id} @{starshipMissileSalvo})}}{{automation=@{useAutomationFlag}}} )">
+							Attack
+						</button>
+					</div>
+					<span style="font-weight:bold;">
+						Launchers 
+						<input type="number" name="attr_starshipMissileLaunchers" min="0" value="0">
+					</span>
+					<br>
+					<span style="font-weight:bold;">
+						Magazine&nbsp;&nbsp;
+						<input type="number" name="attr_starshipMissileMagazine" min="0">
+					</span>					
+				</div>
+				<div style="display:block;">
+					<span style="font-weight:bold;margin-right:75px;">
+						Inventory
+					</span>				
+
+				</div>
+				<div style="display:block;margin-top:3px;">
+					<span style="font-size:.85em;display:inline;margin-right:125px;">
+						Name
+					</span>
+					<span style="font-size:.85em;display:inline;margin-right:0px;">
+						Count
+					</span>
+
+					<fieldset class="repeating_starshipMissileInventory">
+						<input type="text" name="attr_starshipMissileInventoryName" style="width:200;margin-right:5px;"> 
+						<input type="number" name="attr_starshipMissileInventoryCount">
+					</fieldset>
+				</div>
+			</div>		
+		</div>		
+
+	</div>
+	</div>
+	<div style="display:flex;margin-top:25px;width:860px;">
+		<div class="cutCornerWrap">
+		<div class="AttributePanel" style="height:250px;">
+			<label>
+				Limitations
+			</label>
+				<div style="width:100%">
+					<span style="font-size:.85em;display:inline;margin-right:123px;">
+						Description
+					</span>
+				</div>
+				<div style="width:100%;overflow-y:auto;">
+					<fieldset class="repeating_starshipLimitation">
+						<input type="text" style="width:190px;" name="attr_starshipLimitationName">
+					</fieldset>
+				</div>
+		</div>
+		</div>
+		<div class="cutCornerWrap">
+		<div class="TagPanel" style="height:250px;">
+			<label class="Attribute">
+				Ship Tags
+
+			</label>
+
+			<div>
+				<span style="font-size:.85em;display:inline;margin-right:220px;">
+					Description 
+				</span>		
+				<span style="font-size:.85em;display:inline;margin-right:25px;">
+					Rank
+				</span>						
+				<span style="font-size:.85em;display:inline;margin-right:50px;">
+					Type
+				</span>		
+				<span style="font-size:.85em;display:inline;margin-right:12px;">
+					Invoke/Condemn
+				</span>						
+				<span style="font-size:.85em;display:inline;margin-right:0px;">
+					Locked
+				</span>						
+			</div>
+			<fieldset class="repeating_starshipTags">
+				<input type="text" class="tagText" name="attr_tagText" ></input>
+				<select class="tagRank" name="attr_tagRank"> 
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+				</select>
+				<select class="tagType" name="attr_starshipTagType">
+					<option value="Equipment">Equipment</option>
+					<option value="Free">Free</option>
+					<option value="Group">Group</option>
+					<option value="Personal">Personal</option>
+					<option value="Psionic">Psionic</option>
+					<option value="Wound">Wound</option>
+				</select>
+
+				<div class="radioTag">
+					<label>
+						<input type="radio" value="1" name="attr_tagUse">
+						<span>&#9650;</span></input>
+					</label>
+					<label>
+						<input type="radio" value="0" name="attr_tagUse" checked>
+						<span>&#8861;</span>
+					</label>    
+					<label>
+						<input type="radio" value="-1" name="attr_tagUse">
+						<span>&#9660;</span>
+					</label>     
+			  </div>
+					
+				<label class="switch">
+				  <input type="checkbox" name=attr_tagStatus>
+				  <span class="slider round"></span>
+				</label>			
+				
+			</fieldset>
+		</div>		
+		</div>
+	</div>			
+	<div class="cutCornerWrap">
+	<div class="TopPanel">
+		<label>
+			Capabilities
+		</label>
+		<div> 
+			<span style="font-size:.85em;display:inline;margin-right:225px;">
+				Name 
+			</span>	
+			<span style="font-size:.85em;display:inline;margin-right:75px;">
+				Scale 
+			</span>				
+			<span style="font-size:.85em;display:inline;margin-right:25px;">
+				Rank 
+			</span>				
+			<span style="font-size:.85em;display:inline;margin-right:20px;">
+				Resource 
+			</span>				
+			<span style="font-size:.85em;display:inline;margin-right:220px;">
+				Power Slots
+			</span>							
+		</div> 
+		<div style="width:100%;overflow-x:auto;">
+			<fieldset class="repeating_starshipCapabilities">
+				<input type="text" name="attr_starshipCapabilitiesName" style="width:250px;margin-right:5px;"> 
+				<select name="attr_starshipCapabilitiesScale" style="width:100px;maring-right:5px;">
+					<option value="Minor">Minor</option>
+					<option value="Moderate">Moderate</option>
+					<option value="Major">Major</option>
+				</select>
+				<input type="number" name="attr_starshipCapabilitiesRank" min="0" style="margin-right:5px;">
+				<input type="number" name="attr_starshipCapabilitiesResource" min="0">
+				<input type="number" name="attr_starshipCapabilitiesPowerSlots" min="0" value="0">
+			</fieldset>
+		</div>
+	</div>			
+	</div>
+</div>
+
+<div class="sheet-unit">
+	<div style="width:100%">
+	Something Something
+	</div>
+	<div class="cutCornerWrap">
+	<div class="AttributePanel" style="height:490px;">
+		<label class="Attribute">
+			Attributes
+		</label>
+		
+		<div style="width:100%;display:block;display:inline-block;">
+			<div style="float:left;margin-right:5px">
+				<span style="font-size:1.25em;display:inline;float:left;margin-right:0px;">
+					Unit Rank
+				</span>				
+			</div>
+			<div style="float:right;margin-right:2px">
+				<select name="attr_UnitRank" style="width:100px"> 
+					<option value="1">Green</option>
+					<option value="2">Seasoned</option>
+					<option value="3">Elite</option>
+				</select>		
+			</div>
+		</div>
+		<hr style="width:95%;color:black;margin-top:0px;margin-bottom:10px;border-top:1px solid black">
+		<div style="width:100%;display:inline-block;">
+			<div style="float:left;margin-right:20px">
+				<span style="font-size:1.25em;display:inline;float:left;margin-right:0px;">
+					Body
+				</span>				
+			</div>		
+			<div style="float:right;display:inline;margin-right:2px">
+				<input type="number" name="attr_unitBody" value="0" style="width:50px;"> / 
+				<input type="number" name="attr_unitMaxBody" value="0" style="width:50px;">
+				<input type="hidden" name="attr_unitBodyHdn">
+			</div>
+		</div>
+		<div style="width:100%;display:inline-block;">
+			<div style="float:left;display:inline;margin-right:20px">
+				<span style="font-size:1.25em;display:inline;float:right;margin-right:0px;">
+					Armor
+				</span>				
+			</div>		
+			<div style="float:right;display:inline;margin-right:2px">
+				<input type="number" name="attr_unitArmor" value="0" style="width:50px;"> / 
+				<input type="number" name="attr_unitMaxArmor" value="0" style="width:50px;">
+				<input type="hidden" name="attr_unitArmorHdn">
+			</div>			
+		</div>
+		<div style="width:100%;display:inline-block;">
+			<div style="float:left;display:inline;margin-right:5px">
+				<span style="font-size:1.25em;display:inline;float:right;margin-right:0px;">
+					Force Field
+				</span>				
+			</div>		
+			<div style="float:right;display:inline;margin-right:2px">
+				<input type="number" name="attr_unitForceField" value="0" style="width:50px;"> / 
+				<input type="number" name="attr_unitMaxForceField" value="0" style="width:50px;">
+				<input type="hidden" name="attr_unitForceFieldHdn">
+			</div>			
+		</div>	
+		<div style="width:100%;display:inline-block;">
+			<div style="float:left;display:inline;margin-right:5px">
+				<span style="font-size:1.25em;display:inline;float:right;margin-right:0px;">
+					Strain
+				</span>				
+			</div>		
+			<div style="float:right;display:inline;margin-right:2px">
+				<input type="number" name="attr_unitStrain" value="0" style="width:50px;"> / 
+				<input type="number" name="attr_unitMaxStrain" value="0" style="width:50px;">
+				<input type="hidden" name="attr_unitStrainHdn">
+			</div>			
+		</div>			
+		<hr style="width:95%;color:black;margin-top:0px;margin-bottom:10px;border-top:1px solid black">		
+		<div style="width:100%;display:inline-block;">
+			<div style="float:left;display:inline;margin-right:20px">
+				<span style="font-size:1.25em;display:inline;margin-right:0px;">
+					Battle Strain 
+				</span>
+			</div>
+			<div style="float:right;display:inline;margin-right:2px"> 
+				<span>
+					<input type="number" name="attr_unitBattleStrain" value="0" style="width:75px;">
+					<input type="hidden" name="attr_unitBattleStrainHdn">
+				</span>
+			</div>
+		</div>
+		<div style="float:left;display:inline;margin-right:20px">
+
+				<button type="action" name="act_unitRegenerate" >Regenerate</button>
+				<br>
+
+				<button type="action" name="act_unitTag" >Use Tag</button>
+				<br>
+
+				<button type="action" name="act_unitCoordinate" >Coordinate Fire</button>
+				<br>
+
+		</div>
+
+	</div>
+	</div>
+	<div class="cutCornerWrap">
+	<div class="UnitTagPanel" style="height:490px;">
+		<label class="Attribute">
+			Unit Tags
+
+		</label>
+
+		<div>
+			<span style="font-size:.85em;display:inline;margin-right:220px;">
+				Description 
+			</span>		
+			<span style="font-size:.85em;display:inline;margin-right:25px;">
+				Rank
+			</span>						
+			<span style="font-size:.85em;display:inline;margin-right:50px;">
+				Type
+			</span>		
+			<span style="font-size:.85em;display:inline;margin-right:12px;">
+				Invoke/Condemn
+			</span>						
+			<span style="font-size:.85em;display:inline;margin-right:0px;">
+				Locked
+			</span>						
+		</div>
+		<fieldset class="repeating_unitTags">
+			<input type="text" class="tagText" name="attr_tagText" ></input>
+			<select class="tagRank" name="attr_tagRank"> 
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+			</select>
+			<select class="tagType" name="attr_unitTagType">
+				<option value="Equipment">Equipment</option>
+				<option value="Free">Free</option>
+				<option value="Group">Group</option>
+				<option value="Personal">Unit</option>
+				<option value="Psionic">Psionic</option>
+				<option value="Wound">Wound</option>
+			</select>
+
+			<div class="radioTag">
+				<label>
+					<input type="radio" value="1" name="attr_tagUse">
+					<span>&#9650;</span></input>
+				</label>
+				<label>
+					<input type="radio" value="0" name="attr_tagUse" checked>
+					<span>&#8861;</span>
+				</label>    
+				<label>
+					<input type="radio" value="-1" name="attr_tagUse">
+					<span>&#9660;</span>
+				</label>     
+		  </div>
+				
+			<label class="switch">
+			  <input type="checkbox" name=attr_tagStatus>
+			  <span class="slider round"></span>
+			</label>			
+			
+		</fieldset>
+	</div>		
+	</div>
+	
+	<div class="RollDiffPanel">
+		<div >
+			<label class="inline-label">Roll Difficulty:</label> 
+			<div class="radioTag">
+			<label title="Automatic">
+				<input type="radio" value="0" name="attr_unitRollDifficulty" style="padding-left:3px;"/>
+				<span class="rollDiff">Automatic </span>
+			</label>
+			<label title="Easy">
+				<input type="radio" value="3" name="attr_unitRollDifficulty" style="padding-left:3px;"/>
+				<span class="rollDiff">Easy </span>
+			</label>
+			<label title="Standard">
+				<input type="radio" value="6" name="attr_unitRollDifficulty" checked="true" style="padding-left:3px;"/>
+				<span class="rollDiff">Standard </span>
+			</label >
+			<label title="Hard">
+				<input type="radio" value="9" name="attr_unitRollDifficulty" style="padding-left:3px;"/>
+				<span class="rollDiff">Difficult </span>
+			</label>
+			<label title="Impossible">
+				<input type="radio" value="12" name="attr_unitRollDifficulty" style="padding-left:3px;"/>
+				<span class="rollDiff">Impossible </span>
+			</label>
+			</div>
+			<input type="hidden" name="attr_invokeMod" value="0"></input>
+			<input type="hidden" name="attr_rollString" value="3d8"></input> 
+			
+		</div>
+	</div>		
+	
+	<div class="cutCornerWrap">
+	<div class="TopPanel">
+		<input type="hidden" class="sheet-tabsUnitBottomtoggle" name="attr_sheetUnitBottomTab"  value="tabUnitOutfit"  />
+		<div style="margin-bottom:5px;">
+			<button type="action" name="act_tabUnitOutfit" >Outfitting</button>
+			<button type="action" name="act_tabUnitCombat" >Combat</button>
+		</div>
+		<div class="tabUnitOutfit">
+			<div style="display:inline-block;width:100%">
+			<label class="inline-label" style="width:130px">
+				Abilities
+			</label>
+			<div style="float:left;margin-left:25px;">
+				<button type="roll" name="act_unitDetectionRoll" class="abilityRoll"
+						value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Detection}}{{roll=[[@{unitDetTN} - @{rollString}) > 0]]}} )">
+					Detection
+				</button>
+				<input type="number" min="0" max="4" name="attr_UnitDetMod" value="0"> 
+				<input type="number" name="attr_unitDetValue" value="0" readonly="true">
+				<input type="hidden" name="attr_unitDetTN" value="0">
+			</div>
+			<div style="float:left;margin-left:25px;">
+				<button type="roll" name="act_unitDiscernRoll" class="abilityRoll"
+						value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Discern}}{{roll=[[@{unitDisTN} - @{rollString}) > 0]]}} )">
+					Discern
+				</button>
+				<input type="number" min="0" max="4" name="attr_disMod" value="0"> 
+				<input type="number" name="attr_UnitDisValue" value="0" readonly="true">
+				<input type="hidden" name="attr_UnitDisTN" value="0">
+			</div>
+			<div style="float:left;margin-left:25px;">
+				<button type="roll" name="act_UnitInitRoll" class="abilityRoll" 
+						value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Initiative}}{{roll=[[(@{UnitRank}*3)+@{initMod}+@{invokeMod}+d8&{tracker}]]}}")>
+					Initiative
+				</button>
+				<input type="number" min="0" max="4" name="attr_initMod" value="0">
+			</div>	
+			</div>
+			<div style="width:100%;border-top:1px solid black;padding-top:5px;">
+				<div style="width:400px;float:left;text-align:center;"> 
+					<label style="display:inline;">
+						Equipment List 
+					</label>
+				</div>
+				<div style="width:400px;float:right;text-align:center;">
+					<label style="display:inline;width:400px;">
+						Tasks
+					</span>
+				</div>
+				
+					<div style="width:100%">
+						<div class="cutCornerWrap">
+						<div class="EquipmentListPanel">
+							<div>
+								<span style="font-size:.85em;display:inline;margin-right:160px;">
+									Name 
+								</span>
+								<span style="font-size:.85em;display:inline;margin-right:35px;">
+									CC
+								</span>
+								<span style="font-size:.85em;display:inline;margin-right:20px;">
+									CR
+								</span>
+							</div>
+							<div>
+								<input type="text" name="attr_EquipmentListOne" style="width:190px">
+								<input type="number" name="attr_EquipmentCROne" min="0">
+							</div>
+							<div>
+								<input type="text" name="attr_EquipmentListTwo" style="width:190px">	
+								<input type="number" name="attr_EquipmentCRTwo" min="0">
+							</div>
+							<div>
+								<input type="text" name="attr_EquipmentListThree" style="width:190px">
+								<input type="number" name="attr_EquipmentCRThree" min="0">					
+							</div>
+							<div>					
+								<input type="text" name="attr_EquipmentListFour" style="width:190px">
+								<input type="number" name="attr_EquipmentCRFour" min="0">					
+							</div>
+							<div>					
+								<input type="text" name="attr_EquipmentListFive" style="width:190px">
+								<input type="number" name="attr_EquipmentCRFive" min="0">					
+							</div>
+							<div>					
+								<input type="text" name="attr_EquipmentListSix" style="width:190px">
+								<input type="number" name="attr_EquipmentCRSix" min="0">					
+							</div>
+							<div>					
+								<input type="text" name="attr_EquipmentListSeven" style="width:190px">
+								<input type="number" name="attr_EquipmentCRSeven" min="0">					
+							</div>
+							<div>					
+								<input type="text" name="attr_EquipmentListEight" style="width:190px">
+								<input type="number" name="attr_EquipmentCREight" min="0">					
+							</div>
+							<div>					
+								<input type="text" name="attr_EquipmentListNine" style="width:190px">
+								<input type="number" name="attr_EquipmentCRNine" min="0">					
+							</div>
+							<div>					
+								<input type="text" name="attr_EquipmentListTen" style="width:190px">
+								<input type="number" name="attr_EquipmentCRTen" min="0">					
+							</div>				
+						</div>
+						</div>
+						<div class="cutCornerWrapRight">
+						<div class="EquipmentListTasks">
+							<div>
+								<span style="font-size:.85em;display:inline;margin-right:120px;">
+									Task Name 
+								</span>
+								<span style="font-size:.85em;display:inline;margin-right:35px;">
+									TN
+								</span>
+							</div>					
+							<fieldset class="repeating_unitTasks">
+								<input type="text" class="skillSpecialty" name="attr_TaskName" value="">
+								<input type="number" max="24" name="attr_taskTarget" value="0" >
+								<button type="roll" name="attr_taskRoll" class="skillRoll"
+										value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=@{TaskName}}}{{roll=[[(@{taskTarget} - @{rollString}) > 0]]}} )">
+										Roll
+								</button>
+							</fieldset>
+						</div>
+						</div>
+						
+					</div>
+			</div>	
+		</div>
+	
+		<div class="tabUnitCombat">
+			<div style="width:98%;margin:5px;border-bottom:1px solid black;display:inline-block">
+				<div style="display:inline-block;width:50%">
+					<label style="display:inline;float:left;">
+						Defensive margin: 
+						<input name="attr_DefMargin" type="number" value="0">
+
+					</label>
+				</div>
+				<div style="float:right;margin-left:25px;">
+					<button type="action" name="act_Cover">
+						Take Cover
+					</button>
+				</div>
+				<div style="float:right;margin-left:25px;">
+					<button type="action" name="act_Evasion">
+						Evade
+					</button>
+				</div>
+				<div style="float:right;margin-left:25px;">
+					<button type="action" name="act_Stealth">
+						Hide
+					</button>
+				</div>
+			</div>
+		
+			<div style="float:left;width:310px;">
+				<label>
+					Armor
+				</label>
+				<fieldset class="repeating_unitArmor">
+					<div style="width:300px;border-radius:10px;border: 1px solid black;">
+						<div class="armorBlock">
+							<span style="font-weight:bold;margin-right:25px;">
+								Name
+								<input type="text" name="attr_armorName" style="width:130px;">
+							</span> 
+							<label class="switch">
+								<input type="checkbox" name="attr_armorActive">
+								<span class="slider round"></span>
+							</label>
+							<span style="font-size:.85em;display:inline;">
+								Active
+							</span>
+						</div>
+						<div class="armorBlock">
+							<span style="font-weight:bold;margin-right:25px;">
+								Protection
+							</span><br>
+							<span style="display:inline-block;margin-bottom:3px;">
+								<span style="display: inline-block;width:90px">Armor Type</span>
+								<select name="attr_armorType"  style="width:95px;">
+									<option value="Firefight">Firefight</option>
+									<option value="Battlefield">Battlefield</option>
+									<option value="Hull">Hull</option>
+								</select>								
+								<span style="display: inline-block;width:90px">Armor Rating</span>
+								<input type="number" name="attr_armorValueCurr"  min="0">
+								/
+								<input type="number" name="attr_armorValue"  min="0">
+
+							</span style="display:inline-block;margin-bottom:3px;"><br>
+							<span style="display:inline-block;margin-bottom:3px;">
+								<span style="display: inline-block;width:90px">Body </span>
+								<input type="number" name="attr_armorBodyCurr" value="0" min="0" >
+								/
+								<input type="number" name="attr_armorBody" value="0" min="0">
+								 
+<!-- 								<button type="action" name="act_btnArmorRepair">
+									Repair
+								</button>  -->
+							</span><br>
+							<span>
+								<span style="display: inline-block;width:90px">Force fields</span>
+								<input type="number" name="attr_armorForceFieldCurr" min="0">
+								/
+								<input type="number" name="attr_armorForceField" min="0">
+<!-- 								<button type="action" name="act_btnForceFieldRestore">
+									Restore
+								</button>  -->								
+							</span>
+						</div>
+						<div class="armorBlock">
+							<span style="font-weight:bold;margin-right:15px;">
+								Power Slots
+								<select name="attr_armorPowerType" style="width:100px">
+									<option value="minor">Minor</option>
+									<option value="moderate">Moderate</option>
+									<option value="major">Major</option>
+								</select>
+							</span><br>
+							<span style="width:100px;">
+								Total:
+								<input type="number" name="attr_armorPowerSlots">
+							</span>
+							<span style="width:100px">
+								Used: 
+								<input type="number" name="attr_armorPowerSlotsUsed">
+							</span>
+							<span style="width:100px">
+								Fuel: 
+								<input type="number" name="attr_armorFuel">
+							</span>
+						</div>
+						<div class="armorBlock"> 
+							<span style="font-weight:bold;margin-right:15px;">
+								Capabilities
+							</span><br>
+							<span>
+								Life Support: 
+								<select style="width:100px">
+									<option value="None">None</option>
+									<option value="Partial">Partial</option>
+									<option value="Full">Full</option>
+								</select>
+							</span><br>
+							<span>
+								Links:
+								<input type="number" name="attr_armorLinks" value="0" min="0">
+							</span>
+							<span>
+								Used: 
+								<input type="number" name="attr_armorLinks" value="0" min="0">
+							</span> 
+						</div>	
+						<div class="armorBlock">
+							<span style="font-weight:bold;margin-right:15px;">
+								Limitations
+							</span><br>		
+							<input type="text" name="attr_armorLimitations" style="width:275px">
+						</div>
+						<div class="armorBlock">
+							<span style="font-weight:bold;margin-right:25px;">
+								Notes<br>
+								<textarea name="attr_armorNotes" style="width:275px;height:75px;">
+								</textarea>
+							</span> 
+						</div>						
+					</div>
+				</fieldset>	
+			</div>
+			<div style="float:left;width:492px;">
+				<label>
+					Weapons
+				</label>
+				<fieldset class="repeating_unitWeapons">
+					<input type="hidden" name="attr_weaponAttackTN" value="0">
+					<input type="hidden" name="attr_weaponSecAttackTN" value="0">
+					<div style="border-radius:10px;border: 1px solid black;">
+							<div class="weaponBlock">
+								<span style="font-weight:bold;margin-right:15px;">
+									Name
+								</span> 
+								<span>
+									<input type="text" name="attr_weaponName" style="width:175px;">
+								</span>
+								<span style="margin-righ:3px;">
+									Ammo
+									<input type="number" name="attr_weaponAmmo">
+								</span>
+							</div>
+							<div class="weaponBlockFlex" >
+								<div style="float:left";>
+									<button type="roll" name="act_weaponAttack" class="weaponAttackButton"
+											value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Attack Roll at @{target|Defender|token_name}}}{{roll=[[@{weaponAttackTN} - (@{rollString})]] vs [[@{target|Defender|DefMargin}]]}}{{damage=@{weaponMultiplier}}}{{dtype=@{weaponType}}}{{scale=@{weaponScale}}}">
+										Attack
+									</button>
+
+								</div>
+								<div style="border: 1px solid gray;border-radius:10px;padding:5px;float:left;width:400px;">											
+									<span> 
+										Damage Multiplier
+										<input type="number" name="attr_weaponMultiplier" value="1" min="1">							
+									</span>								
+									<select name="attr_weaponType" style="width:100px">
+										<option value="Energy">Energy</option>
+										<option value="Kinetic" selected>Kinetic</option>
+										<option value="Melee">Melee</option>
+										<option value="Exotic">Exotic</option>
+									</select>
+									<select name="attr_weaponScale" style="width:100px">
+										<option value="Firefight">Firefight</option>
+										<option value="Battlefield">Battlefield</option>
+										<option value="Space">Space</option>
+									</select>
+
+									<br>
+									<span>
+										Bleed
+										<input type="number" name="attr_weaponBleed">
+										<select name="attr_weaponBleedType" style="width:100px">
+											<option value=""> </option>
+											<option value="Minor">Minor</option>
+											<option value="Moderate">Moderate</option>
+											<option value="Major">Major</option>
+										</select>										
+									</span>
+									<span>
+										Area
+										<select name="attr_weaponAreaType" style="width:75px">
+											<option value=""> </option>
+											<option value=" "> </option>
+											<option value="Sudden">Sudden</option>
+											<option value="Sustained">Sustained</option>
+										</select>								
+										<select name="attr_weaponAreaSpread" style="width:75px">
+											<option value=""> </option>
+											<option value="Small">Small</option>
+											<option value="Medium">Medium</option>
+											<option value="Large">Large</option>
+										</select>
+								</div>
+								
+							</div>
+							<div class="weaponBlockFlex" >
+								<div style="float:left";>
+									<button type="roll" name="act_weaponSecAttack" class="weaponAttackButton"
+											value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Second Attack Roll at @{target|Defender|token_name}}}{{roll=[[@{weaponSecAttackTN} - (@{rollString})]] vs [[@{target|Defender|DefMargin}]]}}{{damage=@{weaponSecMultiplier}}}{{dtype=@{weaponSecType}}}{{scale=@{weaponSecScale}}}">
+										Second Attack
+									</button>
+
+								</div>
+								<div style="border: 1px solid gray;border-radius:10px;padding:5px;float:left;width:400px;">											
+									<span> 
+										Damage Multiplier
+										<input type="number" name="attr_weaponSecMultiplier" value="1" min="1">							
+									</span>								
+									<select name="attr_weaponSecType" style="width:100px">
+										<option value="Energy">Energy</option>
+										<option value="Kinetic" selected>Kinetic</option>
+										<option value="Melee">Melee</option>
+										<option value="Exotic">Exotic</option>
+									</select>
+									<select name="attr_weaponSecScale" style="width:100px">
+										<option value="Firefight">Firefight</option>
+										<option value="Battlefield">Battlefield</option>
+										<option value="Space">Space</option>
+									</select>
+
+									<br>
+									<span>
+										Bleed
+										<input type="number" name="attr_weaponSecBleed">
+										<select name="attr_weaponSecBleedType" style="width:100px">
+											<option value=""> </option>
+											<option value="Minor">Minor</option>
+											<option value="Moderate">Moderate</option>
+											<option value="Major">Major</option>
+										</select>										
+									</span>
+									<span>
+										Area
+										<select name="attr_weaponSecAreaType" style="width:75px">
+											<option value=""> </option>
+											<option value=" "> </option>
+											<option value="Sudden">Sudden</option>
+											<option value="Sustained">Sustained</option>
+										</select>								
+										<select name="attr_weaponSecAreaSpread" style="width:75px">
+											<option value=""> </option>
+											<option value="Small">Small</option>
+											<option value="Medium">Medium</option>
+											<option value="Large">Large</option>
+										</select>
+								</div>
+								
+							</div>						
+							<div class="weaponBlock">
+								<span style="font-weight:bold;margin-right:22px;">
+										Counters
+								</span>
+								<span>
+									<input type="text" name="attr_weaponCounters" style="width:375px">
+								</span>
+							</div>
+							<div class="weaponBlock">
+								<span style="font-weight:bold;margin-right:10px;">
+										Limitations
+								</span>
+								<span>
+									<input type="text" name="attr_weaponLimitations" style="width:375px">
+								</span>
+							</div>						
+					</div>
+				</fieldset>		
+			</div>		
+		</div>
+	</div>
+	</div>
+</div>
+
+<div class="sheet-config">
+	<div class="cutCornerWrap">
+	<div class="TagPanel">
+		<label class="Attribute" style="width:200px;">
+			Tag Journal
+		</label>
+			<span class="Attribute" style="width:auto;margin-left:15px;margin-right:5px;">Master Journal</span>
+			<input type="checkbox" class="tagJournalMaster" name="attr_tagJournalMaster" value="1" title="When on, this sheet is the shared Tag Journal source; edits sync to all other characters (needs the RedemptionTagSync API script).">
+
+		<hr>
+		<div>
+			<span style="font-size:.85em;display:inline;margin-right:220px;">
+				Description 
+			</span>		
+			<span style="font-size:.85em;display:inline;margin-right:25px;">
+				Rank
+			</span>						
+			<span style="font-size:.85em;display:inline;margin-right:50px;">
+				Type
+			</span>		
+			<span style="font-size:.85em;display:inline;margin-right:12px;">
+				Invoke/Condemn
+			</span>						
+			<span style="font-size:.85em;display:inline;margin-right:0px;">
+				Locked
+			</span>						
+		</div>
+		<fieldset class="repeating_tagJournal">
+			<input type="text" class="tagText" name="attr_tagText" ></input>
+			<select class="tagRank" name="attr_tagRank"> 
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+			</select>
+			<select class="tagType" name="attr_tagType">
+				<option value="Equipment">Equipment</option>
+				<option value="Free">Free</option>
+				<option value="Scene">Scene</option>
+			</select>
+
+			<div class="radioTag">
+				<label>
+					<input type="radio" value="1" name="attr_tagUse">
+					<span>&#9650;</span></input>
+				</label>
+				<label>
+					<input type="radio" value="0" name="attr_tagUse" checked>
+					<span>&#8861;</span>
+				</label>    
+				<label>
+					<input type="radio" value="-1" name="attr_tagUse">
+					<span>&#9660;</span>
+				</label>     
+			</div>
+				
+			<label class="switch">
+			  <input type="checkbox" name=attr_tagStatus>
+			  <span class="slider round"></span>
+			</label>			
+			<br>
+			<div>
+				<span style="font-size:.85em;display:inline;margin-right:220px;"> 
+					Notes
+				</span>	
+				<br>
+				<textarea name="attr_tagJournalNotes" style="width:500px;height:50px;">
+				</textarea>
+
+			</div>
+			<hr>
+		</fieldset>
+	</div>
+	</div>
+    
+</div>
+
+<rolltemplate class="sheet-rolltemplate-redemption">
+	<div class="sheet-rt-outer">
+		<div class="sheet-rt-title">{{title}}</div>
+		<div class="sheet-rt-roll">{{roll}}</div>
+		{{#damage}}<div class="sheet-rt-meta"><span class="sheet-rt-metalabel">Damage</span> &#215;{{damage}} {{dtype}} &#183; {{scale}}</div>{{/damage}}
+		{{#invoked}}<div class="sheet-rt-tags sheet-rt-invoked"><span class="sheet-rt-taglabel">&#9650; Invoked</span> {{invoked}}</div>{{/invoked}}
+		{{#condemned}}<div class="sheet-rt-tags sheet-rt-condemned"><span class="sheet-rt-taglabel">&#9660; Condemned</span> {{condemned}}</div>{{/condemned}}
+		{{#automation}}{{#apply}}<div class="sheet-rt-apply">{{apply}}</div>{{/apply}}{{/automation}}
+	</div>
+</rolltemplate>
+
+<script type="text/worker">
+
+	const mainattributes = ["kinestetic", "logical", "interpersonal", "introspection", "spatial", "verbal"];
+	const AttributeCalc = ["kinestetic", "logical", "interpersonal", "introspection", "spatial", "verbal", "AttribFP"];
+	
+	let invokeMod = 0;
+	let rollDiffSource = "rollDifficulty";
+	
+	let PersonalTagCount = 0;
+	let GroupTagCount = 0;
+	let MaxStrain = 0;
+	let BodyMaxNum = 15;
+	let BodyNum = 0;
+	let SkillSwitch = "";
+	let SkillSwitchTN = 0;
+	let DefMarginType = "";
+	
+	let SkillCount = 0;
+	
+	let skillGroup1Mode = 0;
+	let skillGroup1Lock = -1;
+	
+	let RefreshUnlock = 0;
+	let RefreshFlag = 0;
+	let PsionicDiscountFlag = 0;
+	
+	let tagCounter = 0;
+
+	/* Starship Variables */
+	let starshipBodyChangeType = 1;
+	let starshipFuelChangeType = 1;
+	let starshipPowerSlotCount = 0;
+	let starshipPowerSlotTracker = 0;
+	let starshipTaskTracker = 0;
+	let starshipGunneryFlag = 0;
+	let starshipPilotingFlag = 0;
+	
+	/* Unit Variables */
+	let unitTaskTracker = 0;
+	let unitGunneryFlag = 0;
+	let unitFirearmsFlag = 0;
+	let unitHeavyWeaponsFlag= 0;
+	let unitPilotingFlag = 0;	
+	let unitAthleticsFlag = 0;
+	let unitTacticsFlag = 0;
+	let unitStealthFlag = 0;
+	
+	
+    const tablist = ["character","starship","configuration","unit"];
+    const tabRollDiffSource = {
+        character: "rollDifficulty",
+        starship: "starshipRollDifficulty",
+        unit: "unitRollDifficulty"
+    };
+    tablist.forEach(button => {
+        on(`clicked:${button}`, function() {
+			console.log(JSON.stringify(button));
+            setAttrs({
+                sheetTab: button
+            });
+			if(tabRollDiffSource[button]) {
+				rollDiffSource = tabRollDiffSource[button];
+				setRollString();
+			}
+        });
+    });
+	
+    const buttonlist = ["tabSkills","tabEquipment","tabCombat"];
+    buttonlist.forEach(button => {
+        on(`clicked:${button}`, function() {
+			console.log(JSON.stringify(button));
+            setAttrs({
+                sheetBottomTab: button
+            });
+        });
+    });	
+	
+    const buttonUnitlist = ["tabUnitOutfit","tabUnitCombat"];
+    buttonUnitlist.forEach(button => {
+        on(`clicked:${button}`, function() {
+			console.log(JSON.stringify(button));
+            setAttrs({
+                sheetUnitBottomTab: button
+            });
+			console.log("buttonUnitList");
+        });
+    });		
+
+	mainattributes.forEach(statmod => {
+        on(`change:${statmod}`, function(eventInfo) {
+			let oldStat = parseInt(eventInfo.previousValue)||3;
+			let newStat = parseInt(eventInfo.newValue)||3;
+			let update = {};		
+			
+			console.log("oldStat: ");
+			console.log(oldStat);
+			console.log("newStat: ");
+			console.log(newStat);
+
+			if(newStat > 7) {
+				//alert("Values may not exceed 7");
+				update[`${statmod}`] = 7;
+				newStat = 7;
+			}
+			if(newStat < 3) {
+				//alert("Values may not exceed 7");
+				update[`${statmod}`] = 3;
+				newStat = 3;
+			}				
+
+    		setAttrs(update);
+			
+			
+			getAttrs(["kinestetic", "logical", "interpersonal", "introspection", "spatial", "verbal", "AttribFP"], function(values) {
+				console.log(values);
+			
+				let AttribCount = (10 + parseInt(values.AttribFP)) - (parseInt(values.kinestetic) 
+										+ parseInt(values.logical)
+										+ parseInt(values.interpersonal)
+										+ parseInt(values.introspection)
+										+ parseInt(values.spatial)
+										+ parseInt(values.verbal)
+										- 18);
+			
+				console.log(AttribCount);
+			
+				setAttrs({ availAttrib: AttribCount});
+										
+			});
+			
+			calcAllTaskNumbers();
+        });
+	});	
+	
+	function calcAllTaskNumbers() {
+			let groupSkillPrefix = [];
+			let skillTally = { rankList: 0, remaining: 0 };
+
+			groupSkillPrefix[0] = "grp1";
+			groupSkillPrefix[1] = "grp2";
+			groupSkillPrefix[2] = "grp3";
+
+			console.log(JSON.stringify(groupSkillPrefix));
+
+			for(var i=0; i < groupSkillPrefix.length; i++) {
+					let skillName = groupSkillPrefix[i] + "skillName";
+					let skillRank = groupSkillPrefix[i] + "skillRank";
+					let skillMod = groupSkillPrefix[i] + "skillMod";
+					let skillCombo = groupSkillPrefix[i] + "skillCombo";
+					let skillHidden = groupSkillPrefix[i] + "skillHidden";
+					let skillSecondary = groupSkillPrefix[i] + "skillSecondary";
+
+					skillTally.remaining += 1;
+					getAttrs(["kinestetic", "logical", "interpersonal", "introspection", "spatial", "verbal", "TNPenaltyHdn", "SkillsFP", skillName, skillRank, skillMod, skillCombo, skillHidden, skillSecondary], function(values) {
+							//console.log(JSON.stringify(values));
+							calcTaskNumber(values, skillTally);
+					});
+			}
+
+
+			getSectionIDs("skills", function(idarray) {
+				//console.log(JSON.stringify(idarray));
+
+				let skillName = "";
+				let skillRank = "";
+				let skillMod = "";
+				let skillCombo = "";
+				let skillHidden = "";
+
+				for(var i=0; i < idarray.length; i++) {
+					let skillName = "repeating_skills_" + idarray[i] + "_skillName";
+					let skillRank = "repeating_skills_" + idarray[i] + "_skillRank";
+					let skillMod = "repeating_skills_" + idarray[i] + "_skillMod";
+					let skillCombo = "repeating_skills_" + idarray[i] + "_skillCombo";
+					let skillHidden = "repeating_skills_" + idarray[i] + "_skillHidden";
+					let skillSecondary = "repeating_skills_" + idarray[i] + "_skillSecondary";
+
+					skillTally.remaining += 1;
+					getAttrs(["kinestetic", "logical", "interpersonal", "introspection", "spatial", "verbal", "TNPenaltyHdn", "SkillsFP", skillName, skillRank, skillMod, skillCombo, skillHidden, skillSecondary], function(values) {
+							//console.log(JSON.stringify(values));
+							calcTaskNumber(values, skillTally);
+					});
+
+				}
+			});
+
+	}
+	
+	function sleep(ms) {
+	  return new Promise(resolve => setTimeout(resolve, ms));
+	}	
+	
+	/*
+		Attribute Functionality
+	*/
+	
+	on("change:BodyFP", function(eventInfo) {
+		console.log(eventInfo);
+		
+		let update = {}
+		BodyMaxNum = 15 + (parseInt(eventInfo.newValue)*5);
+		console.log(BodyMaxNum);
+		update["BodyMaxHdn"] = BodyMaxNum;
+		setAttrs(update);
+	});
+	
+	
+	
+	/* Also listens to stat changes + sheet:opened so the remaining-points counter stays live,
+	   and writes usedAttrib (formerly an auto-calc mirror of availAttrib). */
+	on("change:AttribFP change:kinestetic change:logical change:interpersonal change:introspection change:spatial change:verbal sheet:opened", function(eventInfo) {
+			getAttrs(["kinestetic", "logical", "interpersonal", "introspection", "spatial", "verbal", "AttribFP"], function(values) {
+				console.log(values);
+
+				let AttribCount = (10 + (parseInt(values.AttribFP)||0)) - ((parseInt(values.kinestetic)||0)
+										+ (parseInt(values.logical)||0)
+										+ (parseInt(values.interpersonal)||0)
+										+ (parseInt(values.introspection)||0)
+										+ (parseInt(values.spatial)||0)
+										+ (parseInt(values.verbal)||0)
+										- 18);
+
+				console.log(AttribCount);
+
+				setAttrs({ availAttrib: AttribCount, usedAttrib: AttribCount});
+
+			});
+	});
+	
+	on("change:SkillsFP", function(eventInfo) {
+		getAttrs(["SkillsFP"], function(values) {
+			console.log(JSON.stringify(values));
+			console.log(JSON.stringify(eventInfo));
+			
+			console.log(JSON.stringify(parseInt(values.SkillCountHidden)));
+			console.log(JSON.stringify(parseInt(eventInfo.newValue)));
+			console.log(JSON.stringify(parseInt(eventInfo.previousValue)));
+			
+			let skillChangeMod = (parseInt(values.SkillsFP)||0) + 25;
+			console.log(skillChangeMod);
+			let update = {};
+			update["SkillCountHidden"] = skillChangeMod;
+
+			setAttrs(update);
+
+		});
+	});
+
+	/* Auto-calc replacement: character Detection/Discern target numbers.
+	   Formerly auto-calc fields (DetTN="@{spatial}+@{logical}+@{kinestetic}+@{detMod}",
+	   DetValue="@{detTN}", etc.) - now worker-computed on dependency change and on open.
+	   DetTN/DisTN are the values the roll buttons reference; DetValue/DisValue are display mirrors. */
+	on("change:spatial change:logical change:kinestetic change:detMod change:introspection change:interpersonal change:verbal change:disMod sheet:opened", function() {
+		getAttrs(["spatial", "logical", "kinestetic", "detMod", "introspection", "interpersonal", "verbal", "disMod"], function(values) {
+			let det = (parseInt(values.spatial)||0) + (parseInt(values.logical)||0) + (parseInt(values.kinestetic)||0) + (parseInt(values.detMod)||0);
+			let dis = (parseInt(values.introspection)||0) + (parseInt(values.interpersonal)||0) + (parseInt(values.verbal)||0) + (parseInt(values.disMod)||0);
+			setAttrs({ DetTN: det, DetValue: det, DisTN: dis, DisValue: dis });
+		});
+	});
+
+	/* Auto-calc replacement: Unit Detection/Discern target numbers.
+	   Formerly unitDetTN="(@{UnitRank}*3)+11+@{UnitDetMod}", unitDisTN="(@{UnitRank}*3)+11+@{disMod}"
+	   (disMod is intentionally shared with the character Discern mod). */
+	on("change:UnitRank change:UnitDetMod change:disMod sheet:opened", function() {
+		getAttrs(["UnitRank", "UnitDetMod", "disMod"], function(values) {
+			let rank = parseInt(values.UnitRank)||0;
+			let det = (rank*3) + 11 + (parseInt(values.UnitDetMod)||0);
+			let dis = (rank*3) + 11 + (parseInt(values.disMod)||0);
+			setAttrs({ unitDetTN: det, unitDetValue: det, UnitDisTN: dis, UnitDisValue: dis });
+		});
+	});
+
+	/* Auto-calc replacement: Free Points pool.
+	   Formerly availFP="35+@{XP}-(2*@{SkillsFP}+4*@{AttribFP}+5*@{TagsFP}+5*@{BodyFP}+3*@{IncomeLimFP}+6*@{IncomeFP}+@{GearFP})",
+	   usedFP="@{availFP}" (display mirror). */
+	on("change:XP change:SkillsFP change:AttribFP change:TagsFP change:BodyFP change:IncomeLimFP change:IncomeFP change:GearFP sheet:opened", function() {
+		getAttrs(["XP", "SkillsFP", "AttribFP", "TagsFP", "BodyFP", "IncomeLimFP", "IncomeFP", "GearFP"], function(values) {
+			let fp = 35 + (parseInt(values.XP)||0) - (
+				2*(parseInt(values.SkillsFP)||0)
+				+ 4*(parseInt(values.AttribFP)||0)
+				+ 5*(parseInt(values.TagsFP)||0)
+				+ 5*(parseInt(values.BodyFP)||0)
+				+ 3*(parseInt(values.IncomeLimFP)||0)
+				+ 6*(parseInt(values.IncomeFP)||0)
+				+ (parseInt(values.GearFP)||0)
+			);
+			setAttrs({ availFP: fp, usedFP: fp });
+		});
+	});
+
+	/* Auto-calc replacement: Body/Strain display mirrors. BodyMaxHdn/TNPenaltyHdn/StrainPerm are
+	   already worker-written (by change:BodyFP, change:BodyCurr, and calcTagModifier respectively);
+	   this just mirrors them to the readonly display fields on change + open, without touching
+	   those handlers. */
+	on("change:BodyMaxHdn change:TNPenaltyHdn change:StrainPerm sheet:opened", function() {
+		getAttrs(["BodyMaxHdn", "TNPenaltyHdn", "StrainPerm"], function(values) {
+			setAttrs({
+				BodyMax: parseInt(values.BodyMaxHdn)||0,
+				TNPenalty: parseInt(values.TNPenaltyHdn)||0,
+				StrainPermVisible: parseInt(values.StrainPerm)||0
+			});
+		});
+	});
+
+	/* Auto-calc replacement: Equipment carry count (CCCount="@{GearFP}-@{CCCountHdn}")
+	   and starship Heat display (starshipHeat="@{starshipCurrHeatHdn}*-1"). */
+	on("change:GearFP change:CCCountHdn sheet:opened", function() {
+		getAttrs(["GearFP", "CCCountHdn"], function(values) {
+			setAttrs({ CCCount: (parseInt(values.GearFP)||0) - (parseInt(values.CCCountHdn)||0) });
+		});
+	});
+
+	on("change:starshipCurrHeatHdn sheet:opened", function() {
+		getAttrs(["starshipCurrHeatHdn"], function(values) {
+			setAttrs({ starshipHeat: (parseInt(values.starshipCurrHeatHdn)||0) * -1 });
+		});
+	});
+
+	/* Auto-calc replacement: tag counts + Refresh rating. PersonalTagsUsed/GroupTagsUsed are
+	   written by calcTagModifier; this listens to those outputs (plus TagsFP/RaceRank + open)
+	   and computes the hidden pools + their readonly display mirrors, without touching calcTagModifier.
+	   Formerly PersonalTagHidden="8+@{TagsFP}+1-@{RaceRank}-@{PersonalTagsUsed}", GroupTagHidden="5-@{GroupTagsUsed}",
+	   PersonalTagCount/GroupTagCount mirrored those, RefreshRating="@{PersonalTagHidden}+1". */
+	on("change:TagsFP change:RaceRank change:PersonalTagsUsed change:GroupTagsUsed sheet:opened", function() {
+		getAttrs(["TagsFP", "RaceRank", "PersonalTagsUsed", "GroupTagsUsed"], function(values) {
+			let personalHidden = 9 + (parseInt(values.TagsFP)||0) - (parseInt(values.RaceRank)||0) - (parseInt(values.PersonalTagsUsed)||0);
+			let groupHidden = 5 - (parseInt(values.GroupTagsUsed)||0);
+			setAttrs({
+				PersonalTagHidden: personalHidden,
+				GroupTagHidden: groupHidden,
+				PersonalTagCount: personalHidden,
+				GroupTagCount: groupHidden,
+				RefreshRating: personalHidden + 1
+			});
+		});
+	});
+
+	/* Auto-calc replacement: skill display mirrors. The underlying values (SkillCountHidden/
+	   SkillUsedHidden, grpNSkillHidden/grpNSkillCombo, and per-row skillHidden/skillCombo) are all
+	   worker-written by calcTaskNumber/calcAllTaskNumbers; these mirror them to the readonly
+	   display fields on change + open, without touching those async functions. */
+	on("change:SkillCountHidden change:SkillUsedHidden sheet:opened", function() {
+		getAttrs(["SkillCountHidden", "SkillUsedHidden"], function(values) {
+			setAttrs({ SkillCount: (parseInt(values.SkillCountHidden)||0) - (parseInt(values.SkillUsedHidden)||0) });
+		});
+	});
+
+	on("change:grp1SkillHidden change:grp2SkillHidden change:grp3SkillHidden change:grp1SkillCombo change:grp2SkillCombo change:grp3SkillCombo sheet:opened", function() {
+		getAttrs(["grp1SkillHidden", "grp2SkillHidden", "grp3SkillHidden", "grp1SkillCombo", "grp2SkillCombo", "grp3SkillCombo"], function(values) {
+			setAttrs({
+				grp1SkillTarget: parseInt(values.grp1SkillHidden)||0,
+				grp2SkillTarget: parseInt(values.grp2SkillHidden)||0,
+				grp3SkillTarget: parseInt(values.grp3SkillHidden)||0,
+				grp1SkillInfo: values.grp1SkillCombo||"",
+				grp2SkillInfo: values.grp2SkillCombo||"",
+				grp3SkillInfo: values.grp3SkillCombo||""
+			});
+		});
+	});
+
+	on("change:repeating_skills:skillHidden change:repeating_skills:skillCombo sheet:opened", function() {
+		getSectionIDs("repeating_skills", function(ids) {
+			ids.forEach(function(id) {
+				let prefix = "repeating_skills_" + id + "_";
+				getAttrs([prefix + "skillHidden", prefix + "skillCombo"], function(values) {
+					let update = {};
+					update[prefix + "skillTarget"] = parseInt(values[prefix + "skillHidden"])||0;
+					update[prefix + "skillInfo"] = values[prefix + "skillCombo"]||"";
+					setAttrs(update);
+				});
+			});
+		});
+	});
+	
+	
+	on("change:repeating_tags change:repeating_starshipTags change:repeating_unitTags change:repeating_tagJournal", function(eventInfo) {
+		console.log(JSON.stringify(eventInfo));
+		if(!eventInfo.sourceAttribute.includes("tagstatus")) {
+			console.log("Invoking calcTagModifier");
+			calcTagModifier();
+		}
+	});
+	
+	on("change:PsionicDiscount", function(eventInfo) {
+		calcTagModifier();
+	});
+	
+	on("remove:repeating_tags", function(eventinfo) {
+	   console.log(eventinfo);
+	   let tagType = eventinfo.sourceAttribute + "_tagType";
+	   let update = {};
+	   
+	   if(eventinfo.removedInfo[tagType] == "Wound") {
+			update["WoundLevelHdn"] = 0;
+	   }
+	   setAttrs(update);
+	   calcTagModifier();
+	   
+	});	
+	
+	on("change:ConceptUse change:ConceptStatus", function(eventInfo) {
+		console.log(JSON.stringify(eventInfo));
+		if(RefreshUnlock != 1) {
+			calcTagModifier();
+		}
+	});	 
+
+	on("change:TroubleUse change:TroubleStatus", function(eventInfo) {
+		console.log(JSON.stringify(eventInfo));
+		if(RefreshUnlock != 1) {
+			calcTagModifier();
+		}
+	});	
+
+	on("change:RaceUse change:RaceStatus", function(eventInfo) {
+		console.log(JSON.stringify(eventInfo));
+		if(RefreshUnlock != 1) {
+			calcTagModifier();
+		}
+	});		
+
+
+	function setRollString() {
+		console.log("setRollString");
+		
+		getAttrs([rollDiffSource, "invokeMod"], function(values) {
+			let rollSpec = parseInt(values[rollDiffSource]) - parseInt(values.invokeMod);
+			let update = {};
+			console.log(values);
+			
+			if(rollSpec < 0) {
+				rollSpec = 0;
+			}
+			if(rollSpec > 12) {
+				rollSpec = 12;
+			}
+			
+			switch(rollSpec) {
+				case (0): 
+					update["rollString"] = "3";
+					break;
+				case (1): 
+					update["rollString"] = "(1d6cs0cf0+2)";
+					break;					 
+				case (2): 
+					update["rollString"] = "(2d6cs0cf0+1)";
+					break;	
+				case (3): 
+					update["rollString"] = "3d6cs0cf0";
+					break;					
+				case (4): 
+					update["rollString"] = "(1d8cs0cf0+2d6cs0cf0)";
+					break;					
+				case (5): 
+					update["rollString"] = "(2d8cs0cf0+1d6cs0cf0)";
+					break;					
+				case (6): 
+					update["rollString"] = "3d8cs0cf0";
+					break;					
+				case (7): 
+					update["rollString"] = "(1d10cs0cf0+2d8cs0cf0)";
+					break;					
+				case (8): 
+					update["rollString"] = "(2d10cs0cf0+1d8cs0cf0)";
+					break;					
+				case (9): 
+					update["rollString"] = "3d10cs0cf0";
+					break;					
+				case (10): 
+					update["rollString"] = "(10+2d10cs0cf0)";
+					break;					
+				case (11): 
+					update["rollString"] = "(20+1d10cs0cf0)";
+					break;					
+				case (12): 
+					update["rollString"] = "30";
+					break;					
+			}
+			
+			console.log(update);
+			setAttrs(update);
+		});
+	}
+
+	
+	/* Assembles the "[Tag Text Rank]" lists of currently invoked (up) and condemned (down) tags
+	   for the &{template:redemption} roll template. Deliberately isolated from calcTagModifier
+	   (no shared state): reads built-in Concept/Trouble/Race + all three repeating tag sections
+	   with one getAttrs per section (no per-row race), then writes attr_invokedTags/condemnedTags.
+	   Active = status unlocked (==0); invoked = tagUse 1, condemned = tagUse -1 (mirrors calcTagModifier). */
+	function buildTagLists() {
+		getAttrs(["Concept", "ConceptRank", "ConceptUse", "ConceptStatus", "Trouble", "TroubleRank", "TroubleUse", "TroubleStatus", "Race", "RaceRank", "RaceUse", "RaceStatus"], function(bi) {
+			let invoked = [];
+			let condemned = [];
+
+			["Concept", "Trouble", "Race"].forEach(function(name) {
+				let text = (bi[name] || "").trim();
+				let rank = parseInt(bi[name + "Rank"]) || 0;
+				let use = parseInt(bi[name + "Use"]);
+				if(bi[name + "Status"] == 0) {
+					if(use === 1) invoked.push("[" + text + " " + rank + "]");
+					else if(use === -1) condemned.push("[" + text + " " + rank + "]");
+				}
+			});
+
+			let sections = ["tags", "starshipTags", "unitTags", "tagJournal"];
+			let remaining = sections.length;
+
+			function finish() {
+				remaining -= 1;
+				if(remaining === 0) {
+					setAttrs({ invokedTags: invoked.join(" "), condemnedTags: condemned.join(" ") });
+				}
+			}
+
+			sections.forEach(function(sec) {
+				getSectionIDs(sec, function(ids) {
+					if(ids.length === 0) { finish(); return; }
+					let names = [];
+					ids.forEach(function(id) {
+						let p = "repeating_" + sec + "_" + id + "_";
+						names.push(p + "tagText", p + "tagRank", p + "tagUse", p + "tagStatus");
+					});
+					getAttrs(names, function(v) {
+						ids.forEach(function(id) {
+							let p = "repeating_" + sec + "_" + id + "_";
+							let text = (v[p + "tagText"] || "").trim();
+							let rank = parseInt(v[p + "tagRank"]) || 0;
+							let use = parseInt(v[p + "tagUse"]);
+							if(parseInt(v[p + "tagStatus"]) === 0) {
+								if(use === 1) invoked.push("[" + text + " " + rank + "]");
+								else if(use === -1) condemned.push("[" + text + " " + rank + "]");
+							}
+						});
+						finish();
+					});
+				});
+			});
+		});
+	}
+
+	on("change:repeating_tags change:repeating_starshipTags change:repeating_unitTags change:repeating_tagJournal change:ConceptUse change:ConceptStatus change:Concept change:TroubleUse change:TroubleStatus change:Trouble change:RaceUse change:RaceStatus change:Race sheet:opened", function() {
+		buildTagLists();
+	});
+
+	function calcTagModifier() {
+	
+		
+		invokeMod = 0;
+		PersonalTagCount = 0;
+		GroupTagCount = 0;
+		MaxStrain = 0;
+
+		tagCounter = 0;
+		let sectionsRemaining = 4;
+
+		function maybeSetRollString() {
+			if(tagCounter == 0 && sectionsRemaining == 0) {
+				setRollString();
+			}
+		}
+
+		
+		//RefreshFlag = RefreshUnlock;
+		
+		
+		getAttrs(["ConceptRank", "ConceptUse", "ConceptStatus", "TroubleRank", "TroubleUse", "TroubleStatus", "RaceRank", "RaceUse", "RaceStatus", "PsionicDiscount"], 
+				function(values) {
+					console.log(JSON.stringify(values));
+					
+					if(values.PsionicDiscount == "on") {
+						PsionicDiscountFlag = -1;
+					} else {
+						PsionicDiscountFlag = 0;
+					}
+					
+					
+					if(values.ConceptStatus == 0) {
+						invokeMod = invokeMod + (values.ConceptRank * values.ConceptUse);
+					}
+					if(values.TroubleStatus == 0) {
+						invokeMod = invokeMod + (values.TroubleRank * values.TroubleUse);
+					}
+					if(values.RaceStatus == 0) {
+						invokeMod = invokeMod + (values.RaceRank * values.RaceUse);
+					}
+					
+					console.log(invokeMod);
+					
+					let update = {};
+					update["invokeMod"] = invokeMod;
+					
+					
+					console.log(update);
+					setAttrs(update);	
+					console.log("set invokeMod");						
+				
+	
+					getSectionIDs("tags", function(idarray) {
+						let tagRankID = "";
+						let tagUseID = "";
+						let tagLockedID = "";
+						let tagTypeID = "";
+
+						
+						let update = {};
+					
+						console.log("RefreshUnlock:");
+						console.log(RefreshUnlock);
+					
+						
+						for(var i=0; i < idarray.length; i++) {
+							console.log(idarray[i]);
+							console.log("RefreshUnlock:");
+							console.log(RefreshUnlock);							
+							
+							tagRankID = "repeating_tags_" + idarray[i] + "_tagRank";
+							tagUseID = "repeating_tags_" + idarray[i] + "_tagUse";
+							tagLockedID = "repeating_tags_" + idarray[i] + "_tagStatus";
+							tagTypeID = "repeating_tags_" + idarray[i] + "_tagType";
+							
+							tagCounter += 1;
+							getAttrs([tagRankID, tagUseID, tagLockedID, tagTypeID, "invokeMod"], function(values) {
+								console.log(JSON.stringify(values));
+								
+								let tagRankMod = 0;
+								let tagUseMod = 0;
+								let lockedFlag = 1;
+								let personalFlag = 0;
+								let groupFlag = 0;
+								let psionicFlag = 0;
+								let psigearFlag = 0;
+								let woundFlag = 0;
+								
+								console.log("Refresh Flag:");
+								console.log(RefreshFlag);
+								 
+								//invokeMod = values.invokeMod;
+								
+								Object.keys(values).forEach(element => {
+									if(element.includes("tagRank")) {
+										tagRankMod = parseInt(values[element]);
+									}
+									if(element.includes("tagUse")) {
+										tagUseMod = parseInt(values[element]);
+									}
+									if(element.includes("tagStatus")) {
+										lockedFlag = parseInt(values[element]);
+										
+										if(RefreshFlag == 1) {
+											update[element] = 0;
+										}
+									}
+									if(element.includes("tagType")) {
+										console.log("Tag Type Triggered");
+										if(values[element] == "Personal") {
+											personalFlag = 1;
+										}
+										if(values[element] == "Group") {
+											groupFlag = 1;
+										}					
+										if(values[element] == "Psionic") {
+											personalFlag = 1; 
+											psionicFlag = 1;
+										}
+										if(values[element] == "Psigear") {
+											psigearFlag = 1;
+										}										
+										if(values[element] == "Wound") {
+											//update[WoundLevelHdn] = 
+											woundFlag = 1;
+										}
+									}
+								});
+								
+														
+								if(personalFlag == 1) {
+									PersonalTagCount = PersonalTagCount + tagRankMod;
+									//console.log(PersonalTagCount);
+								}
+								if(groupFlag == 1) {
+									GroupTagCount = GroupTagCount + tagRankMod;
+									//console.log(GroupTagCount);
+								}
+								if(psionicFlag == 1) {
+									MaxStrain = MaxStrain + (tagRankMod*10);
+									console.log(MaxStrain);
+									PersonalTagCount = PersonalTagCount + PsionicDiscountFlag;
+								}
+								if(psigearFlag == 1) {
+									MaxStrain = MaxStrain + (tagRankMod*10);
+									console.log(MaxStrain);
+									//PersonalTagCount = PersonalTagCount + PsionicDiscountFlag;
+								}								
+								if(lockedFlag == 0) {
+									invokeMod = invokeMod + (tagRankMod * tagUseMod);
+									console.log(invokeMod);
+								}
+								if(woundFlag == 1) {
+									update["WoundLevelHdn"] = tagRankMod;
+									update["WoundRankID"] = tagRankID;
+								}
+
+								console.log(invokeMod);
+							
+								tagCounter = tagCounter - 1;
+								update["invokeMod"] = invokeMod;
+								
+								if(tagCounter == 0) { 
+									update["PersonalTagsUsed"] = PersonalTagCount;
+									update["GroupTagsUsed"] = GroupTagCount;
+								} 
+								update["StrainPerm"] = MaxStrain;
+
+
+								
+								console.log(update);
+								setAttrs(update);
+								console.log("set Personal invokeMod");
+								maybeSetRollString();
+							});
+
+
+						}
+
+						sectionsRemaining -= 1;
+						maybeSetRollString();
+				   });
+				   
+				   
+				getSectionIDs("starshipTags", function(idarray) {
+						let tagRankID = "";
+						let tagUseID = "";
+						let tagLockedID = "";
+						let tagTypeID = "";
+
+						
+						let update = {};
+					
+						console.log("RefreshUnlock:");
+						console.log(RefreshUnlock);
+					
+						
+						for(var i=0; i < idarray.length; i++) {
+							console.log(idarray[i]);
+							console.log("RefreshUnlock:");
+							console.log(RefreshUnlock);							
+							
+							tagRankID = "repeating_starshipTags_" + idarray[i] + "_tagRank";
+							tagUseID = "repeating_starshipTags_" + idarray[i] + "_tagUse";
+							tagLockedID = "repeating_starshipTags_" + idarray[i] + "_tagStatus";
+							tagTypeID = "repeating_starshipTags_" + idarray[i] + "_tagType";
+							
+							tagCounter += 1;
+							getAttrs([tagRankID, tagUseID, tagLockedID, tagTypeID, "invokeMod"], function(values) {
+								console.log(JSON.stringify(values));
+								
+								let tagRankMod = 0;
+								let tagUseMod = 0;
+								let lockedFlag = 1;
+								let personalFlag = 0;
+								let groupFlag = 0;
+								let psionicFlag = 0;
+								let woundFlag = 0;
+								
+								console.log("Refresh Flag:");
+								console.log(RefreshFlag);
+								 
+								//invokeMod = values.invokeMod;
+								
+								Object.keys(values).forEach(element => {
+									if(element.includes("tagRank")) {
+										tagRankMod = parseInt(values[element]);
+									}
+									if(element.includes("tagUse")) {
+										tagUseMod = parseInt(values[element]);
+									}
+									if(element.includes("tagStatus")) {
+										lockedFlag = parseInt(values[element]);
+										
+										if(RefreshFlag == 1) {
+											update[element] = 0;
+										}
+									}
+									if(element.includes("tagType")) {
+										console.log("Tag Type Triggered");
+										if(values[element] == "Personal") {
+											personalFlag = 1;
+										}
+										if(values[element] == "Group") {
+											groupFlag = 1;
+										}					
+										if(values[element] == "Psionic") {
+											personalFlag = 1; 
+											psionicFlag = 1;
+										}
+										if(values[element] == "Wound") {
+											//update[WoundLevelHdn] = 
+											woundFlag = 1;
+										}
+									}
+								});
+								
+														
+								if(personalFlag == 1) {
+									PersonalTagCount = PersonalTagCount + tagRankMod;
+									//console.log(PersonalTagCount);
+								}
+								if(groupFlag == 1) {
+									GroupTagCount = GroupTagCount + tagRankMod;
+									//console.log(GroupTagCount);
+								}
+								if(psionicFlag == 1) {
+									MaxStrain = MaxStrain + (tagRankMod*10);
+									console.log(MaxStrain);
+									PersonalTagCount = PersonalTagCount + PsionicDiscountFlag;
+								}
+								if(lockedFlag == 0) {
+									invokeMod = invokeMod + (tagRankMod * tagUseMod);
+									console.log(invokeMod);
+								}
+								if(woundFlag == 1) {
+									update["WoundLevelHdn"] = tagRankMod;
+									update["WoundRankID"] = tagRankID;
+								}
+
+								console.log(invokeMod);
+							
+								tagCounter = tagCounter - 1;
+								update["invokeMod"] = invokeMod;
+								
+								if(tagCounter == 0) { 
+									update["PersonalTagsUsed"] = PersonalTagCount;
+									update["GroupTagsUsed"] = GroupTagCount;
+								} 
+								update["StrainPerm"] = MaxStrain;
+
+
+								
+								console.log(update);
+								setAttrs(update);
+								console.log("set Starship invokeMod");
+								maybeSetRollString();
+							});
+
+
+						}
+
+						sectionsRemaining -= 1;
+						maybeSetRollString();
+				   });
+
+				   
+				getSectionIDs("unitTags", function(idarray) {
+						let tagRankID = "";
+						let tagUseID = "";
+						let tagLockedID = "";
+						let tagTypeID = "";
+
+						
+						let update = {};
+					
+						console.log("RefreshUnlock:");
+						console.log(RefreshUnlock);
+					
+						
+						for(var i=0; i < idarray.length; i++) {
+							console.log(idarray[i]);
+							console.log("RefreshUnlock:");
+							console.log(RefreshUnlock);							
+							
+							tagRankID = "repeating_unitTags_" + idarray[i] + "_tagRank";
+							tagUseID = "repeating_unitTags_" + idarray[i] + "_tagUse";
+							tagLockedID = "repeating_unitTags_" + idarray[i] + "_tagStatus";
+							tagTypeID = "repeating_unitTags_" + idarray[i] + "_tagType";
+							
+							tagCounter += 1;
+							getAttrs([tagRankID, tagUseID, tagLockedID, tagTypeID, "invokeMod"], function(values) {
+								console.log(JSON.stringify(values));
+								
+								let tagRankMod = 0;
+								let tagUseMod = 0;
+								let lockedFlag = 1;
+								let personalFlag = 0;
+								let groupFlag = 0;
+								let psionicFlag = 0;
+								let woundFlag = 0;
+								
+								console.log("Refresh Flag:");
+								console.log(RefreshFlag);
+								 
+								//invokeMod = values.invokeMod;
+								
+								Object.keys(values).forEach(element => {
+									if(element.includes("tagRank")) {
+										tagRankMod = parseInt(values[element]);
+									}
+									if(element.includes("tagUse")) {
+										tagUseMod = parseInt(values[element]);
+									}
+									if(element.includes("tagStatus")) {
+										lockedFlag = parseInt(values[element]);
+										
+										if(RefreshFlag == 1) {
+											update[element] = 0;
+										}
+									}
+									if(element.includes("tagType")) {
+										console.log("Tag Type Triggered");
+										if(values[element] == "Personal") {
+											personalFlag = 1;
+										}
+										if(values[element] == "Group") {
+											groupFlag = 1;
+										}					
+										if(values[element] == "Psionic") {
+											personalFlag = 1; 
+											psionicFlag = 1;
+										}
+										if(values[element] == "Wound") {
+											//update[WoundLevelHdn] = 
+											woundFlag = 1;
+										}
+									}
+								});
+								
+														
+								if(personalFlag == 1) {
+									PersonalTagCount = PersonalTagCount + tagRankMod;
+									//console.log(PersonalTagCount);
+								}
+								if(groupFlag == 1) {
+									GroupTagCount = GroupTagCount + tagRankMod;
+									//console.log(GroupTagCount);
+								}
+								if(psionicFlag == 1) {
+									MaxStrain = MaxStrain + (tagRankMod*10);
+									console.log(MaxStrain);
+									PersonalTagCount = PersonalTagCount + PsionicDiscountFlag;
+								}
+								if(lockedFlag == 0) {
+									invokeMod = invokeMod + (tagRankMod * tagUseMod);
+									console.log(invokeMod);
+								}
+								if(woundFlag == 1) {
+									update["WoundLevelHdn"] = tagRankMod;
+									update["WoundRankID"] = tagRankID;
+								}
+
+								console.log(invokeMod);
+							
+								tagCounter = tagCounter - 1;
+								update["invokeMod"] = invokeMod;
+								
+								if(tagCounter == 0) { 
+									update["PersonalTagsUsed"] = PersonalTagCount;
+									update["GroupTagsUsed"] = GroupTagCount;
+								} 
+								update["StrainPerm"] = MaxStrain;
+
+
+								
+								console.log(update);
+								setAttrs(update);
+								console.log("set unit invokeMod");
+								maybeSetRollString();
+							});
+
+
+						}
+
+						sectionsRemaining -= 1;
+						maybeSetRollString();
+				   });
+
+				getSectionIDs("tagJournal", function(idarray) {
+						/* Scene/Free tags from the shared Tag Journal contribute to invokeMod exactly
+						   like personal tags (rank * use when unlocked). They have no Personal/Group/
+						   Psionic/Wound type, so none of that flag logic applies; and a character
+						   refresh does not unlock shared scene tags. */
+						let tagRankID = "";
+						let tagUseID = "";
+						let tagLockedID = "";
+
+						let update = {};
+
+						for(var i=0; i < idarray.length; i++) {
+							tagRankID = "repeating_tagJournal_" + idarray[i] + "_tagRank";
+							tagUseID = "repeating_tagJournal_" + idarray[i] + "_tagUse";
+							tagLockedID = "repeating_tagJournal_" + idarray[i] + "_tagStatus";
+
+							tagCounter += 1;
+							getAttrs([tagRankID, tagUseID, tagLockedID, "invokeMod"], function(values) {
+								let tagRankMod = 0;
+								let tagUseMod = 0;
+								let lockedFlag = 1;
+
+								Object.keys(values).forEach(element => {
+									if(element.includes("tagRank")) {
+										tagRankMod = parseInt(values[element]);
+									}
+									if(element.includes("tagUse")) {
+										tagUseMod = parseInt(values[element]);
+									}
+									if(element.includes("tagStatus")) {
+										lockedFlag = parseInt(values[element]);
+									}
+								});
+
+								if(lockedFlag == 0) {
+									invokeMod = invokeMod + (tagRankMod * tagUseMod);
+								}
+
+								tagCounter = tagCounter - 1;
+								update["invokeMod"] = invokeMod;
+
+								if(tagCounter == 0) {
+									update["PersonalTagsUsed"] = PersonalTagCount;
+									update["GroupTagsUsed"] = GroupTagCount;
+								}
+								update["StrainPerm"] = MaxStrain;
+
+								setAttrs(update);
+								maybeSetRollString();
+							});
+						}
+
+						sectionsRemaining -= 1;
+						maybeSetRollString();
+				   });
+
+
+			/*
+			console.log("Personal Tag Count:");
+			console.log(PersonalTagCount);
+			console.log("Group Tag Count:");
+			console.log(GroupTagCount);
+			*/
+	   });
+	   
+
+	}
+	
+	on("change:BodyCurr", function(eventInfo) {
+		let DamagePenaltyNumber = 0;
+		let update = {};
+	
+		BodyNum = eventInfo.newValue;
+	
+		if(parseInt(eventInfo.newValue) < 10) {
+			DamagePenaltyNumber = 10 - parseInt(eventInfo.newValue);
+		}	
+		console.log(update);
+		update["TNPenaltyHdn"] = DamagePenaltyNumber;
+		
+		getAttrs(["BodyMaxHdn"], function(values) {
+			let update = {};
+		
+			console.log(values);
+			BodyMaxNum = parseInt(values.BodyMaxHdn);
+			
+			if(BodyNum > BodyMaxNum) {
+				update["BodyCurr"] = BodyMaxNum;
+			}
+
+			setAttrs(update);
+		});
+		sleep(2000); 
+		console.log(BodyMaxNum);
+
+
+		setAttrs(update);
+		
+	});
+	
+	on("change:TNPenaltyHdn", function(eventInfo) {
+		console.log("Damage Penalty Changed");
+		
+		calcAllTaskNumbers();
+	});
+	
+	on("change:repeating_skills", function(eventInfo) {
+		if(eventInfo.sourceAttribute != eventInfo.triggerName) {
+			console.log(JSON.stringify(eventInfo));
+
+			let skillName = eventInfo.triggerName + "_skillName";
+			let skillRank = eventInfo.triggerName + "_skillRank";
+			let skillMod = eventInfo.triggerName + "_skillMod";
+			let skillCombo = eventInfo.triggerName + "_skillCombo";
+			let skillHidden = eventInfo.triggerName + "_skillHidden";
+			let skillSecondary = eventInfo.triggerName + "_skillSecondary";
+			
+			console.log(skillName);
+			
+			if(eventInfo.sourceAttribute.includes("skillswitch") ) {
+				//SkillSwitch = eventInfo.sourceAttribute;
+				skillSwitchTracking(eventInfo);
+			}
+			if(eventInfo.sourceAttribute.includes("skillname")) {
+				let skillNameHdn = eventInfo.triggerName + "_skillNameHdn";
+				let update = {};
+				update[skillNameHdn] = eventInfo.newValue;
+				
+				setAttrs(update);
+				console.log(JSON.stringify(update));
+			}
+			
+			calcAllTaskNumbers();
+			/*getAttrs(["kinestetic", "logical", "interpersonal", "introspection", "spatial", "verbal", "TNPenaltyHdn", skillName, skillRank, skillMod, skillCombo, skillHidden, skillSecondary], function(values) {
+					//console.log(JSON.stringify(values));
+					calcTaskNumber(values);
+			});*/
+			
+			
+			/*if(eventInfo.sourceAttribute.includes("skillrank")) {
+				console.log("Skill Rank Change");
+				
+				skillCountSubtract(eventInfo);
+			}*/
+		}
+	});	
+	
+	on("change:grp1SkillName change:grp1SkillRank change:grp1SkillMod change:grp1SkillSecondary", function(eventInfo) {
+		let skillName = "grp1skillName";
+		let skillRank = "grp1skillRank";
+		let skillMod = "grp1skillMod";
+		let skillCombo = "grp1skillCombo";
+		let skillHidden = "grp1skillHidden";	
+		let skillSecondary = "grp1skillSecondary";
+		
+		console.log(JSON.stringify(eventInfo));
+		
+		if(eventInfo.triggerName.includes("skillrank") && eventInfo.newValue < 4 && eventInfo.newValue > 0 && eventInfo.newValue != skillGroup1Lock) {
+			console.log("Group Skill Adjustment Triggered")
+			if(eventInfo.previousValue === undefined || eventInfo.newValue >= eventInfo.previousValue) {
+				console.log("Group Skill Adjustment Positive")
+				skillGroup1Mode = 1;
+			} else {
+				console.log("Group Skill Adjustment Negative")
+				skillGroup1Mode = -1;
+			}
+		} else {
+			console.log("Group Skill Adjustment Not Triggered")
+			skillGroup1Mode = 0;
+		}
+		
+		calcAllTaskNumbers();
+		/*getAttrs(["kinestetic", "logical", "interpersonal", "introspection", "spatial", "verbal", "TNPenaltyHdn", skillName, skillRank, skillMod, skillCombo, skillHidden, skillSecondary], function(values) {
+				//console.log(JSON.stringify(values));
+				calcTaskNumber(values);
+				
+		});*/		
+		
+		/*if(eventInfo.sourceAttribute.includes("skillrank") && eventInfo.newValue != skillGroup1Lock) {
+			console.log("Skill Rank Change");
+			
+			skillCountSubtract(eventInfo);
+		}		*/
+		
+	});
+
+	on("change:grp2SkillName change:grp2SkillRank change:grp2SkillMod change:grp2SkillSecondary", function(eventInfo) {
+		let skillName = "grp2skillName";
+		let skillRank = "grp2skillRank";
+		let skillMod = "grp2skillMod";
+		let skillCombo = "grp2skillCombo";
+		let skillHidden = "grp2skillHidden";	
+		let skillSecondary = "grp2skillSecondary";
+		
+		console.log(JSON.stringify(eventInfo));
+		
+		if(eventInfo.triggerName.includes("skillrank") && eventInfo.newValue < 4 && eventInfo.newValue > 0 && eventInfo.newValue != skillGroup1Lock) {
+			console.log("Group Skill Adjustment Triggered")
+			if(eventInfo.previousValue === undefined || eventInfo.newValue >= eventInfo.previousValue) {
+				console.log("Group Skill Adjustment Positive")
+				skillGroup1Mode = 1;
+			} else {
+				console.log("Group Skill Adjustment Negative")
+				skillGroup1Mode = -1;
+			}
+		} else {
+			console.log("Group Skill Adjustment Not Triggered")
+			skillGroup1Mode = 0;
+		}
+		
+		calcAllTaskNumbers();
+		/*getAttrs(["kinestetic", "logical", "interpersonal", "introspection", "spatial", "verbal", "TNPenaltyHdn", skillName, skillRank, skillMod, skillCombo, skillHidden, skillSecondary], function(values) {
+				//console.log(JSON.stringify(values));
+				calcTaskNumber(values);
+				
+		});	*/	
+		
+		/*if(eventInfo.sourceAttribute.includes("skillrank") && eventInfo.newValue != skillGroup1Lock) {
+			console.log("Skill Rank Change");
+			
+			skillCountSubtract(eventInfo);
+		}*/
+		
+	});
+	
+	on("change:grp3SkillName change:grp3SkillRank change:grp3SkillMod change:grp3SkillSecondary", function(eventInfo) {
+		let skillName = "grp3skillName";
+		let skillRank = "grp3skillRank";
+		let skillMod = "grp3skillMod";
+		let skillCombo = "grp3skillCombo";
+		let skillHidden = "grp3skillHidden";	
+		let skillSecondary = "grp3skillSecondary";
+		
+		console.log(JSON.stringify(eventInfo));
+		
+		if(eventInfo.triggerName.includes("skillrank") && eventInfo.newValue < 4 && eventInfo.newValue > 0 && eventInfo.newValue != skillGroup1Lock) {
+			console.log("Group Skill Adjustment Triggered")
+			if(eventInfo.previousValue === undefined || eventInfo.newValue >= eventInfo.previousValue) {
+				console.log("Group Skill Adjustment Positive")
+				skillGroup1Mode = 1;
+			} else {
+				console.log("Group Skill Adjustment Negative")
+				skillGroup1Mode = -1;
+			}
+		} else {
+			console.log("Group Skill Adjustment Not Triggered")
+			skillGroup1Mode = 0;
+		}
+		
+		calcAllTaskNumbers();
+		/*getAttrs(["kinestetic", "logical", "interpersonal", "introspection", "spatial", "verbal", "TNPenaltyHdn", skillName, skillRank, skillMod, skillCombo, skillHidden, skillSecondary], function(values) {
+				//console.log(JSON.stringify(values));
+				calcTaskNumber(values);
+				
+		});		
+		
+		if(eventInfo.sourceAttribute.includes("skillrank") && eventInfo.newValue != skillGroup1Lock) {
+			console.log("Skill Rank Change");
+			
+			skillCountSubtract(eventInfo);
+		}	*/	
+		
+	});	
+	
+	on("change:grp1SkillSwitch change:grp2SkillSwitch change:grp3SkillSwitch", function(eventInfo) {
+		skillSwitchTracking(eventInfo);
+	});
+	
+	function skillSwitchTracking(eventInfo) {
+		console.log("Skill Switch Tracking");
+		
+		SkillSwitch = eventInfo;
+		let SkillSwitchTN = "";
+		
+		if(SkillSwitch.sourceAttribute.includes("repeating_skills")) { 
+			SkillSwitchTN = SkillSwitch.triggerName + "_skillHidden";
+		}
+		if(SkillSwitch.sourceAttribute.includes("grp")) {
+			SkillSwitchTN = SkillSwitch.sourceAttribute.replace(/skillswitch/g, "skillHidden");
+			console.log(SkillSwitchTN);
+		}
+	
+		getAttrs(["SkillSwitchFlag", SkillSwitchTN], function(values) {
+			let update = {};
+		
+		
+			console.log(SkillSwitch);
+			console.log(values);
+			if(/*SkillSwitch.sourceAttribute.includes("repeating_skills") &&*/ SkillSwitch.sourceAttribute != values.SkillSwitchFlag && SkillSwitch.newValue == "on") {
+				if(values.SkillSwitchFlag != "") {
+					update[values.SkillSwitchFlag] = 0;
+				}
+			
+				update["SkillSwitchTN"] = values[SkillSwitchTN];
+				update["SkillSwitchFlag"] = SkillSwitch.sourceAttribute;
+				
+			}
+			if(/*SkillSwitch.sourceAttribute.includes("repeating_skills") &&*/ SkillSwitch.sourceAttribute == values.SkillSwitchFlag && SkillSwitch.newValue != "on") {
+				update["SkillSwitchTN"] = 0;
+				update["SkillSwitchFlag"] = "";
+			}
+			
+			console.log(update);
+			setAttrs(update);
+		});
+
+	}
+	
+	function skillCountSubtract(eventInfo) {
+			getAttrs(["SkillCountHidden"], function(values) {
+				let skillChangeMod = 0;
+			
+				console.log(JSON.stringify(values));
+				console.log(JSON.stringify(eventInfo));
+				
+				console.log(JSON.stringify(parseInt(values.SkillCountHidden)));
+				console.log(JSON.stringify(parseInt(eventInfo.newValue)));
+				console.log(JSON.stringify(parseInt(eventInfo.previousValue)));
+				
+				// Group Skills provide Ranks to skill points at a 2:1 ratio until Rank 4, so we need logic to account for that
+				// when determining the number of points still available for the character. 
+				if(eventInfo.sourceAttribute.includes("grp")) {
+					let prevCount = 0;
+					let newCount = 0;
+					
+					if(eventInfo.previousValue !== undefined) {
+						if(parseInt(eventInfo.previousValue) < 5) {
+							prevCount = parseInt(eventInfo.previousValue)/2;
+						} else {
+							prevCount = parseInt(eventInfo.previousValue) - 2;
+						}
+					}
+					
+					if(parseInt(eventInfo.newValue) < 5) {
+						newCount = parseInt(eventInfo.newValue) / 2;
+					} else {
+						newCount = parseInt(eventInfo.newValue) - 2;
+					}
+					
+					skillChangeMod = parseInt(values.SkillCountHidden) - (newCount - prevCount);
+					
+				} else {
+					if(eventInfo.previousValue !== undefined) {
+						skillChangeMod = parseInt(values.SkillCountHidden) - (parseInt(eventInfo.newValue) - parseInt(eventInfo.previousValue));
+					} else {
+						skillChangeMod = parseInt(values.SkillCountHidden) - parseInt(eventInfo.newValue);
+					}
+				}
+				
+				console.log(skillChangeMod);
+				let update = {};
+				update["SkillCountHidden"] = skillChangeMod;
+
+				setAttrs(update);
+				
+			});	
+	}
+	
+	function calcTaskNumber(values, skillTally) {
+		console.log(JSON.stringify(values));
+		
+		let primaryAttrib = 0;
+		let secondaryAttrib = 0;
+		let professionSecAttrib = 0;
+		let skillRank = 0;
+		let skillMod = 0; 
+		
+		let skillHidden = "";
+		let skillCombo = "";
+		let skillStats = "";
+		let skillRankName = "";
+		let skillSecondary = "";
+		
+		let grpFlag = 0;
+		
+		let update= {};
+		
+		let firearmsFlag = 0;
+		let heavyWeaponsFlag = 0;
+		let gunneryFlag=0;
+		let meleeFlag = 0;
+		let professionFlag = 0;
+		let CoverFlag = 0;
+		let EvasionFlag = 0;
+		let HideFlag = 0;
+
+		
+		console.log(JSON.stringify(Object.keys(values)));
+		
+		Object.keys(values).forEach(element => {
+			console.log(JSON.stringify(element));
+			if(element.includes("grp")) {
+				grpFlag = 1;
+			}
+			
+			if(element.includes("skillName")) {
+
+				console.log(values[element]);
+				switch(values[element]) {
+					case ("animal ken"):
+						primaryAttrib = parseInt(values.introspection);
+						secondaryAttrib = parseInt(values.kinestetic);
+						skillStats = "Introspection+Kinestetic";
+						break;
+					case ("athletics"): 
+						primaryAttrib = parseInt(values.kinestetic);
+						secondaryAttrib = parseInt(values.spatial);
+						skillStats = "Kinestetic+Spatial";
+						EvasionFlag=1;
+						break;
+					case ("clairvoyance"):
+						primaryAttrib = parseInt(values.introspection);
+						secondaryAttrib = parseInt(values.verbal);					
+						skillStats = "Introspection+Verbal";
+						break;
+					case ("command"):
+						primaryAttrib = parseInt(values.interpersonal);
+						secondaryAttrib = parseInt(values.spatial);					
+						skillStats = "Interpersonal+Spatial";
+						
+						console.log(primaryAttrib);
+						console.log(secondaryAttrib);
+						break;
+					case ("computers"):
+						primaryAttrib = parseInt(values.logical);
+						secondaryAttrib = parseInt(values.verbal);	
+						skillStats = "Logical+Verbal";
+						break;
+					case ("diplomacy"):
+						primaryAttrib = parseInt(values.interpersonal);
+						secondaryAttrib = parseInt(values.verbal);	
+						skillStats = "Interpersonal+Verbal";
+						break;
+					case ("drive"):
+						primaryAttrib = parseInt(values.logical);
+						secondaryAttrib = parseInt(values.spatial);
+						skillStats = "Logical+Spatial";
+						break;
+					case ("engineering"):
+						primaryAttrib = parseInt(values.logical);
+						secondaryAttrib = parseInt(values.spatial);	
+						skillStats = "Logical+Spatial";
+						break;
+					case ("energy"):
+						primaryAttrib = parseInt(values.introspection);
+						secondaryAttrib = parseInt(values.logical);					
+						skillStats = "Introspection+Logical";
+						break;
+					case ("firearms"):
+						primaryAttrib = parseInt(values.kinestetic);
+						secondaryAttrib = parseInt(values.spatial);	
+						skillStats = "Spatial+Kinestetic";
+						firearmsFlag = 1;
+						break;
+					case ("gunnery"):
+						primaryAttrib = parseInt(values.logical);
+						secondaryAttrib = parseInt(values.spatial);					
+						skillStats = "Spatial+Logical";
+						gunneryFlag = 1;
+						break;
+					case ("heavy"):
+						primaryAttrib = parseInt(values.logical);
+						secondaryAttrib = parseInt(values.spatial);					
+						skillStats = "Spatial+Logical";
+						heavyWeaponsFlag = 1;
+						break;
+					case ("medicine"):
+						primaryAttrib = parseInt(values.logical);
+						secondaryAttrib = parseInt(values.interpersonal);					
+						skillStats = "Logical+Interpersonal";
+						break;
+					case ("meditation"):
+						primaryAttrib = parseInt(values.introspection);
+						secondaryAttrib = parseInt(values.kinestetic);					
+						skillStats = "Introspection+Kinestetic";
+						break;
+					case ("melee"):
+						primaryAttrib = parseInt(values.spatial);
+						secondaryAttrib = parseInt(values.kinestetic);
+						skillStats = "Spatial+Kinestetic";
+						meleeFlag = 1;
+						break;
+					case ("mind"):
+						primaryAttrib = parseInt(values.introspection);
+						secondaryAttrib = parseInt(values.interpersonal);					
+						skillStats = "Introspection+Interpersonal";
+						break;
+					case ("necromancy"):
+						primaryAttrib = parseInt(values.introspection);
+						secondaryAttrib = parseInt(values.verbal);					
+						skillStats = "Introspection+Verbal";
+						break;
+					case ("organize"):
+						primaryAttrib = parseInt(values.interpersonal);
+						secondaryAttrib = parseInt(values.logical);					
+						skillStats = "Interpersonal+Logical";
+						break;
+					case ("persuade"):
+						primaryAttrib = parseInt(values.interpersonal);
+						secondaryAttrib = parseInt(values.verbal);	
+						skillStats = "Interpersonal+Verbal";
+						break;
+					case ("pilot"):
+						primaryAttrib = parseInt(values.logical);
+						secondaryAttrib = parseInt(values.spatial);		
+						skillStats = "Logical+Spatial";
+						break;
+					case ("profession"):
+						primaryAttrib = parseInt(values.logical);
+						secondaryAttrib = 3;
+						professionFlag = 1;
+						skillStats = "Logical+";				
+						break;
+					case ("science"):
+						primaryAttrib = parseInt(values.logical);
+						secondaryAttrib = parseInt(values.verbal);					
+						skillStats = "Logical+Verbal";
+						break;
+					case ("socialize"):
+						primaryAttrib = parseInt(values.interpersonal);
+						secondaryAttrib = parseInt(values.logical);	
+						skillStats = "Interpersonal+Logical";
+						break;
+					case ("stealth"):
+						primaryAttrib = parseInt(values.kinestetic);
+						secondaryAttrib = parseInt(values.logical);							
+						skillStats = "Kinestetic+Logical";
+						HideFlag = 1;
+						break;
+					case ("survival"):
+						primaryAttrib = parseInt(values.kinestetic);
+						secondaryAttrib = parseInt(values.logical);
+						skillStats = "Kinestetic+Logical";
+						break;
+					case ("tactics"):
+						primaryAttrib = parseInt(values.spatial);
+						secondaryAttrib = parseInt(values.logical);
+						skillStats = "Spatial+Logical";
+						CoverFlag = 1;
+						break;
+					case ("telekinesis"):
+						console.log("telekinesis Triggered");
+						primaryAttrib = parseInt(values.introspection);
+						secondaryAttrib = parseInt(values.spatial);	
+						skillStats = "Introspection+Spatial";
+						break;
+					case ("telepathy"):
+						primaryAttrib = parseInt(values.introspection);
+						secondaryAttrib = parseInt(values.interpersonal);					
+						skillStats = "Introspection+Interpersonal";
+						break;
+					case ("teleportation"):
+						primaryAttrib = parseInt(values.introspection);
+						secondaryAttrib = parseInt(values.spatial);	
+						skillStats = "Introspection+Spatial";
+						break;
+						
+					default:
+						console.log(element);						
+				}
+			}
+			if(element.includes("skillRank")) { 
+				skillRank = parseInt(values[element]);
+				skillRankName = element;
+				console.log(skillRank);
+			}
+			if(element.includes("skillMod")) {
+				skillMod = parseInt(values[element]);
+				console.log(skillMod);
+			}
+			if(element.includes("skillHidden")) {
+				skillHidden = element;
+				console.log(skillHidden);
+			}
+			if(element.includes("skillCombo")) {
+				skillCombo = element;
+				console.log(element);
+			}	
+			if(element.includes("skillSecondary")) {
+				professionSecAttrib = parseInt(values[values[element]]);
+				console.log("Professsion Secondary Attribute");
+				console.log(values[element]);
+				console.log(professionSecAttrib);
+			}
+		});
+		
+		if(professionFlag == 1) {
+			secondaryAttrib = professionSecAttrib;
+			console.log(secondaryAttrib);
+		}
+		
+		if(grpFlag == 1 && (skillRank == 1 || skillRank == 3)) {
+			skillRank = skillRank + skillGroup1Mode;
+			update[skillRankName] = skillRank;
+			skillGroup1Lock = skillRank;
+		}
+
+		console.log("SkillRankList - calcTaskNumber");
+		console.log(skillTally.rankList);
+		if(grpFlag == 1) {
+			switch (skillRank) {
+				case 0:
+					skillTally.rankList += parseInt(skillRank);
+					break;
+				case 2:
+					skillTally.rankList += parseInt(skillRank)/2;
+					break;
+				case 4:
+					skillTally.rankList += parseInt(skillRank)/2;
+					break;
+				default:
+					skillTally.rankList += parseInt(skillRank)-2;
+					break;
+			}
+		} else {
+			skillTally.rankList += parseInt(skillRank);
+		}
+		console.log(skillTally.rankList);
+		skillTally.remaining -= 1;
+
+		if(skillTally.remaining == 0) {
+			console.log("SkillRankList:");
+			console.log(skillTally.rankList);
+			update["SkillUsedHidden"] = skillTally.rankList;
+			update["SkillCountHidden"] = parseInt(values.SkillsFP) + 25;
+		}
+		
+		
+	
+		let targetNumber = skillRank + skillMod + primaryAttrib + secondaryAttrib - parseInt(values.TNPenaltyHdn); 
+		if (targetNumber > 24) { 
+			targetNumber = 24;
+		}
+		
+		/*
+			<input type="hidden" name="attr_weaponFirefightTN">
+			<input type="hidden" name="attr_weaponHeavyWeaponsTN">
+			<input type="hidden" name="attr_weaponGunneryTN">
+			
+			<input type="hidden" name="attr_armorActiveBody">
+			<input type="hidden" name="attr_armorActiveRating">
+			<input type="hidden" name="attr_armorActiveType">		
+		*/
+		
+		if(firearmsFlag == 1) {
+			update["weaponFirefightTN"] = targetNumber;
+		}		
+		if(heavyWeaponsFlag == 1) {
+			update["weaponHeavyWeaponsTN"] = targetNumber;
+		}
+		if(gunneryFlag == 1) {
+			update["weaponGunneryTN"] = targetNumber;
+		}
+		if(meleeFlag == 1) {
+			update["weaponMeleeTN"] = targetNumber;
+		}
+
+		if(CoverFlag == 1) {
+			update["CoverTN"] = targetNumber;
+		}
+		if(EvasionFlag == 1) {
+			update["EvasionTN"] = targetNumber;
+		}
+		if(HideFlag == 1) {
+			update["HideTN"] = targetNumber;
+		}
+		
+		update[skillHidden] = targetNumber;
+		update[skillCombo] = skillStats;
+		
+		console.log(JSON.stringify(update));
+		setAttrs(update);
+	}
+	
+	/*
+		Action Functionality
+	*/
+	
+	on("change:rollDifficulty change:starshipRollDifficulty change:unitRollDifficulty", function(eventInfo) {
+			rollDiffSource = eventInfo.sourceAttribute;
+	
+			console.log(eventInfo);
+			setRollString();
+	});	
+		
+	/*
+	function setRollString() {
+		console.log("setRollString");
+		
+		getAttrs([rollDiffSource, "invokeMod"], function(values) {
+			let rollSpec = parseInt(values[rollDiffSource]) - parseInt(values.invokeMod);
+			let update = {};
+			
+			if(rollSpec < 0) {
+				rollSpec = 0;
+			}
+			if(rollSpec > 12) {
+				rollSpec = 12;
+			}
+			
+			switch(rollSpec) {
+				case (0): 
+					update["rollString"] = "3";
+					break;
+				case (1): 
+					update["rollString"] = "(1d6cs0cf0+2)";
+					<!-- break;					 -->
+				case (2): 
+					update["rollString"] = "(2d6cs0cf0+1)";
+					break;	
+				case (3): 
+					update["rollString"] = "3d6cs0cf0";
+					break;					
+				case (4): 
+					update["rollString"] = "(1d8cs0cf0+2d6cs0cf0)";
+					break;					
+				case (5): 
+					update["rollString"] = "(2d8cs0cf0+1d6cs0cf0)";
+					break;					
+				case (6): 
+					update["rollString"] = "3d8cs0cf0";
+					break;					
+				case (7): 
+					update["rollString"] = "(1d10cs0cf0+2d8cs0cf0)";
+					break;					
+				case (8): 
+					update["rollString"] = "(2d10cs0cf0+1d8cs0cf0)";
+					break;					
+				case (9): 
+					update["rollString"] = "3d10cs0cf0";
+					break;					
+				case (10): 
+					update["rollString"] = "(10+2d10cs0cf0)";
+					break;					
+				case (11): 
+					update["rollString"] = "(20+1d10cs0cf0)";
+					break;					
+				case (12): 
+					update["rollString"] = "30";
+					break;					
+			}
+			
+			setAttrs(update);
+		});
+	}
+	*/
+	
+	on("change:rollDifficulty", function(eventInfo) {
+			setRollString();
+	});
+	
+	on("change:repeating_armor", function(eventInfo) {
+		console.log(eventInfo);
+		
+		
+		if(eventInfo.sourceAttribute.includes("armoractive")) {		
+		
+			if(eventInfo.newValue == "on") {
+				
+			} else {
+			
+			}
+		}
+	});
+	
+	on("change:repeating_unitArmor", function(eventInfo) {
+		console.log(eventInfo);
+		let id = "";
+		/*
+			_armorBodyCurr
+			_armorBody
+			_armorForceFieldCurr
+			_armorForceField
+			_armorValueCurr
+			_armorValue		
+		*/
+		let armorBodyCurr = "";
+		let armorBody = "";
+		let armorForceFieldCurr = "";
+		let armorForceField = "";
+		let armorValueCurr = "";
+		let armorValue = "";
+		 
+		
+		if(eventInfo.sourceAttribute.includes("armoractive")) {		
+		
+			if(eventInfo.newValue == "on") {
+				id = eventInfo.sourceAttribute.replace("_armoractive", "");
+
+				console.log(id);
+				
+				armorBodyCurr = id + "_armorBodyCurr";
+				armorBody = id + "_armorBody";
+				armorForceFieldCurr = id + "_armorForceFieldCurr";
+				armorForceField = id + "_armorForceField";
+				armorValueCurr = id + "_armorValueCurr";
+				armorValue = id + "_armorValue";
+				
+				console.log(armorBodyCurr);
+				
+				getAttrs([armorBodyCurr, armorBody, armorForceFieldCurr, armorForceField, armorValueCurr, armorValue], function(values) {
+					console.log(values);
+					let update = [];
+					
+					Object.keys(values).forEach(element => {
+						console.log(element);
+						console.log(values[element]);
+
+						if(element.includes("_armorBody")) {
+							update["unitMaxBody"] = values[element];
+						}						
+						if(element.includes("_armorBodyCurr")) {
+							update["unitBody"] = values[element];
+						}
+						if(element.includes("_armorForceField")) {
+							update["unitMaxForceField"] = values[element];
+						}						
+						if(element.includes("_armorForceFieldCurr")) {
+							update["unitForceField"] = values[element];
+						}
+						if(element.includes("armorValue")) {
+							update["unitMaxArmor"] = values[element];
+						}
+						if(element.includes("armorValueCurr")) {
+							update["unitArmor"] = values[element];
+						}
+						
+						
+					});
+					
+					setAttrs(update);
+					
+				});
+				
+			} else {
+			
+			}
+		}
+	});	
+	
+	on("change:repeating_weapons", function(eventInfo) {
+	
+	});
+	
+	on("clicked:starshipInterception", function(eventInfo) {
+		console.log("starshipInterception");
+		getAttrs(["weaponGunneryTN", "rollString", "invokedTags", "condemnedTags"], function(values) {
+			let targetNumber = 0;
+			let RollName = ""
+			console.log(values);
+
+			RollName = "Missile Intercept";
+			targetNumber = parseInt(values["weaponGunneryTN"]);
+			let DefenseRoll = "&{template:redemption}{{invoked=" + (values.invokedTags || "") + "}}{{condemned=" + (values.condemnedTags || "") + "}}{{title=" + RollName + " Roll}}{{roll=[[" + targetNumber + " - (" + values.rollString + ")]] }}";
+			
+			startRoll(DefenseRoll, (results) => { 
+				let update = {};
+				console.log(results);
+				console.log(results.results.roll.result);
+				
+				if(parseInt(results.results.roll.result) >= 0) {
+					update["starshipIntercept"] = parseInt(results.results.roll.result);
+				} else {
+					update["starshipIntercept"] = 0;
+				}
+				setAttrs(update);
+				
+				finishRoll(results.rollId, results); 
+			});				
+		});
+	});
+	
+	on("clicked:Cover clicked:Evasion clicked:Stealth clicked:starshipEvade", function(eventInfo) {
+		console.log(JSON.stringify(eventInfo));
+		
+		DefMarginType = eventInfo.htmlAttributes.name;
+		
+		getAttrs(["kinestetic", "logical", "interpersonal", "introspection", "spatial", "verbal", "SkillSwitchTN", "CoverTN", "EvasionTN", "HideTN", "weaponGunneryTN", "rollString", "invokedTags", "condemnedTags"], function(values) {
+			let targetNumber = 0;
+			let RollName = ""
+			console.log(values);
+		
+
+			switch (DefMarginType) {
+				case "act_Cover": 
+					RollName = "Cover";
+					if(parseInt(values["CoverTN"]) != 0) {
+						targetNumber = parseInt(values["CoverTN"]);
+					} else {
+						targetNumber = parseInt(values["spatial"]) + parseInt(values["logical"]);
+					}
+					break;
+				case "act_starshipEvade":
+					/*RollName = "Evasion";
+					targetNumber = parseInt(values["EvasionTN"]);
+					break;*/
+				case "act_Evasion":
+					RollName = "Evasion";
+					console.log(JSON.stringify(values));
+					if(parseInt(values["EvasionTN"]) != 0) {
+						targetNumber = parseInt(values["EvasionTN"]);
+					} else {
+						targetNumber = parseInt(values["kinestetic"]) + parseInt(values["spatial"]);
+					}
+					console.log("target number");
+					console.log(targetNumber);
+					break;
+				case "act_Stealth":
+					RollName = "Stealth";
+					if(parseInt(values["HideTN"]) != 0) {
+						targetNumber = parseInt(values["HideTN"]);
+					} else {
+						targetNumber = parseInt(values["kinestetic"]) + parseInt(values["logical"]);
+					}
+					break;
+				case "act_starshipIntercept":
+					RollName = "Missile Intercept";
+					targetNumber = parseInt(values["weaponGunneryTN"]);
+					break;
+
+			}
+			
+			if(parseInt(values["SkillSwitchTN"]) > 0 && values["SkillSwitchTN"] !== undefined) {
+				targetNumber = parseInt(values["SkillSwitchTN"]);
+			} 
+			console.log("target number");
+			console.log(targetNumber);			
+			
+			
+			let DefenseRoll = "&{template:redemption}{{invoked=" + (values.invokedTags || "") + "}}{{condemned=" + (values.condemnedTags || "") + "}}{{title=" + RollName + " Roll}}{{roll=[[" + targetNumber + " - (" + values.rollString + ")]] }}";
+
+			console.log(DefenseRoll);
+			startRoll(DefenseRoll, (results) => { 
+				let update = {};
+				console.log(results);
+				console.log(results.results.roll.result);
+				
+				if(parseInt(results.results.roll.result) >= 0) {
+					update["DefMargin"] = parseInt(results.results.roll.result);
+				} else {
+					update["DefMargin"] = 0;
+				}
+				setAttrs(update);
+				
+				finishRoll(results.rollId, results); 
+			});			
+			
+		});
+	});
+	
+	on("change:DefMargin", function(eventInfo) {
+		let update = {}; 
+		
+		update["starshipEvasion"] = eventInfo.newValue;
+		console.log(update);
+		setAttrs(update);
+	});
+	
+	
+	
+	
+	/*
+		STASHED - original type="action" + startRoll()/finishRoll() implementation of the
+		weapon attack buttons. @{target|...} targeting is not reliable when the roll string
+		is assembled in JS and fired through startRoll() - it intermittently throws "invalid
+		target" until the page is refreshed. Replaced below with type="roll" buttons that
+		reference a precomputed weaponAttackTN/weaponSecAttackTN attribute directly, mirroring
+		the working starship weapon attack buttons. Kept here in case we need to revert.
+
+	on("clicked:repeating_weapons clicked:repeating_unitWeapons", function(eventInfo) {
+		console.log("clicked:repeating_weapons");
+		console.log(eventInfo);
+		let Sec = "";
+
+		console.log(eventInfo.htmlAttributes.name);
+		if(eventInfo.htmlAttributes.name.normalize() === "act_weaponSecAttack") {
+			console.log("Secondary");
+			Sec = "Sec";
+			console.log(Sec);
+		}
+		else
+		{
+			console.log("Primary");
+		}
+
+		console.log(Sec);
+		let weaponScale = eventInfo.sourceAttribute + "_weapon" + Sec + "Scale";
+		let weaponName = eventInfo.sourceAttribute + "_weaponName";
+
+		getAttrs(["weaponFirefightTN", "weaponHeavyWeaponsTN", "weaponGunneryTN", "SkillSwitchTN", weaponScale, weaponName, "rollString",
+					"kinestetic", "logical", "interpersonal", "introspection", "spatial", "verbal"], function(values) {
+			console.log(values);
+			let targetNumber = 0;
+
+
+			if(values.SkillSwitchTN !== undefined && parseInt(values.SkillSwitchTN) > 0) {
+				targetNumber = values.SkillSwitchTN;
+			} else {
+
+				Object.keys(values).forEach(element => {
+					if(element.includes(weaponScale)) {
+						console.log(element);
+						//console.log(values[element]);
+						switch(values[element]) {
+							case "Firefight":
+								console.log("Firefight");
+								if(parseInt(values.weaponFirefightTN) > 0 && values.weaponFirefightTN !== undefined) {
+									targetNumber = values.weaponFirefightTN;
+								} else {
+									targetNumber = parseInt(values.kinestetic) + parseInt(values.spatial);
+								}
+								break;
+							case "Battlefield":
+								console.log("Battlefield");
+								console.log(parseInt(values.weaponHeavyWeaponsTN));
+								if(parseInt(values.weaponHeavyWeaponsTN) > 0 && values.weaponHeavyWeaponsTN !== undefined) {
+									targetNumber = values.weaponHeavyWeaponsTN;
+								} else {
+									targetNumber = parseInt(values.logical) + parseInt(values.spatial);
+								}
+								break;
+							case "Space":
+								console.log("Space");
+								if(parseInt(values.weaponGunneryTN) > 0 && values.weaponGunneryTN !== undefined) {
+									targetNumber = values.weaponGunneryTN;
+								} else {
+									targetNumber = parseInt(values.logical) + parseInt(values.spatial);
+								}
+								break;
+							default:
+								targetNumber = 0;
+						}
+
+					}
+				});
+			}
+
+			let AttackRoll = "&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Attack Roll at @{target|token_name}}}{{roll=[[" + targetNumber + " - (" + values.rollString + ")]] vs [[@{target|DefMargin}]]}}";
+
+			console.log(AttackRoll);
+			startRoll(AttackRoll, (results) => { finishRoll(results.rollId, results); });
+		});
+	});
+	*/
+
+	function calcWeaponAttackTN(values, scale, type) {
+		if(values.SkillSwitchTN !== undefined && parseInt(values.SkillSwitchTN) > 0) {
+			return parseInt(values.SkillSwitchTN);
+		}
+		/* A Melee-damage weapon is governed by the Melee skill REGARDLESS of its Scale
+		   (e.g. a Firefight-scale Tse Blade still rolls Melee). Fallback is Melee's
+		   attribute pair (Spatial+Kinestetic) when the character has no Melee skill. */
+		if(type === "Melee") {
+			return (values.weaponMeleeTN !== undefined && parseInt(values.weaponMeleeTN) > 0)
+				? parseInt(values.weaponMeleeTN)
+				: (parseInt(values.spatial)||0) + (parseInt(values.kinestetic)||0);
+		}
+		switch(scale) {
+			case "Firefight":
+				return (values.weaponFirefightTN !== undefined && parseInt(values.weaponFirefightTN) > 0)
+					? parseInt(values.weaponFirefightTN)
+					: (parseInt(values.kinestetic)||0) + (parseInt(values.spatial)||0);
+			case "Battlefield":
+				return (values.weaponHeavyWeaponsTN !== undefined && parseInt(values.weaponHeavyWeaponsTN) > 0)
+					? parseInt(values.weaponHeavyWeaponsTN)
+					: (parseInt(values.logical)||0) + (parseInt(values.spatial)||0);
+			case "Space":
+				return (values.weaponGunneryTN !== undefined && parseInt(values.weaponGunneryTN) > 0)
+					? parseInt(values.weaponGunneryTN)
+					: (parseInt(values.logical)||0) + (parseInt(values.spatial)||0);
+			default:
+				return 0;
+		}
+	}
+
+	function recalcWeaponAttackTNs() {
+		["weapons", "unitWeapons"].forEach(sectionName => {
+			getSectionIDs(sectionName, function(idarray) {
+				for(var i=0; i < idarray.length; i++) {
+					let rowPrefix = "repeating_" + sectionName + "_" + idarray[i];
+					let weaponScale = rowPrefix + "_weaponScale";
+					let weaponSecScale = rowPrefix + "_weaponSecScale";
+					let weaponType = rowPrefix + "_weaponType";
+					let weaponSecType = rowPrefix + "_weaponSecType";
+
+					getAttrs(["weaponFirefightTN", "weaponHeavyWeaponsTN", "weaponGunneryTN", "weaponMeleeTN", "SkillSwitchTN",
+								weaponScale, weaponSecScale, weaponType, weaponSecType, "kinestetic", "logical", "spatial"], function(values) {
+						let update = {};
+						update[rowPrefix + "_weaponAttackTN"] = calcWeaponAttackTN(values, values[weaponScale], values[weaponType]);
+						update[rowPrefix + "_weaponSecAttackTN"] = calcWeaponAttackTN(values, values[weaponSecScale], values[weaponSecType]);
+						setAttrs(update);
+					});
+				}
+			});
+		});
+	}
+
+	on("change:repeating_weapons change:repeating_unitWeapons", function(eventInfo) {
+		if(eventInfo.sourceAttribute.includes("weaponattacktn") || eventInfo.sourceAttribute.includes("weaponsecattacktn")) {
+			return;
+		}
+		recalcWeaponAttackTNs();
+	});
+
+	on("change:weaponFirefightTN change:weaponHeavyWeaponsTN change:weaponGunneryTN change:weaponMeleeTN change:SkillSwitchTN", function(eventInfo) {
+		recalcWeaponAttackTNs();
+	});
+
+	/* Populate worker-computed weapon attack TNs on open. weaponAttackTN/weaponSecAttackTN
+	   have no meaningful value until recalcWeaponAttackTNs() runs on a change event, so
+	   weapons that predate that worker (or were never touched) leave them empty - which under
+	   JumpGate's stricter roll parser turns the attack template [[@{weaponAttackTN} - ...]]
+	   into a malformed roll and throws. Recomputing on sheet open guarantees they're never
+	   empty for existing characters. */
+	on("sheet:opened", function() {
+		/* Recompute skill task numbers first so the weapon-skill TNs (weaponMeleeTN /
+		   weaponFirefightTN / weaponHeavyWeaponsTN / weaponGunneryTN) are fresh for EXISTING
+		   characters on open - otherwise a melee weapon reads a stale/empty weaponMeleeTN until
+		   the player nudges a skill. calcAllTaskNumbers' TN writes then re-fire recalcWeaponAttackTNs
+		   via the change:weapon*TN handler; the direct call below covers the no-change case. */
+		calcAllTaskNumbers();
+		recalcWeaponAttackTNs();
+	});
+
+	/* "Use Automation" gating. Roll20's roll-template {{#automation}} conditional hides its block
+	   only when the field is BLANK - the string "0" counts as truthy and still renders. So the
+	   checkbox's raw 0/1 can't gate it directly. This maps the checkbox to useAutomationFlag =
+	   "" (off) or "1" (on); the missile card passes {{automation=@{useAutomationFlag}}}, so OFF is
+	   blank -> Apply Salvo button hidden. Off by default keeps the sheet fully standalone. */
+	on("change:useAutomation sheet:opened", function() {
+		getAttrs(["useAutomation"], function(v) {
+			var on = (v.useAutomation === "1" || v.useAutomation === "on");
+			setAttrs({ useAutomationFlag: on ? "1" : "" });
+		});
+	});
+
+	function setWeaponSkill() {
+		getAttrs(["SkillSwitchTN"], function(values) {
+			if(values.SkillSwitchTN != "" && values.SkillSwitchTN != 0 && values.Science !== undefined) {
+				SkillSwitchTN = parseInt(values.SkillSwitchTN);
+			} else {
+				SkillSwitchTN = 0
+			}
+			
+			getSectionIDs("repeating_weapons", function(idarray) {
+			
+			});
+			
+		});
+	}
+	
+	on("clicked:btnArmorRepair", function(eventInfo) {
+		console.log("btnArmorRepair clicked");
+		
+		console.log(eventInfo);
+	});	
+	
+	
+	on("clicked:btnWound", function() {
+		console.log("btnWound clicked");
+	
+		getAttrs(["WoundLevelHdn", "WoundRankID", "BodyCurr"], function(values) {
+			let update = {};
+			let WoundRank = parseInt(values.WoundLevelHdn);
+			
+			update["BodyCurr"] = parseInt(values.BodyCurr) + 4;
+			
+			console.log(values);
+		
+			if(WoundRank == 0) {
+				var newrowid = generateRowID();
+				
+				update["repeating_tags_" + newrowid + "_tagType"] = "Wound";
+				update["repeating_tags_" + newrowid + "_tagRank"] = "1";
+				update["repeating_tags_" + newrowid + "_tagStatus"] = "0";
+				
+				console.log(update);
+				setAttrs(update);
+			}
+			if(WoundRank <= 2 && WoundRank > 0) {
+				update[values.WoundRankID] = WoundRank + 1;
+				
+				console.log(update);
+				setAttrs(update);
+			}
+			
+			
+		});
+	});
+	
+	on("clicked:btnRefresh", function() {
+		console.log("Refresh Activated");
+		
+		RefreshUnlock = 1;
+		//calcTagModifier();
+	
+		let tagStatus = {}; 
+		
+		// Update Action Point total
+		
+		getAttrs(['TagsFP', 'RaceRank', 'PersonalTagsUsed', 'APCount'], function(values) {
+			console.log(JSON.stringify(values));
+		
+			let APCountNumber = 0; 
+			let RefreshRatingNumber = 0;
+			let TagsFPNumber = 0;
+			let RaceRankNumber = 0;
+			let PersonalTagsUsedNumber = 0;
+			
+			let update = {};
+			
+			if(values['APCount'] !== undefined) {
+				APCountNumber = parseInt(values.APCount);
+			}
+			if(values['TagsFP'] !== undefined) {
+				console.log("TagsFP:");
+				console.log(values['TagsFP']);
+				TagsFPNumber = parseInt(values.TagsFP);
+			}
+			if(values['RaceRank'] !== undefined) {
+				console.log("RaceRank:");
+				console.log(values['RaceRank']);			
+				RaceRankNumber = parseInt(values.RaceRank);
+			}			
+			if(values['PersonalTagsUsed'] !== undefined) {
+				console.log("PersonalTagsUsed:");
+				console.log(values['PersonalTagsUsed']);				
+				PersonalTagsUsedNumber = parseInt(values.PersonalTagsUsed);
+			}			
+			
+			RefreshRatingNumber = 8 + TagsFPNumber + 2 - RaceRankNumber - PersonalTagsUsedNumber;
+			console.log("Refresh Rating Number:");
+			console.log(RefreshRatingNumber);
+			
+			if(RefreshRatingNumber > APCountNumber) {
+				APCountNumber = RefreshRatingNumber;
+			}
+			
+			console.log("APCount:");
+			console.log(APCountNumber);
+			update['APCount'] = APCountNumber;
+			update['StrainCurr'] = 0;
+			update['StrainCommit'] = 0;
+			setAttrs(update);
+			
+		
+		});	
+		
+		// Remove Tag Locks from Concept, Trouble, and Race tags. 
+		tagStatus['ConceptStatus'] = 0;
+		tagStatus['TroubleStatus'] = 0;
+		tagStatus['RaceStatus'] = 0;
+		
+		setAttrs(tagStatus);
+		
+		// Remove Tag Locks from Repeating Tags section. 
+		getSectionIDs("tags", function(idarray) {
+			let tagLockedID = "";
+			let tagTypeID = "";
+		
+			for(var i=0; i < idarray.length; i++) {
+				let update = {};
+			
+				console.log(idarray[i]);
+				tagLockedID = "repeating_tags_" + idarray[i] + "_tagStatus";
+				
+				update[tagLockedID] = 0;
+				setAttrs(update);
+
+			}
+		});
+		
+		sleep(300);
+	
+
+	});
+
+
+on("change:EquipmentCCOne change:EquipmentCCTwo change:EquipmentCCThree change:EquipmentCCFour change:EquipmentCCFive change:EquipmentCCSix change:EquipmentCCSeven change:EquipmentCCEight change:EquipmentCCNine change:EquipmentCCTen", function(eventInfo) {
+	console.log(eventInfo);
+	
+	getAttrs(["EquipmentCCOne", "EquipmentCCTwo", "EquipmentCCThree", "EquipmentCCFour", "EquipmentCCFive", "EquipmentCCSix", "EquipmentCCSeven", "EquipmentCCEight", "EquipmentCCNine", "EquipmentCCTen"],
+		function(values) {
+			let CCTotal = 0;
+			let update = {}
+		
+			console.log(values);
+		
+			Object.keys(values).forEach(element => {
+				if(parseInt(values[element]) > 0) {
+					CCTotal = CCTotal + parseInt(values[element]);
+				}
+			
+			});
+				
+			update["CCCountHdn"] = CCTotal;
+			
+			setAttrs(update);
+		});
+});
+
+
+/***********************************
+
+ ----- STARSHIP FUNCTIONALITY ----
+
+----------------------------------*/
+
+
+const PowerSlotList = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve"]
+on("change:starshipPowerSlots", function(eventInfo) {
+	let slotString = "One";
+	let update = {};
+	console.log(update);
+	
+	let slotNumber = parseInt(eventInfo.newValue);
+	
+	if(slotNumber > 12) {
+		slotNumber = 12;
+		update["starshipPowerSlots"] = 12;
+	}
+	if(slotNumber < 0) {
+		slotNumber = 0;
+		update["starshipPowerSlots"] = 0;
+	}
+	
+	console.log(PowerSlotList[slotNumber]);
+	
+	slotString = PowerSlotList[slotNumber];
+	
+	update["starshipPowerSlotsHdn"] = slotString;
+	setAttrs(update);
+});
+
+on("change:starshipPowerSlotsUsed", function(eventInfo) {
+	let update= {};
+
+	for(var i = 1; i < PowerSlotList.length; i++) {
+		let powerSlotNumber = "starshipPowerSlot" + PowerSlotList[i];
+	
+	
+		if(i <= eventInfo.newValue) {
+			update[powerSlotNumber] = "on";
+		} else {
+			update[powerSlotNumber] = "0";
+		}
+	}
+	
+	console.log(JSON.stringify(update));
+	setAttrs(update);
+});
+
+
+
+on("change:starshipBody", function(eventInfo) {
+	let update = {}; 
+	
+	update["starshipCurrBodyHdn"] = eventInfo.newValue;
+	console.log(update);
+	
+	setAttrs(update);
+});
+
+on("change:starshipCurrBodyHdn", function(eventInfo) {
+
+	// starshipCurrBody
+	getAttrs(["starshipBody", "starshipCurrBodyHdn"], function(values) {
+		let update= {} 
+		update["starshipCurrBody"] = (parseInt(values.starshipCurrBodyHdn) / parseInt(values.starshipBody)) * 100;
+		console.log(update);
+		
+		setAttrs(update);
+	});
+});
+
+on("clicked:addStarshipBody clicked:subStarshipBody", function(eventInfo) {
+	console.log(eventInfo);
+	
+	let actionType = eventInfo.htmlAttributes.name;
+	
+	if(actionType == "act_subStarshipBody") { 
+		starshipBodyChangeType = -1;
+		console.log("Damage Taken");
+	} else {
+		starshipBodyChangeType = 1;
+	}
+	
+	getAttrs(["starshipCurrHeatHdn", "starshipBody", "starshipCurrBodyHdn", "starshipBodyIncrement"], function(values) {
+		console.log(values);
+		
+		let update = {};
+		let newCurrBody = parseInt(values.starshipCurrBodyHdn) + (parseInt(values.starshipBodyIncrement) * starshipBodyChangeType);
+		
+		
+		if(newCurrBody > parseInt(values.starshipBody) - parseInt(values.starshipCurrHeatHdn)) {
+				newCurrBody = parseInt(values.starshipBody) - parseInt(values.starshipCurrHeatHdn)
+		}		
+		
+		update["starshipCurrBodyHdn"] = newCurrBody
+		//update["starshipCurrBody"] = (newCurrBody / parseInt(values.starshipBody)) * 100;
+		
+		
+		console.log(update);
+		setAttrs(update);
+	});
+	
+});
+
+
+on("clicked:addStarshipHeat clicked:subStarshipHeat", function(eventInfo) {
+	console.log(eventInfo);
+	
+	let actionType = eventInfo.htmlAttributes.name;
+	
+	if(actionType == "act_subStarshipHeat") { 
+		starshipBodyChangeType = 1;
+		console.log("Damage Taken");
+	} else {
+		starshipBodyChangeType = -1;
+	}
+	
+	getAttrs(["starshipBody", "starshipCurrBodyHdn", "starshipHeat", "starshipCurrHeatHdn", "starshipHeatIncrement"], function(values) {
+		console.log(values);
+		
+		let update = {};
+		let newCurrBody = parseInt(values.starshipCurrBodyHdn) + (parseInt(values.starshipHeatIncrement) * starshipBodyChangeType);
+		let newCurrHeat = parseInt(values.starshipCurrHeatHdn) + (parseInt(values.starshipHeatIncrement) * starshipBodyChangeType);
+		
+		if(newCurrBody > parseInt(values.starshipBody) - newCurrHeat) {
+				newCurrBody = parseInt(values.starshipBody) - newCurrHeat;
+		}
+		
+		
+		update["starshipCurrBodyHdn"] = newCurrBody;
+		update["starshipCurrHeatHdn"] = newCurrHeat;
+		//update["starshipHeat"] = newCurrHeat;
+		//update["starshipCurrBody"] = (newCurrBody / parseInt(values.starshipBody)) * 100;
+		
+		console.log(update);
+		setAttrs(update);
+	});
+	
+});
+
+
+on("change:starshipMaxFuel", function(eventInfo) {
+	let update = {}; 
+	
+	update["starshipCurrFuelHdn"] = eventInfo.newValue;
+	console.log(update);
+	
+	setAttrs(update);	
+});
+
+on("change:starshipCurrFuelHdn", function(eventInfo) {
+
+	// starshipCurrBody
+	getAttrs(["starshipMaxFuel", "starshipCurrFuelHdn"], function(values) {
+		let update= {} 
+		update["starshipCurrFuel"] = (parseInt(values.starshipCurrFuelHdn) / parseInt(values.starshipMaxFuel)) * 100;
+		console.log(update);
+		
+		setAttrs(update);
+	});
+});
+
+on("clicked:addFuel clicked:subFuel", function(eventInfo) {
+	console.log(eventInfo);
+	
+	let actionType = eventInfo.htmlAttributes.name;
+	
+	if(actionType == "act_subFuel") { 
+		starshipFuelChangeType = -1;
+		console.log("Fuel Expended");
+	} else {
+		starshipFuelChangeType = 1;
+	}
+	
+	getAttrs(["starshipMaxFuel", "starshipCurrFuelHdn", "starshipFuelIncrement"], function(values) {
+		console.log(values);
+		
+		let update = {};
+		let newCurrFuel = parseInt(values.starshipCurrFuelHdn) + (parseInt(values.starshipFuelIncrement) * starshipFuelChangeType);
+		
+		update["starshipCurrFuelHdn"] = newCurrFuel
+
+		
+		console.log(update);
+		setAttrs(update);
+	});
+	
+});
+
+on("change:repeating_starshipWeapons", function(eventInfo) {
+	calcAllPowerSlots();
+});
+
+on("change:starshipMissileLaunchers", function(eventInfo) {
+
+	calcAllPowerSlots();
+});
+
+on("change:repeating_starshipCapabilities", function(eventInfo) {
+	calcAllPowerSlots();
+});
+
+function calcAllPowerSlots() {
+	starshipPowerSlotTracker = 0;
+	starshipPowerSlotCount = 0;
+	
+	getAttrs(["starshipMissileLaunchers"], function(values) {
+		starshipPowerSlotCount = parseInt(values.starshipMissileLaunchers)/4;
+	});
+	
+	
+	getSectionIDs("starshipWeapons", function(idarray) {
+		for(var i=0; i < idarray.length; i++) {
+			let starshipWeaponHungry = "repeating_starshipWeapons_" + idarray[i] + "_starshipWeaponHungry";
+			console.log(starshipWeaponHungry);
+			
+			starshipPowerSlotTracker += 1;
+			
+			getAttrs([starshipWeaponHungry], function(values) {
+				console.log(values);
+				
+				starshipPowerSlotTracker = starshipPowerSlotTracker - 1;
+				
+				let valueKeys = Object.keys(values); 
+				console.log(valueKeys);
+				if(values[valueKeys[0]] == "0") {
+					starshipPowerSlotCount += 1;
+				} else {
+					starshipPowerSlotCount += 2;
+				}
+				
+				console.log(starshipPowerSlotTracker);
+				if(starshipPowerSlotTracker == 0) {
+					let update = {};
+					
+					update["starshipPowerSlotsUsed"] = starshipPowerSlotCount;
+					console.log(JSON.stringify(update));
+					setAttrs(update);
+					
+				}
+			});
+			
+			
+			
+		}
+	});
+
+	getSectionIDs("starshipCapabilities", function(idarray) {
+		for(var i=0; i < idarray.length; i++) {
+			let capabilitiesPowerSlots = "repeating_starshipCapabilities_" + idarray[i] + "_starshipCapabilitiesPowerSlots";
+			
+			starshipPowerSlotTracker += 1;
+			
+			getAttrs([capabilitiesPowerSlots], function(values) {
+				console.log(values);
+				
+				starshipPowerSlotTracker = starshipPowerSlotTracker - 1;
+				let valueKeys = Object.keys(values);
+				starshipPowerSlotCount += parseInt(values[valueKeys[0]]);
+				
+				console.log(starshipPowerSlotTracker);
+				if(starshipPowerSlotTracker == 0) {
+					let update = {};
+					
+					update["starshipPowerSlotsUsed"] = starshipPowerSlotCount;
+					console.log(JSON.stringify(update));
+					setAttrs(update);
+					
+				}				
+				
+			});
+			
+		}
+	});
+	
+	
+}
+
+on("change:repeating_starshipTasks", function(eventInfo) {
+	starshipTaskTracker = 0;
+	starshipGunneryFlag = 0;
+	starshipPilotingFlag = 0;
+	
+	getSectionIDs("starshipTasks", function(idarray) {
+		for(var i=0; i < idarray.length; i++) {
+			starshipTaskTracker += 1;
+			
+			let taskName = "repeating_starshipTasks_" + idarray[i] + "_starshipTaskName";
+			let taskRank = "repeating_starshipTasks_" + idarray[i] + "_starshipTaskRank";
+			
+			getAttrs([taskName, taskRank], function(values) {
+				let taskRank = 0;
+				let gunneryFlag = 0;
+				let pilotFlag = 0;
+				
+			
+				starshipTaskTracker = starshipTaskTracker - 1;
+				Object.keys(values).forEach(element => {
+					if(element.includes("TaskName")) {
+						if(values[element].toUpperCase().includes("GUNNERY")) {
+							gunneryFlag = 1;
+						}
+						if(values[element].toUpperCase().includes("PILOT")) {
+							pilotFlag = 1;
+						}						
+					}
+					if(element.includes("TaskRank")) {
+						taskRank = parseInt(values[element]);
+					}
+				});
+				
+				if(gunneryFlag == 1) {
+					starshipGunneryFlag = taskRank;
+				}
+				if(pilotFlag == 1) {
+					starshipPilotingFlag = taskRank;
+				}
+				
+				if(starshipTaskTracker == 0) {
+					let update = {};
+					
+					update["weaponGunneryTN"] = starshipGunneryFlag;
+					update["EvasionTN"] = starshipPilotingFlag;
+					
+					
+					console.log(update);
+					setAttrs(update);
+				}
+				
+				
+			});
+			
+		}
+	});
+});
+
+
+on("change:repeating_unitTasks", function(eventInfo) {
+	console.log(JSON.stringify(eventInfo));
+	
+	unitTaskTracker = 0;
+	unitGunneryFlag = 0;
+	unitPilotingFlag = 0;
+	unitFirearmsFlag = 0;
+	unitHeavyWeaponsFlag = 0;
+	unitAthleticsFlag = 0;
+	unitTacticsFlag = 0;
+	unitStealthFlag = 0;	
+	
+	getSectionIDs("unitTasks", function(idarray) {
+		for(var i=0; i < idarray.length; i++) {
+			unitTaskTracker += 1;
+			
+			let taskName = "repeating_unitTasks_" + idarray[i] + "_taskName";
+			let taskRank = "repeating_unitTasks_" + idarray[i] + "_taskTarget";
+			console.log(taskName);
+			console.log(taskRank);
+			
+			getAttrs([taskName, taskRank], function(values) {
+				console.log(values);
+				
+				let taskRank = 0;
+				let gunneryFlag = 0;
+				let pilotFlag = 0;
+				let firearmsFlag = 0;
+				let heavyweaponsFlag = 0;
+				let athleticsFlag = 0;
+				let tacticsFlag = 0;
+				let stealthFlag = 0;
+
+				
+			
+				unitTaskTracker = unitTaskTracker - 1;
+				Object.keys(values).forEach(element => {
+					if(element.includes("taskName")) {
+						console.log(element);
+						if(values[element].toUpperCase().includes("GUNNERY")) {
+							gunneryFlag = 1;
+							console.log("Gunnery Flag");
+						}
+						if(values[element].toUpperCase().includes("PILOT")) {
+							pilotFlag = 1;
+						}						
+						if(values[element].toUpperCase().includes("FIREARMS")) {
+							firearmsFlag = 1;
+						}
+						if(values[element].toUpperCase().includes("HEAVY WEAPONS")) {
+							heavyweaponsFlag = 1;
+						}						
+						if(values[element].toUpperCase().includes("ATHLETICS")) {
+							athleticsFlag = 1;
+						}							
+						if(values[element].toUpperCase().includes("TACTICS")) {
+							tacticsFlag = 1;
+						}	
+						if(values[element].toUpperCase().includes("STEALTH")) {
+							stealthFlag = 1;
+						}	
+							
+					}
+					if(element.includes("taskTarget")) {
+						taskRank = parseInt(values[element]);
+						console.log(taskRank);
+					}
+				});
+				
+				if(gunneryFlag == 1) {
+					unitGunneryFlag = taskRank;
+					
+				}
+				if(pilotFlag == 1) {
+					unitPilotingFlag = taskRank;
+				}
+				if(firearmsFlag == 1) {
+					unitFirearmsFlag = taskRank;
+				}
+				if(heavyweaponsFlag == 1) {
+					unitHeavyWeaponsFlag = taskRank;
+				}
+				if(athleticsFlag == 1) {
+					unitPilotingFlag = taskRank;
+				}
+				if(tacticsFlag == 1) {
+					unitTacticsFlag = taskRank;
+				}
+				if(stealthFlag == 1) {
+					unitStealthFlag = taskRank;
+				}
+				
+				if(unitTaskTracker == 0) {
+					let update = {};
+					
+					update["weaponGunneryTN"] = unitGunneryFlag;
+					update["weaponFirefightTN"] = unitFirearmsFlag;
+					update["weaponHeavyWeaponsTN"] = unitHeavyWeaponsFlag;
+					update["EvasionTN"] = unitPilotingFlag;
+					update["CoverTN"] = unitTacticsFlag;
+					update["HideTN"] = unitStealthFlag;
+					
+					console.log(update);
+					setAttrs(update);
+				}
+				
+				
+			});
+			
+		}
+	});	
+});
+
+/***********************************
+
+ ----- UNIT FUNCTIONALITY ----
+
+----------------------------------*/
+on("clicked:unitRegenerate", function(eventInfo) {
+	console.log(JSON.stringify(eventInfo));
+	let unitBody = 0;
+	
+	getAttrs(["unitBody","unitMaxBody","unitBattleStrain"], function(values) {
+		console.log(values);
+		let update = [];
+		update["unitBattleStrain"] = parseInt(values["unitBattleStrain"]) - 5;
+		update["unitBody"] = values["unitMaxBody"];
+
+		setAttrs(update);
+	});
+	
+});
+
+on("clicked:unitTag", function(eventInfo) {
+	console.log(JSON.stringify(eventInfo));
+	let unitBody = 0;
+	
+	getAttrs(["unitBody","unitMaxBody","unitBattleStrain"], function(values) {
+		console.log(values);
+		let update = [];
+		update["unitBattleStrain"] = parseInt(values["unitBattleStrain"]) - 3;
+		//update["unitBody"] = values["unitMaxBody"];
+
+		setAttrs(update);
+	});
+	
+});
+
+
+on("clicked:unitCoordinate", function(eventInfo) {
+	console.log(JSON.stringify(eventInfo));
+	let unitBody = 0;
+	
+	getAttrs(["unitBody","unitMaxBody","unitBattleStrain"], function(values) {
+		console.log(values);
+		let update = [];
+		update["unitBattleStrain"] = parseInt(values["unitBattleStrain"]) - 1;
+		//update["unitBody"] = values["unitMaxBody"];
+
+		setAttrs(update);
+	});
+	
+});
+
+
+
+/*
+on("change:kinestetic ", function(eventInfo) {
+	//Do something here
+	// eventInfo.previousValue is the original value of the attribute that triggered this event, before being changed.
+	// eventInfo.newValue is the current value of the attribute that triggered this event, having been changed.
+	let oldStat = parseInt(eventInfo.previousValue)||3;
+	let newStat = parseInt(eventInfo.newValue)||3;
+ 
+	console.log("oldStat: ");
+	console.log(oldStat);
+	console.log("newStat: ");
+	console.log(newStat);
+ 
+	if(newStat > 7) {
+		//alert("Values may not exceed 7");
+		setAttrs({
+			"kinestetic": 7
+		});
+	}
+	if(newStat < 3) {
+		//alert("Values may not go below 3");
+		setAttrs({
+			"kinestetic": 3
+		});
+	}	
+ 
+});
+
+on("keydown:kinestetic", function(eventInfo) {return false;});
+*/
+</script>

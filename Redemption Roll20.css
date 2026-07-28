@@ -1,0 +1,1013 @@
+@import url('https://fonts.googleapis.com/css2?family=Asimovian&family=Oswald:wght@500;600&family=Share+Tech+Mono&display=swap');
+.charsheet {
+	--navy: #1b2130;
+	--navy-deep: #11141f;
+	--panel-hi: #232b42;
+	--panel-lo: #1a2135;
+	--slate: #45516c;
+	--slate-light: #5c6b8a;
+	--gold: #caa03e;
+	--gold-bright: #f0d488;
+	--gold-dim: #8a6a2a;
+	--chrome-hi: #f4f4f4;
+	--chrome-lo: #8b8f96;
+	--ivory: #e9e4d6;
+	--ember: #e07b2e;
+	--steel: #8892a6;
+	--field-bg: #10131f;
+	--hairline: rgba(202,160,62,0.3);
+
+	display: flow-root;
+	background:
+		radial-gradient(ellipse at 50% -10%, rgba(69,81,108,0.28), transparent 60%),
+		var(--navy-deep);
+	color: var(--ivory);
+	font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+
+.charsheet .sheet-Attribute {
+	width:80px;
+	display:inline-block;
+	font-family: Georgia, 'Cambria', serif;
+	font-style: italic;
+	color: var(--gold-bright);
+	font-size: .95em;
+}
+
+.charsheet .sheet-spanSubTitle {
+	display:inline-block;
+	font-family: 'Asimovian', Georgia, serif;
+	color: var(--gold-bright);
+	letter-spacing: 0.04em;
+}
+
+.charsheet label {
+	font-family: 'Asimovian', Georgia, serif;
+	letter-spacing: 0.02em;
+	color: var(--gold-bright);
+}
+
+/* ---- Global field + button theme ---- */
+
+.charsheet input[type="text"],
+.charsheet input[type="number"],
+.charsheet select,
+.charsheet textarea {
+	background-color: var(--field-bg);
+	color: var(--ivory);
+	border: 1px solid rgba(69,81,108,0.9);
+	border-radius: 2px;
+	font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+
+.charsheet input[type="text"]:focus,
+.charsheet input[type="number"]:focus,
+.charsheet select:focus,
+.charsheet textarea:focus {
+	outline: none;
+	border-color: var(--gold);
+	box-shadow: 0 0 0 1px var(--gold);
+}
+
+.charsheet input:disabled {
+	background-color: #171d2c;
+	color: var(--slate-light);
+	border-color: rgba(69,81,108,0.4);
+	font-family: 'Share Tech Mono', Consolas, 'Lucida Console', monospace;
+	text-shadow: 0 0 6px rgba(202,160,62,0.25);
+}
+
+.charsheet input[type="range"] {
+	-webkit-appearance: none;
+	appearance: none;
+	height: 4px;
+	width: auto;
+	background: var(--field-bg);
+	border: 1px solid rgba(69,81,108,0.9);
+	border-radius: 2px;
+	outline: none;
+	vertical-align: middle;
+}
+
+.charsheet input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	background: var(--gold-bright);
+	border: 1px solid #6e5320;
+	box-shadow: 0 0 6px rgba(202,160,62,0.5);
+	cursor: pointer;
+}
+
+.charsheet input[type="range"]::-moz-range-track {
+	height: 4px;
+	background: var(--field-bg);
+	border: 1px solid rgba(69,81,108,0.9);
+	border-radius: 2px;
+}
+
+.charsheet input[type="range"]::-moz-range-thumb {
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	background: var(--gold-bright);
+	border: 1px solid #6e5320;
+	box-shadow: 0 0 6px rgba(202,160,62,0.5);
+	cursor: pointer;
+}
+
+.charsheet .sheet-plainCheckbox {
+	-webkit-appearance: none;
+	appearance: none;
+	box-sizing: border-box;
+	width: 18px;
+	height: 18px;
+	background: var(--field-bg);
+	border: 2px solid var(--gold);
+	border-radius: 2px;
+	cursor: pointer;
+	vertical-align: middle;
+	position: relative;
+}
+
+.charsheet .sheet-plainCheckbox:checked {
+	background: var(--gold-bright);
+	border-color: var(--gold-bright);
+}
+
+.charsheet .sheet-plainCheckbox:checked::after {
+	content: "✓";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -55%);
+	color: #ffffff;
+	text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 1;
+}
+
+.charsheet button {
+	box-sizing: border-box;
+	font-family: 'Oswald', 'Arial Narrow', sans-serif;
+	font-weight: 600;
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+	font-size: .8em;
+	color: #201704;
+	padding: 3px 4px;
+	white-space: nowrap;
+	overflow: hidden;
+	background: linear-gradient(180deg, var(--gold-bright), var(--gold) 55%, var(--gold-dim));
+	border: 1px solid #6e5320;
+	border-radius: 2px;
+	box-shadow: 0 1px 0 rgba(255,255,255,0.3) inset, 0 2px 4px rgba(0,0,0,0.4);
+}
+
+.charsheet button:hover {
+	filter: brightness(1.08);
+}
+
+/* "Use Automation" master toggle, sits at the right end of the top tabs row. Gates optional
+   Mod-script features (e.g. the missile Apply Salvo button) so the sheet is fully standalone
+   when off (default). Future script controls can also key off attr_useAutomation. */
+.charsheet .sheet-automationToggle {
+	float: right;
+	display: flex;
+	align-items: center;
+	margin-right: 8px;
+	margin-top: 2px;
+}
+
+/* Roll20 puts its own .btn class on every sheet button with padding:4px 10px, which beats
+   our base .charsheet button padding and eats ~12px of horizontal room - clipping the
+   uppercase labels (DETECTION->DETECTIO, ROLL->ROL, ATTACK->ATTAC). Re-assert tight side
+   padding with specificity high enough (.charsheet button.btn = 2 classes + element) to win. */
+.charsheet button.btn {
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+/* Highlight whichever top-level / bottom-level tab is currently active */
+.charsheet .sheet-tabstoggle[value="character"] ~ div button[name="act_character"],
+.charsheet .sheet-tabstoggle[value="starship"] ~ div button[name="act_starship"],
+.charsheet .sheet-tabstoggle[value="unit"] ~ div button[name="act_unit"],
+.charsheet .sheet-tabstoggle[value="configuration"] ~ div button[name="act_configuration"],
+.charsheet .sheet-tabsBottomtoggle[value="tabSkills"] ~ div button[name="act_tabSkills"],
+.charsheet .sheet-tabsBottomtoggle[value="tabEquipment"] ~ div button[name="act_tabEquipment"],
+.charsheet .sheet-tabsBottomtoggle[value="tabCombat"] ~ div button[name="act_tabCombat"],
+.charsheet .sheet-tabsUnitBottomtoggle[value="tabUnitOutfit"] ~ div button[name="act_tabUnitOutfit"],
+.charsheet .sheet-tabsUnitBottomtoggle[value="tabUnitCombat"] ~ div button[name="act_tabUnitCombat"] {
+	background: linear-gradient(180deg, var(--slate-light), var(--slate) 55%, #2c3550);
+	color: var(--gold-bright);
+	border-color: var(--gold);
+	box-shadow: 0 0 8px rgba(202,160,62,0.35) inset;
+}
+
+.charsheet .sheet-TopPanel {
+	box-sizing: border-box;
+	width:824px;
+	display:flow-root;
+	background: linear-gradient(180deg, var(--panel-hi), var(--panel-lo));
+	clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+	padding: 9px 8px 8px 9px;
+}
+
+.charsheet .sheet-cutCornerWrap {
+	float:left;
+	background: var(--gold);
+	clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+	padding: 2px;
+	margin:2px;
+}
+
+.charsheet .sheet-cutCornerWrap:has(.sheet-AttributePanel) {
+	clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 22px 100%, 0 calc(100% - 22px));
+}
+
+.charsheet .sheet-cutCornerWrapRight {
+	float:right;
+	background: var(--gold);
+	clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+	padding: 2px;
+	margin:2px;
+}
+
+.charsheet .sheet-AttributePanel {
+	box-sizing: border-box;
+	width:185px;
+	background: linear-gradient(180deg, var(--panel-hi), var(--panel-lo));
+	clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+	padding: 18px 16px 16px 18px;
+	height:600px;
+}
+
+.sheet-darkmode button,
+.sheet-darkmode input,
+.sheet-darkmode optgroup,
+.sheet-darkmode select,
+.sheet-darkmode textarea,
+.sheet-darkmode .charsheet {
+	color: #eee
+}
+.sheet-darkmode .btn,
+.sheet-darkmode .btn.btn-default {
+	color: #c8c3bc;
+	text-shadow: rgba(24,26,27,.75) 0px 1px 1px;
+	background-color: #1e2021;
+	background-image: linear-gradient(#181a1b, #26292b);
+	border-color: #3e4446 #3e4446 #43494c;
+	box-shadow: rgba(24,26,27,.2) 0px 1px 0px inset,rgba(0,0,0,.05) 0px 1px 2px
+}
+
+.charsheet .sheet-FreePointsPanel {
+	float:left;
+	width:200px;
+	margin-top:5px;
+}
+
+.charsheet .sheet-StatusPanel {
+	box-sizing: border-box;
+	width:630px;
+	display:fixed;
+	background: linear-gradient(180deg, var(--panel-hi), var(--panel-lo));
+	clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+	padding: 9px 8px 8px 9px;
+	height:126px;
+}
+
+.charsheet .sheet-TagPanel {
+	box-sizing: border-box;
+	width:630px;
+	display:fixed;
+	background: linear-gradient(180deg, var(--panel-hi), var(--panel-lo));
+	clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+	padding: 9px 8px 8px 9px;
+	height:474px;
+	overflow-x:auto;
+}
+
+.charsheet .sheet-UnitTagPanel {
+	box-sizing: border-box;
+	width:588px;
+	display:fixed;
+	background: linear-gradient(180deg, var(--panel-hi), var(--panel-lo));
+	clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+	padding: 9px 8px 8px 9px;
+	height:490px;
+	overflow-x:auto;
+}
+
+.charsheet .sheet-bottomPanel {
+	box-sizing: border-box;
+	width:824px;
+	display:fixed;
+	padding: 9px 8px 8px 9px;
+	background: linear-gradient(180deg, var(--panel-hi), var(--panel-lo));
+	clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+
+.charsheet .sheet-EquipmentListPanel {
+	box-sizing: border-box;
+	width:388px;
+	height:300px;
+	display:fixed;
+	padding: 9px 8px 8px 9px;
+	background: linear-gradient(180deg, var(--panel-hi), var(--panel-lo));
+	clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+
+.charsheet .sheet-EquipmentListTasks {
+	box-sizing: border-box;
+	width:388px;
+	height:300px;
+	display:fixed;
+	padding: 9px 8px 8px 9px;
+	background: linear-gradient(180deg, var(--panel-hi), var(--panel-lo));
+	clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+
+.charsheet .sheet-RollDiffPanel {
+	padding-top:5px;
+	padding-bottom:5px;
+	margin-top:5px;
+	margin-bottom:5px;
+	width:820px;
+	float:left;
+	border-top:1px solid var(--hairline);
+	border-bottom:1px solid var(--hairline);
+}
+
+.charsheet .sheet-SkillPanel {
+	width:814px;
+	float:left;
+	padding:5px;
+	border-top:1px solid var(--hairline);
+}
+
+.charsheet .sheet-skillGroupDivider {
+	border-bottom: 1px solid var(--hairline);
+	margin-bottom: 5px;
+}
+
+.charsheet .sheet-AbilitiesPanel {
+	width:810px;
+	float:left;
+	padding-bottom:5px;
+	margin-bottom:5px;
+}
+
+
+.charsheet .sheet-tagText {
+	width:275px;
+}
+
+.charsheet .sheet-tagRank {
+	width:50px;
+	font-family: 'Share Tech Mono', Consolas, monospace;
+	text-align: center;
+}
+
+.charsheet .sheet-tagType {
+	width:75px;
+}
+
+.charsheet .sheet-inline-label {
+    white-space: nowrap;
+    max-width: 135px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    float:left;
+    font-family: 'Asimovian', Georgia, serif;
+    letter-spacing: 0.02em;
+    color: var(--gold-bright);
+}
+
+.charsheet .sheet-skillName {
+	width:150px;
+}
+.charsheet .sheet-skillRoll {
+	width:66px;
+}
+
+.charsheet .sheet-abilityRoll {
+	width:108px;
+}
+
+.charsheet .sheet-skillInfo {
+	width:175px;
+	font-family: 'Share Tech Mono', Consolas, monospace;
+}
+
+.charsheet .sheet-skillSpecialty {
+	width:175px;
+}
+
+.charsheet .sheet-armorBlock {
+	width:275px;
+	padding:5px;
+	border-bottom: .5px solid var(--hairline);
+	margin-right:auto;
+	margin-left:auto;
+}
+
+.charsheet .sheet-weaponBlock {
+	width:470px;
+	padding:5px;
+	border-bottom: .5px solid var(--hairline);
+	margin-right:auto;
+	margin-left:auto;
+}
+
+.charsheet .sheet-weaponBlockFlex {
+	width:470px;
+	padding:5px;
+	border-bottom: .5px solid var(--hairline);
+	margin-right:auto;
+	margin-left:auto;
+	display:flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.charsheet .sheet-Vinny P {
+	width:50px;
+	height:50px;
+	float:left;
+	margin-right:10px;
+	font-size:1em;
+	font-weight:bold;
+}
+
+.charsheet .sheet-weaponStarshipAttackButton {
+	width:64px;           /* 50px was too narrow for the single word "ATTACK" (clipped to "ATTAC") */
+	height:50px;
+	float:left;
+	margin-right:10px;
+	font-size:.8em;
+	font-weight:bold;
+	letter-spacing:0;
+	padding:3px 3px;
+	line-height:1.05;
+	white-space:normal;   /* dice icon on top, ATTACK below - both fully visible */
+	text-align:center;
+}
+
+.charsheet .sheet-weaponAttackButton {
+	width:90px;
+	text-align:center;
+}
+
+.sheet-gunnery[value="0"] ~ button.sheet-weaponStarshipAttackButton {
+	display:none;
+}
+
+.charsheet .sheet-SecondaryAttribute {
+	display:none;
+}
+
+.sheet-SkillInfoDiv {
+	display:inline;
+}
+
+.sheet-skillNameHdn[value="profession"] ~ div.sheet-SkillInfoDiv {
+	display:none;
+}
+
+.sheet-skillNameHdn[value="profession"] ~ div.sheet-SecondaryAttribute {
+	display:inline;
+}
+
+/* The switch - the box around the slider */
+.sheet-switch {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 17px;
+}
+
+/* Hide default HTML checkbox */
+.sheet-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.sheet-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--field-bg);
+  border: 1px solid rgba(69,81,108,0.9);
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+/* Rounded sliders */
+.sheet-slider.sheet-round {
+  border-radius: 17px;
+}
+
+.sheet-slider:before {
+  position: absolute;
+  content: "";
+  height: 11px;
+  width: 11px;
+  left: 2px;
+  bottom: 2px;
+  background-color: var(--steel);
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .sheet-slider {
+  border-color: var(--gold);
+  box-shadow: 0 0 8px rgba(202,160,62,0.4) inset;
+}
+
+input:focus + .sheet-slider {
+  box-shadow: 0 0 0 1px var(--gold);
+}
+
+.sheet-slider.sheet-round:before {
+  border-radius: 50%;
+}
+
+input:checked + .sheet-slider:before {
+  background-color: var(--gold-bright);
+  box-shadow: 0 0 6px rgba(240,212,136,0.8);
+  -webkit-transform: translateX(23px);
+  -ms-transform: translateX(23px);
+  transform: translateX(23px);
+}
+
+
+.sheet-radioTag {
+	display: inline-flex;
+	margin-right: 25px;
+	margin-left:  15px;
+}
+
+.sheet-radioTag label {
+	display: contents;
+}
+
+.sheet-radioTag input[type=radio] {
+  display: none;
+}
+
+.sheet-radioTag input[type=radio] + span {
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   box-sizing: border-box;
+   height:20px;
+   border: 1px solid var(--gold);
+   color: var(--steel);
+   background: var(--field-bg);
+}
+
+.sheet-radioTag label:not(:first-child) input[type=radio] + span {
+   border-left: none;
+}
+
+.sheet-radioTag input[type=radio]:checked + span {
+   background: var(--gold);
+   color: #201704;
+}
+
+.sheet-radioTag svg {
+	fill: var(--steel);
+	height: 3.6rem;
+	width: 3.6rem;
+	margin: 0.2rem;
+}
+
+.sheet-radioTag input[type=radio]:checked + svg {
+   background: var(--gold);
+   color: #201704;
+}
+
+.sheet-round {
+  /*position: relative;*/
+}
+
+.sheet-round label {
+  background-color: var(--field-bg);
+  border: 1px solid rgba(69,81,108,0.9);
+  border-radius: 50%;
+  cursor: pointer;
+  height: 28px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 28px;
+}
+
+.sheet-round label:after {
+  border: 2px solid var(--ivory);
+  border-top: none;
+  border-right: none;
+  content: "";
+  height: 6px;
+  left: 7px;
+  opacity: 0;
+  position: absolute;
+  top: 8px;
+  transform: rotate(-45deg);
+  width: 12px;
+}
+
+.sheet-round input[type="checkbox"] {
+  visibility: hidden;
+}
+
+.sheet-round input[type="checkbox"]:checked + label {
+  background-color: var(--gold);
+  border-color: var(--gold);
+}
+
+.sheet-round input[type="checkbox"]:checked + label:after {
+  opacity: 1;
+}
+
+/* Roll difficulty chips - hide the native radio, style the sibling span as a chip */
+.charsheet input[name="attr_rollDifficulty"],
+.charsheet input[name="attr_starshipRollDifficulty"],
+.charsheet input[name="attr_unitRollDifficulty"] {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.sheet-rollDiff {
+	box-sizing: border-box;
+	width:72px;
+	height:18px;
+	font-size:9px;
+	padding:2px;
+	text-align:center;
+	display: inline-block;
+	white-space: nowrap;
+	overflow: hidden;
+	font-family: 'Oswald', 'Arial Narrow', sans-serif;
+	font-weight: 500;
+	letter-spacing: 0.01em;
+	text-transform: uppercase;
+	color: var(--steel);
+	border: 1px solid rgba(202,160,62,0.4);
+	background: var(--field-bg);
+	cursor: pointer;
+}
+
+.charsheet input[name="attr_rollDifficulty"]:checked + .sheet-rollDiff,
+.charsheet input[name="attr_starshipRollDifficulty"]:checked + .sheet-rollDiff,
+.charsheet input[name="attr_unitRollDifficulty"]:checked + .sheet-rollDiff {
+	color: var(--gold-bright);
+	border-color: var(--gold);
+	background: rgba(202,160,62,0.14);
+	box-shadow: 0 0 8px rgba(202,160,62,0.25) inset;
+}
+
+/*Configure the tab buttons*/
+.sheet-tabSkills,
+.sheet-tabEquipment,
+.sheet-tabCombat {
+    display: none;
+}
+
+/*Configure the tab buttons*/
+.charsheet .sheet-character,
+.charsheet .sheet-starship,
+.charsheet .sheet-unit,
+.charsheet .sheet-config {
+    display: none;
+}
+
+/* show the selected tab */
+.sheet-tabsBottomtoggle[value="tabSkills"] ~ div.sheet-tabSkills,
+.sheet-tabsBottomtoggle[value="tabEquipment"] ~ div.sheet-tabEquipment,
+.sheet-tabsBottomtoggle[value="tabCombat"] ~ div.sheet-tabCombat {
+    display: flow-root;
+}
+
+.charsheet .sheet-tabstoggle[value="character"] ~ div.sheet-character,
+.charsheet .sheet-tabstoggle[value="starship"] ~ div.sheet-starship,
+.charsheet .sheet-tabstoggle[value="unit"] ~ div.sheet-unit,
+.charsheet .sheet-tabstoggle[value="configuration"] ~ div.sheet-config {
+    display: flow-root;
+}
+
+.sheet-tabUnitOutfit,
+.sheet-tabUnitCombat {
+	display: none;
+}
+
+.sheet-tabsUnitBottomtoggle[value="tabUnitOutfit"] ~ div.sheet-tabUnitOutfit,
+.sheet-tabsUnitBottomtoggle[value="tabUnitCombat"] ~ div.sheet-tabUnitCombat {
+    display: flow-root;
+}
+
+/* Power Slot Style Settings */
+.charsheet .sheet-PowerSlotOne,
+.charsheet .sheet-PowerSlotTwo,
+.charsheet .sheet-PowerSlotThree,
+.charsheet .sheet-PowerSlotFour,
+.charsheet .sheet-PowerSlotFive,
+.charsheet .sheet-PowerSlotSix,
+.charsheet .sheet-PowerSlotSeven,
+.charsheet .sheet-PowerSlotEight,
+.charsheet .sheet-PowerSlotNine,
+.charsheet .sheet-PowerSlotTen,
+.charsheet .sheet-PowerSlotEleven,
+.sheet-PowerSlotTwelve {
+	float:left;
+	display:none;
+	margin-left:5px;
+	text-align: center;
+	padding-top:5px;
+	padding-bottom:2px;
+}
+
+.charsheet .sheet-starshippowerslots[value="One"] ~ div.sheet-PowerSlotOne,
+.charsheet .sheet-starshippowerslots[value="Two"] ~ div.sheet-PowerSlotOne,
+.charsheet .sheet-starshippowerslots[value="Three"] ~ div.sheet-PowerSlotOne,
+.charsheet .sheet-starshippowerslots[value="Four"] ~ div.sheet-PowerSlotOne,
+.charsheet .sheet-starshippowerslots[value="Five"] ~ div.sheet-PowerSlotOne,
+.charsheet .sheet-starshippowerslots[value="Six"] ~ div.sheet-PowerSlotOne,
+.charsheet .sheet-starshippowerslots[value="Seven"] ~ div.sheet-PowerSlotOne,
+.charsheet .sheet-starshippowerslots[value="Eight"] ~ div.sheet-PowerSlotOne,
+.charsheet .sheet-starshippowerslots[value="Nine"] ~ div.sheet-PowerSlotOne,
+.charsheet .sheet-starshippowerslots[value="Ten"] ~ div.sheet-PowerSlotOne,
+.charsheet .sheet-starshippowerslots[value="Eleven"] ~ div.sheet-PowerSlotOne,
+.charsheet .sheet-starshippowerslots[value="Twelve"] ~ div.sheet-PowerSlotOne {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslots[value="Two"] ~ div.sheet-PowerSlotTwo,
+.charsheet .sheet-starshippowerslots[value="Three"] ~ div.sheet-PowerSlotTwo,
+.charsheet .sheet-starshippowerslots[value="Four"] ~ div.sheet-PowerSlotTwo,
+.charsheet .sheet-starshippowerslots[value="Five"] ~ div.sheet-PowerSlotTwo,
+.charsheet .sheet-starshippowerslots[value="Six"] ~ div.sheet-PowerSlotTwo,
+.charsheet .sheet-starshippowerslots[value="Seven"] ~ div.sheet-PowerSlotTwo,
+.charsheet .sheet-starshippowerslots[value="Eight"] ~ div.sheet-PowerSlotTwo,
+.charsheet .sheet-starshippowerslots[value="Nine"] ~ div.sheet-PowerSlotTwo,
+.charsheet .sheet-starshippowerslots[value="Ten"] ~ div.sheet-PowerSlotTwo,
+.charsheet .sheet-starshippowerslots[value="Eleven"] ~ div.sheet-PowerSlotTwo,
+.charsheet .sheet-starshippowerslots[value="Twelve"] ~ div.sheet-PowerSlotTwo {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslots[value="Three"] ~ div.sheet-PowerSlotThree,
+.charsheet .sheet-starshippowerslots[value="Four"] ~ div.sheet-PowerSlotThree,
+.charsheet .sheet-starshippowerslots[value="Five"] ~ div.sheet-PowerSlotThree,
+.charsheet .sheet-starshippowerslots[value="Six"] ~ div.sheet-PowerSlotThree,
+.charsheet .sheet-starshippowerslots[value="Seven"] ~ div.sheet-PowerSlotThree,
+.charsheet .sheet-starshippowerslots[value="Eight"] ~ div.sheet-PowerSlotThree,
+.charsheet .sheet-starshippowerslots[value="Nine"] ~ div.sheet-PowerSlotThree,
+.charsheet .sheet-starshippowerslots[value="Ten"] ~ div.sheet-PowerSlotThree,
+.charsheet .sheet-starshippowerslots[value="Eleven"] ~ div.sheet-PowerSlotThree,
+.charsheet .sheet-starshippowerslots[value="Twelve"] ~ div.sheet-PowerSlotThree {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslots[value="Four"] ~ div.sheet-PowerSlotFour,
+.charsheet .sheet-starshippowerslots[value="Five"] ~ div.sheet-PowerSlotFour,
+.charsheet .sheet-starshippowerslots[value="Six"] ~ div.sheet-PowerSlotFour,
+.charsheet .sheet-starshippowerslots[value="Seven"] ~ div.sheet-PowerSlotFour,
+.charsheet .sheet-starshippowerslots[value="Eight"] ~ div.sheet-PowerSlotFour,
+.charsheet .sheet-starshippowerslots[value="Nine"] ~ div.sheet-PowerSlotFour,
+.charsheet .sheet-starshippowerslots[value="Ten"] ~ div.sheet-PowerSlotFour,
+.charsheet .sheet-starshippowerslots[value="Eleven"] ~ div.sheet-PowerSlotFour,
+.charsheet .sheet-starshippowerslots[value="Twelve"] ~ div.sheet-PowerSlotFour {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslots[value="Five"] ~ div.sheet-PowerSlotFive,
+.charsheet .sheet-starshippowerslots[value="Six"] ~ div.sheet-PowerSlotFive,
+.charsheet .sheet-starshippowerslots[value="Seven"] ~ div.sheet-PowerSlotFive,
+.charsheet .sheet-starshippowerslots[value="Eight"] ~ div.sheet-PowerSlotFive,
+.charsheet .sheet-starshippowerslots[value="Nine"] ~ div.sheet-PowerSlotFive,
+.charsheet .sheet-starshippowerslots[value="Ten"] ~ div.sheet-PowerSlotFive,
+.charsheet .sheet-starshippowerslots[value="Eleven"] ~ div.sheet-PowerSlotFive,
+.charsheet .sheet-starshippowerslots[value="Twelve"] ~ div.sheet-PowerSlotFive {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslots[value="Six"] ~ div.sheet-PowerSlotSix,
+.charsheet .sheet-starshippowerslots[value="Seven"] ~ div.sheet-PowerSlotSix,
+.charsheet .sheet-starshippowerslots[value="Eight"] ~ div.sheet-PowerSlotSix,
+.charsheet .sheet-starshippowerslots[value="Nine"] ~ div.sheet-PowerSlotSix,
+.charsheet .sheet-starshippowerslots[value="Ten"] ~ div.sheet-PowerSlotSix,
+.charsheet .sheet-starshippowerslots[value="Eleven"] ~ div.sheet-PowerSlotSix,
+.charsheet .sheet-starshippowerslots[value="Twelve"] ~ div.sheet-PowerSlotSix {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslots[value="Seven"] ~ div.sheet-PowerSlotSeven,
+.charsheet .sheet-starshippowerslots[value="Eight"] ~ div.sheet-PowerSlotSeven,
+.charsheet .sheet-starshippowerslots[value="Nine"] ~ div.sheet-PowerSlotSeven,
+.charsheet .sheet-starshippowerslots[value="Ten"] ~ div.sheet-PowerSlotSeven,
+.charsheet .sheet-starshippowerslots[value="Eleven"] ~ div.sheet-PowerSlotSeven,
+.charsheet .sheet-starshippowerslots[value="Twelve"] ~ div.sheet-PowerSlotSeven {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslots[value="Eight"] ~ div.sheet-PowerSlotEight,
+.charsheet .sheet-starshippowerslots[value="Nine"] ~ div.sheet-PowerSlotEight,
+.charsheet .sheet-starshippowerslots[value="Ten"] ~ div.sheet-PowerSlotEight,
+.charsheet .sheet-starshippowerslots[value="Eleven"] ~ div.sheet-PowerSlotEight,
+.charsheet .sheet-starshippowerslots[value="Twelve"] ~ div.sheet-PowerSlotEight {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslots[value="Nine"] ~ div.sheet-PowerSlotNine,
+.charsheet .sheet-starshippowerslots[value="Ten"] ~ div.sheet-PowerSlotNine,
+.charsheet .sheet-starshippowerslots[value="Eleven"] ~ div.sheet-PowerSlotNine,
+.charsheet .sheet-starshippowerslots[value="Twelve"] ~ div.sheet-PowerSlotNine {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslots[value="Ten"] ~ div.sheet-PowerSlotTen,
+.charsheet .sheet-starshippowerslots[value="Eleven"] ~ div.sheet-PowerSlotTen,
+.charsheet .sheet-starshippowerslots[value="Twelve"] ~ div.sheet-PowerSlotTen {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslots[value="Eleven"] ~ div.sheet-PowerSlotEleven,
+.charsheet .sheet-starshippowerslots[value="Twelve"] ~ div.sheet-PowerSlotEleven {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslots[value="Twelve"] ~ div.sheet-PowerSlotTwelve {
+	display:inline;
+}
+
+
+/*** END of Power Slot Section ***/
+
+
+.sheet-woundButton {
+	width:60px;
+	display:inline;
+}
+
+.sheet-woundLevel[value="1"] ~ div.sheet-woundButton,
+.sheet-woundLevel[value="2"] ~ div.sheet-woundButton {
+    display: inline;
+}
+
+.sheet-woundLevel[value="3"] ~ div.sheet-woundButton {
+    display: none;
+}
+
+/* ---- Tag Journal master switch (drives cross-character sync via the API script) ---- */
+.charsheet .sheet-tagJournalMaster {
+	-webkit-appearance: none;
+	appearance: none;
+	box-sizing: border-box;
+	width: 34px;
+	height: 18px;
+	background: var(--field-bg);
+	border: 1px solid var(--gold);
+	border-radius: 9px;
+	position: relative;
+	cursor: pointer;
+	vertical-align: middle;
+}
+
+.charsheet .sheet-tagJournalMaster::after {
+	content: "";
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background: var(--steel);
+	transition: .2s;
+}
+
+.charsheet .sheet-tagJournalMaster:checked {
+	box-shadow: 0 0 8px rgba(202,160,62,0.4) inset;
+}
+
+.charsheet .sheet-tagJournalMaster:checked::after {
+	left: 18px;
+	background: var(--gold-bright);
+	box-shadow: 0 0 6px rgba(240,212,136,0.8);
+}
+
+/* On non-master sheets (switch off), lock the shared identity fields (text/rank/type) in the
+   Journal. Scoped by the sibling combinator to the config-tab Journal only - the personal-tag
+   sections have no master switch so are never affected. Self-contained: works off local switch
+   state with no dependency on the API script. */
+.charsheet .sheet-tagJournalMaster:not(:checked) ~ * .sheet-tagText,
+.charsheet .sheet-tagJournalMaster:not(:checked) ~ * .sheet-tagRank,
+.charsheet .sheet-tagJournalMaster:not(:checked) ~ * .sheet-tagType {
+	pointer-events: none;
+	opacity: 0.55;
+}
+
+/* ---- Custom roll template: &{template:redemption} ----
+   Renders in chat, OUTSIDE .charsheet, so it uses literal colors (not the --var tokens,
+   which are only defined on .charsheet). Roll-template classes keep the sheet- prefix
+   even under CSE (the documented exception). */
+.sheet-rolltemplate-redemption .sheet-rt-outer {
+	background: linear-gradient(180deg, #232b42, #1a2135);
+	border: 1px solid #caa03e;
+	border-radius: 4px;
+	padding: 8px 10px;
+	color: #e9e4d6;
+	font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+
+.sheet-rolltemplate-redemption .sheet-rt-title {
+	font-family: 'Asimovian', Georgia, serif;
+	color: #f0d488;
+	font-size: 1.05em;
+	letter-spacing: 0.03em;
+	text-transform: capitalize;
+	border-bottom: 1px solid rgba(202,160,62,0.4);
+	padding-bottom: 3px;
+	margin-bottom: 5px;
+}
+
+.sheet-rolltemplate-redemption .sheet-rt-roll {
+	font-family: 'Share Tech Mono', Consolas, 'Lucida Console', monospace;
+	font-size: 1.15em;
+	color: #e9e4d6;
+}
+
+/* Force our OWN opaque gold inline-roll box (background + dark text) instead of relying on
+   Roll20's default box color. Roll20's DARK MODE themes inline-roll results purple, and our
+   forced dark text on that purple was unreadable; a solid gold box keeps the number
+   high-contrast in both light and dark Roll20 themes. The surrounding "vs"/plain text still
+   uses the light ivory from .sheet-rt-roll. */
+.sheet-rolltemplate-redemption .sheet-rt-roll .inlinerollresult {
+	color: #11141f;
+	background-color: #f0d488;
+	border: 1px solid #a07f2c;
+}
+
+.sheet-rolltemplate-redemption .sheet-rt-meta {
+	font-family: 'Share Tech Mono', Consolas, 'Lucida Console', monospace;
+	font-size: 0.9em;
+	color: #cbb46a;
+	margin-top: 3px;
+}
+
+.sheet-rolltemplate-redemption .sheet-rt-metalabel {
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: #caa03e;
+	margin-right: 5px;
+}
+
+.sheet-rolltemplate-redemption .sheet-rt-tags {
+	font-size: 0.9em;
+	margin-top: 5px;
+	line-height: 1.4;
+}
+
+.sheet-rolltemplate-redemption .sheet-rt-taglabel {
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	margin-right: 5px;
+}
+
+.sheet-rolltemplate-redemption .sheet-rt-invoked .sheet-rt-taglabel {
+	color: #5aa392;
+}
+
+.sheet-rolltemplate-redemption .sheet-rt-condemned .sheet-rt-taglabel {
+	color: #e07b2e;
+}
+
+.sheet-rolltemplate-redemption .sheet-rt-apply {
+	margin-top: 7px;
+}
+
+/* Style the Roll20 API button ([Apply Salvo](!missiledrain ...)) to match the sheet's
+   gold buttons. Literal colors (renders in chat, outside .charsheet). */
+.sheet-rolltemplate-redemption .sheet-rt-apply a {
+	display: inline-block;
+	background: linear-gradient(180deg, #f0d488, #caa03e 60%, #a07f2c);
+	color: #201704;
+	border: 1px solid #6e5320;
+	border-radius: 3px;
+	padding: 3px 12px;
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	text-decoration: none;
+}

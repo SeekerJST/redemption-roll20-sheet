@@ -1,0 +1,588 @@
+.charsheet {
+	background-color:white;
+	color:black;
+}
+
+.charsheet .sheet-Attribute {
+	width:80px;
+	display:inline-block;
+}
+
+.charsheet .sheet-spanSubTitle {
+	display:inline-block;
+}
+
+.charsheet .sheet-TopPanel {
+
+	width:804px;
+	float:left;
+	border: 1px solid black;
+	border-radius:10px;
+	padding:5px;
+	margin:2px;
+}
+
+.charsheet .sheet-AttributePanel {
+	float:left;
+	width:200px;
+	border: 1px solid black; 
+	border-radius:10px;
+	padding:5px;	
+	height:600px;
+	margin:2px;
+
+}
+
+.sheet-darkmode button,
+.sheet-darkmode input,
+.sheet-darkmode optgroup,
+.sheet-darkmode select,
+.sheet-darkmode textarea,
+.sheet-darkmode .charsheet {
+	color: #eee
+}
+.sheet-darkmode .btn,
+.sheet-darkmode .btn.btn-default {
+	color: #c8c3bc;
+	text-shadow: rgba(24,26,27,.75) 0px 1px 1px;
+	background-color: #1e2021;
+	background-image: linear-gradient(#181a1b, #26292b);
+	border-color: #3e4446 #3e4446 #43494c;
+	box-shadow: rgba(24,26,27,.2) 0px 1px 0px inset,rgba(0,0,0,.05) 0px 1px 2px
+}
+
+.charsheet .sheet-FreePointsPanel {
+	float:left;
+	width:200px;
+	margin-top:5px;
+}
+
+.charsheet .sheet-StatusPanel { 
+	width:588px;
+	float:left;
+	display:fixed;
+	border: 1px solid black; 
+	border-radius:10px;	
+	padding:5px;
+	height:110px;
+	margin:2px;
+}
+
+.charsheet .sheet-TagPanel {
+	width:588px;
+	float:left;
+	display:fixed;
+	border: 1px solid black; 
+	border-radius:10px;	
+	padding:5px;
+	height:474px;
+	margin:2px;
+	overflow-x:auto;
+}
+
+.charsheet .sheet-bottomPanel {
+	width:804px;
+	float:left;
+	display:fixed;
+	padding:5px;
+	border: 1px solid black; 
+	border-radius:10px;	
+}
+
+.charsheet .sheet-EquipmentListPanel {
+	width:388px;
+	height:300px;
+	float:left;
+	display:fixed;
+	padding:5px;
+	border: 1px solid black; 
+	border-radius:10px;	
+}
+
+.charsheet .sheet-EquipmentListTasks {
+	width:388px;
+	height:300px;
+	float:right;
+	display:fixed;
+	padding:5px;
+	border: 1px solid black; 
+	border-radius:10px;		
+}
+
+.charsheet .sheet-RollDiffPanel {
+	padding-top:5px;
+	padding-bottom:5px;
+	margin-top:5px;
+	margin-bottom:5px;
+	width:800px;
+	float:left;
+	border-top:1px solid black;
+	border-bottom: 1px solid black;
+}
+
+.charsheet .sheet-SkillPanel {
+	width:794px;
+	float:left;
+	padding:5px;	
+	border-top:1px solid black;
+
+}
+
+.charsheet .sheet-AbilitiesPanel {
+	width:790px;
+	float:left;
+	padding-bottom:5px;
+	margin-bottom:5px;
+}
+	
+
+.charsheet .sheet-tagText {
+		width:275px;
+}
+
+.charsheet .sheet-tagRank {
+		width:50px;
+}
+
+.charsheet .sheet-tagType {
+	width:75px;
+}
+
+.charsheet .sheet-inline-label { 
+    white-space: nowrap;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    float:left;     
+    }
+	
+.charsheet .sheet-skillName {
+	width:150px;
+}	
+.charsheet .sheet-skillRoll {
+	width:60px;
+}
+
+.charsheet .sheet-abilityRoll {
+	width:100px;
+}
+
+.charsheet .sheet-skillInfo {
+		width:175px;
+}
+
+.charsheet .sheet-skillSpecialty {
+		width:175px;
+}
+
+.charsheet .sheet-armorBlock {
+	width:275px;
+	padding:5px;
+	border-bottom: .5px solid #D3D3D3;	
+	margin-right:auto;
+	margin-left:auto;
+}
+
+.charsheet .sheet-weaponBlock {
+	width:470px;
+	padding:5px;
+	border-bottom: .5px solid #D3D3D3;	
+	margin-right:auto;
+	margin-left:auto;
+
+}
+
+.charsheet .sheet-weaponBlockFlex {
+	width:470px;
+	padding:5px;
+	border-bottom: .5px solid #D3D3D3;	
+	margin-right:auto;
+	margin-left:auto;
+	display:flex;
+}
+
+.charsheet .sheet-Vinny P {
+		width:50px;
+		height:50px;
+		float:left;
+		margin-right:10px;
+		font-size:1em;
+		font-weight:bold;
+}
+
+.charsheet .sheet-weaponStarshipAttackButton {
+		width:50px;
+		height:50px;
+		float:left;
+		margin-right:10px;
+		font-size:.90em;
+		font-weight:bold;
+}
+
+.sheet-gunnery[value="0"] ~ button.sheet-weaponStarshipAttackButton {
+	display:none;
+}
+
+.charsheet .sheet-SecondaryAttribute {
+	display:none;
+}
+
+.sheet-SkillInfoDiv {
+	display:inline;
+}
+
+.sheet-skillNameHdn[value="profession"] ~ div.sheet-SkillInfoDiv {
+	display:none;
+}
+
+.sheet-skillNameHdn[value="profession"] ~ div.sheet-SecondaryAttribute {
+	display:inline;
+}
+	
+/* The switch - the box around the slider */
+.sheet-switch {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 17px;
+}
+
+/* Hide default HTML checkbox */
+.sheet-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.sheet-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+/* Rounded sliders */
+.sheet-slider.sheet-round {
+  border-radius: 17px;
+}
+
+.sheet-slider:before {
+  position: absolute;
+  content: "";
+  height: 13px;
+  width: 13px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .sheet-slider {
+  background-color: #2196F3;
+}
+
+input:focus + .sheet-slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+.sheet-slider.sheet-round:before {
+  border-radius: 50%;
+}
+
+input:checked + .sheet-slider:before {
+  -webkit-transform: translateX(23px);
+  -ms-transform: translateX(23px);
+  transform: translateX(23px);
+}
+
+  
+.sheet-radioTag {
+	display: inline-block;
+}
+
+.sheet-radioTag label {
+	display: inline;
+	width:60px;
+}
+
+.sheet-radioTag input[type=radio] {
+  opacity:0;
+  width:0;
+}
+
+.sheet-radioTag input[type=radio] + span {
+   display: inline-block;
+   border: 1px solid #eee;
+   height:20px;
+   margin-right: 0px;
+   color: #eee;
+   float:left;
+}
+
+.sheet-radioTag input[type=radio]:checked + span {
+   background: #eee;
+   color: #000;
+}  
+
+.sheet-radioTag svg {
+	fill: rgb(242, 242, 242);
+	height: 3.6rem;
+	width: 3.6rem;
+	margin: 0.2rem;
+}
+
+.sheet-radioTag input[type=radio]:checked + svg {
+   background: #eee;
+   color: #000;	
+}
+
+.sheet-round {
+  /*position: relative;*/
+}
+
+.sheet-round label {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 28px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 28px;
+}
+
+.sheet-round label:after {
+  border: 2px solid #fff;
+  border-top: none;
+  border-right: none;
+  content: "";
+  height: 6px;
+  left: 7px;
+  opacity: 0;
+  position: absolute;
+  top: 8px;
+  transform: rotate(-45deg);
+  width: 12px;
+}
+
+.sheet-round input[type="checkbox"] {
+  visibility: hidden;
+}
+
+.sheet-round input[type="checkbox"]:checked + label {
+  background-color: #66bb6a;
+  border-color: #66bb6a;
+}
+
+.sheet-round input[type="checkbox"]:checked + label:after {
+  opacity: 1;
+}
+
+.sheet-rollDiff {
+	width:60px;
+	height:15px;
+	font-size:10px;
+	padding:3px;
+	text-align:center;
+}
+
+/*Configure the tab buttons*/
+.sheet-tabSkills,
+.sheet-tabEquipment,
+.sheet-tabCombat {
+    display: none;
+}
+
+/*Configure the tab buttons*/
+.charsheet .sheet-character,
+.charsheet .sheet-starship,
+.charsheet .sheet-unit,
+.charsheet .sheet-config {
+    display: none;
+}
+
+/* show the selected tab */
+.sheet-tabsBottomtoggle[value="tabSkills"] ~ div.sheet-tabSkills,
+.sheet-tabsBottomtoggle[value="tabEquipment"] ~ div.sheet-tabEquipment,
+.sheet-tabsBottomtoggle[value="tabCombat"] ~ div.sheet-tabCombat {
+    display: block;
+}
+
+.charsheet .sheet-tabstoggle[value="character"] ~ div.sheet-character,
+.charsheet .sheet-tabstoggle[value="starship"] ~ div.sheet-starship,
+.charsheet .sheet-tabstoggle[value="unit"] ~ div.sheet-unit,
+.charsheet .sheet-tabstoggle[value="configuration"] ~ div.sheet-config {
+    display: block;
+}
+
+.sheet-tabUnitOutfit,
+.sheet-tabUnitCombat {
+	display: none;
+}
+
+.sheet-tabsUnitBottomtoggle[value="tabUnitOutfit"] ~ div.sheet-tabUnitOutfit,
+.sheet-tabsUnitBottomtoggle[value="tabUnitCombat"] ~ div.sheet-tabUnitCombat {
+    display: block;
+}
+
+/* Power Slot Style Settings */
+.charsheet .sheet-PowerSlotOne,
+.charsheet .sheet-PowerSlotTwo,
+.charsheet .sheet-PowerSlotThree, 
+.charsheet .sheet-PowerSlotFour,
+.charsheet .sheet-PowerSlotFive,
+.charsheet .sheet-PowerSlotSix,
+.charsheet .sheet-PowerSlotSeven,
+.charsheet .sheet-PowerSlotEight,
+.charsheet .sheet-PowerSlotNine,
+.charsheet .sheet-PowerSlotTen,
+.charsheet .sheet-PowerSlotEleven,
+.sheet-PowerSlotTwelve {
+	float:left;
+	display:none;
+	margin-left:5px;
+	text-align: center;
+	padding-top:5px;
+	padding-bottom:2px;
+}
+
+.charsheet .sheet-starshippowerslots[value="One"] ~ div.sheet-PowerSlotOne, 
+.charsheet .sheet-starshippowerslots[value="Two"] ~ div.sheet-PowerSlotOne, 
+.charsheet .sheet-starshippowerslots[value="Three"] ~ div.sheet-PowerSlotOne, 
+.charsheet .sheet-starshippowerslots[value="Four"] ~ div.sheet-PowerSlotOne, 
+.charsheet .sheet-starshippowerslots[value="Five"] ~ div.sheet-PowerSlotOne, 
+.charsheet .sheet-starshippowerslots[value="Six"] ~ div.sheet-PowerSlotOne, 
+.charsheet .sheet-starshippowerslots[value="Seven"] ~ div.sheet-PowerSlotOne, 
+.charsheet .sheet-starshippowerslots[value="Eight"] ~ div.sheet-PowerSlotOne, 
+.charsheet .sheet-starshippowerslots[value="Nine"] ~ div.sheet-PowerSlotOne, 
+.charsheet .sheet-starshippowerslots[value="Ten"] ~ div.sheet-PowerSlotOne, 
+.charsheet .sheet-starshippowerslots[value="Eleven"] ~ div.sheet-PowerSlotOne, 
+.charsheet .sheet-starshippowerslots[value="Twelve"] ~ div.sheet-PowerSlotOne {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslots[value="Two"] ~ div.sheet-PowerSlotTwo, 
+.charsheet .sheet-starshippowerslots[value="Three"] ~ div.sheet-PowerSlotTwo, 
+.charsheet .sheet-starshippowerslots[value="Four"] ~ div.sheet-PowerSlotTwo, 
+.charsheet .sheet-starshippowerslots[value="Five"] ~ div.sheet-PowerSlotTwo, 
+.charsheet .sheet-starshippowerslots[value="Six"] ~ div.sheet-PowerSlotTwo, 
+.charsheet .sheet-starshippowerslots[value="Seven"] ~ div.sheet-PowerSlotTwo, 
+.charsheet .sheet-starshippowerslots[value="Eight"] ~ div.sheet-PowerSlotTwo, 
+.charsheet .sheet-starshippowerslots[value="Nine"] ~ div.sheet-PowerSlotTwo, 
+.charsheet .sheet-starshippowerslots[value="Ten"] ~ div.sheet-PowerSlotTwo, 
+.charsheet .sheet-starshippowerslots[value="Eleven"] ~ div.sheet-PowerSlotTwo, 
+.charsheet .sheet-starshippowerslots[value="Twelve"] ~ div.sheet-PowerSlotTwo {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslots[value="Three"] ~ div.sheet-PowerSlotThree, 
+.charsheet .sheet-starshippowerslots[value="Four"] ~ div.sheet-PowerSlotThree, 
+.charsheet .sheet-starshippowerslots[value="Five"] ~ div.sheet-PowerSlotThree, 
+.charsheet .sheet-starshippowerslots[value="Six"] ~ div.sheet-PowerSlotThree, 
+.charsheet .sheet-starshippowerslots[value="Seven"] ~ div.sheet-PowerSlotThree, 
+.charsheet .sheet-starshippowerslots[value="Eight"] ~ div.sheet-PowerSlotThree, 
+.charsheet .sheet-starshippowerslots[value="Nine"] ~ div.sheet-PowerSlotThree, 
+.charsheet .sheet-starshippowerslots[value="Ten"] ~ div.sheet-PowerSlotThree, 
+.charsheet .sheet-starshippowerslots[value="Eleven"] ~ div.sheet-PowerSlotThree, 
+.charsheet .sheet-starshippowerslots[value="Twelve"] ~ div.sheet-PowerSlotThree {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslots[value="Four"] ~ div.sheet-PowerSlotFour, 
+.charsheet .sheet-starshippowerslots[value="Five"] ~ div.sheet-PowerSlotFour, 
+.charsheet .sheet-starshippowerslots[value="Six"] ~ div.sheet-PowerSlotFour, 
+.charsheet .sheet-starshippowerslots[value="Seven"] ~ div.sheet-PowerSlotFour, 
+.charsheet .sheet-starshippowerslots[value="Eight"] ~ div.sheet-PowerSlotFour, 
+.charsheet .sheet-starshippowerslots[value="Nine"] ~ div.sheet-PowerSlotFour, 
+.charsheet .sheet-starshippowerslots[value="Ten"] ~ div.sheet-PowerSlotFour, 
+.charsheet .sheet-starshippowerslots[value="Eleven"] ~ div.sheet-PowerSlotFour, 
+.charsheet .sheet-starshippowerslots[value="Twelve"] ~ div.sheet-PowerSlotFour {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslots[value="Five"] ~ div.sheet-PowerSlotFive, 
+.charsheet .sheet-starshippowerslots[value="Six"] ~ div.sheet-PowerSlotFive, 
+.charsheet .sheet-starshippowerslots[value="Seven"] ~ div.sheet-PowerSlotFive, 
+.charsheet .sheet-starshippowerslots[value="Eight"] ~ div.sheet-PowerSlotFive, 
+.charsheet .sheet-starshippowerslots[value="Nine"] ~ div.sheet-PowerSlotFive, 
+.charsheet .sheet-starshippowerslots[value="Ten"] ~ div.sheet-PowerSlotFive, 
+.charsheet .sheet-starshippowerslots[value="Eleven"] ~ div.sheet-PowerSlotFive, 
+.charsheet .sheet-starshippowerslots[value="Twelve"] ~ div.sheet-PowerSlotFive {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslots[value="Six"] ~ div.sheet-PowerSlotSix, 
+.charsheet .sheet-starshippowerslots[value="Seven"] ~ div.sheet-PowerSlotSix, 
+.charsheet .sheet-starshippowerslots[value="Eight"] ~ div.sheet-PowerSlotSix, 
+.charsheet .sheet-starshippowerslots[value="Nine"] ~ div.sheet-PowerSlotSix, 
+.charsheet .sheet-starshippowerslots[value="Ten"] ~ div.sheet-PowerSlotSix, 
+.charsheet .sheet-starshippowerslots[value="Eleven"] ~ div.sheet-PowerSlotSix, 
+.charsheet .sheet-starshippowerslots[value="Twelve"] ~ div.sheet-PowerSlotSix {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslots[value="Seven"] ~ div.sheet-PowerSlotSeven, 
+.charsheet .sheet-starshippowerslots[value="Eight"] ~ div.sheet-PowerSlotSeven, 
+.charsheet .sheet-starshippowerslots[value="Nine"] ~ div.sheet-PowerSlotSeven, 
+.charsheet .sheet-starshippowerslots[value="Ten"] ~ div.sheet-PowerSlotSeven, 
+.charsheet .sheet-starshippowerslots[value="Eleven"] ~ div.sheet-PowerSlotSeven, 
+.charsheet .sheet-starshippowerslots[value="Twelve"] ~ div.sheet-PowerSlotSeven {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslots[value="Eight"] ~ div.sheet-PowerSlotEight, 
+.charsheet .sheet-starshippowerslots[value="Nine"] ~ div.sheet-PowerSlotEight, 
+.charsheet .sheet-starshippowerslots[value="Ten"] ~ div.sheet-PowerSlotEight, 
+.charsheet .sheet-starshippowerslots[value="Eleven"] ~ div.sheet-PowerSlotEight, 
+.charsheet .sheet-starshippowerslots[value="Twelve"] ~ div.sheet-PowerSlotEight {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslots[value="Nine"] ~ div.sheet-PowerSlotNine, 
+.charsheet .sheet-starshippowerslots[value="Ten"] ~ div.sheet-PowerSlotNine, 
+.charsheet .sheet-starshippowerslots[value="Eleven"] ~ div.sheet-PowerSlotNine, 
+.charsheet .sheet-starshippowerslots[value="Twelve"] ~ div.sheet-PowerSlotNine {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslots[value="Ten"] ~ div.sheet-PowerSlotTen, 
+.charsheet .sheet-starshippowerslots[value="Eleven"] ~ div.sheet-PowerSlotTen, 
+.charsheet .sheet-starshippowerslots[value="Twelve"] ~ div.sheet-PowerSlotTen {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslots[value="Eleven"] ~ div.sheet-PowerSlotEleven, 
+.charsheet .sheet-starshippowerslots[value="Twelve"] ~ div.sheet-PowerSlotEleven {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslots[value="Twelve"] ~ div.sheet-PowerSlotTwelve {
+	display:inline;
+}
+
+
+/*** END of Power Slot Section ***/
+
+
+.sheet-woundButton {
+	width:60px;
+	display:inline;
+}
+
+.sheet-woundLevel[value="1"] ~ div.sheet-woundButton,
+.sheet-woundLevel[value="2"] ~ div.sheet-woundButton {
+    display: inline;
+}
+
+.sheet-woundLevel[value="3"] ~ div.sheet-woundButton {
+    display: none;
+}
+

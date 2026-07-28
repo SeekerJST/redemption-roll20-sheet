@@ -1,0 +1,22 @@
+# --- Debug captures & campaign/character data (kept out of the public repo) ---
+Back ups/
+Game Settings/
+Character Comparison/
+Screenshots/
+*.log
+
+# --- Local scratch / backups ---
+*.bak
+cutcorner_mockup.html
+
+# --- Tooling / IDE ---
+.vs/
+.claude/
+.vscode/
+.idea/
+
+# --- OS cruft ---
+.DS_Store
+Thumbs.db
+*~
+*.swp
