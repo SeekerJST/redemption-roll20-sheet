@@ -228,9 +228,13 @@
 						<input name="attr_BodyCurr" type="number" value="15">
 					</span>
 					<span>
-						Damage Penalty: 
+						Damage Penalty:
 						<input name="attr_TNPenaltyHdn" type="hidden" value="0" >
 						<input name="attr_TNPenalty" type="number" value="0" readonly="true">
+					</span>
+					<span>
+						Regen:
+						<input name="attr_bodyRegen" type="number" value="0" min="0">
 					</span>
 					<div class="woundButton">
 						<button name="act_btnWound" type="action">
@@ -879,6 +883,7 @@
 									<option value="Battlefield">Battlefield</option>
 									<option value="Hull">Hull</option>
 								</select>								
+								<span style="display:inline-block;width:45px;text-align:center;font-weight:bold;margin-left:10px;">Regen</span>
 								<span style="display: inline-block;width:90px">Armor Rating</span>
 								<input type="number" name="attr_armorValueCurr"  min="0">
 								/
@@ -890,6 +895,7 @@
 								<input type="number" name="attr_armorBodyCurr" value="0" min="0" >
 								/
 								<input type="number" name="attr_armorBody" value="0" min="0">
+								<input type="number" name="attr_armorBodyRegen" value="0" min="0" style="width:45px;margin-left:8px;">
 								 
 <!-- 								<button type="action" name="act_btnArmorRepair">
 									Repair
@@ -900,6 +906,7 @@
 								<input type="number" name="attr_armorForceFieldCurr" min="0">
 								/
 								<input type="number" name="attr_armorForceField" min="0">
+								<input type="number" name="attr_armorFFRegen" value="0" min="0" style="width:45px;margin-left:8px;">
 <!-- 								<button type="action" name="act_btnForceFieldRestore">
 									Restore
 								</button>  -->								
@@ -1110,9 +1117,9 @@
 				</fieldset>		
 			</div>		
 			
-			<div class="bleedPanel" style="width:100%;clear:both;margin-top:25px;">
+			<div class="bleedPanel" style="width:100%;clear:both;padding-top:25px;">
 				<label>Bleeds</label>
-				<button type="action" name="act_applyBleeds" style="margin-left:15px;">Apply Bleeds</button>
+				<button type="action" name="act_applyBleeds" style="margin-left:15px;">Apply Regen/Bleeds</button>
 				<button type="action" name="act_clearBleeds" style="margin-left:5px;">Clear All</button>
 				<span style="margin-left:15px;font-size:.9em;">Total / round: <input type="number" name="attr_bleedTotal" value="0" readonly="true" style="width:45px;"></span>
 				<div style="border-radius:10px;border:1px solid black;padding:5px;margin-top:3px;">
@@ -4667,22 +4674,23 @@
 	on("clicked:applyBleeds", function() {
 		getSectionIDs("bleeds", function(bleedIds) {
 			let bleedFields = bleedIds.map(function(id) { return "repeating_bleeds_" + id + "_bleedDamage"; });
-			getAttrs(bleedFields.concat(["BodyCurr"]), function(bv) {
+			getAttrs(bleedFields.concat(["BodyCurr", "BodyMaxHdn", "bodyRegen"]), function(bv) {
 				let total = 0;
 				bleedFields.forEach(function(f) { total += parseInt(bv[f]) || 0; });
-				if(total <= 0) { return; }
 				let body = parseInt(bv.BodyCurr) || 0;
+				let bodyMax = parseInt(bv.BodyMaxHdn) || 0;
+				let bodyRegen = parseInt(bv.bodyRegen) || 0;
+				// Each track regens toward its max first, then bleeds hit the front line: net is
+				// (current + regen - bleeds), floored at 0, capped at max. Regen never reduces a
+				// track below its current value if the max is mis-set. (Formula per PJ.)
+				let bodyReg = Math.min(Math.max(bodyMax, body), body + bodyRegen);
 
 				getSectionIDs("armor", function(armorIds) {
-					if(armorIds.length === 0) {
-						setAttrs({ BodyCurr: Math.max(0, body - total) });
-						return;
-					}
 					let names = [];
 					armorIds.forEach(function(id) {
-						names.push("repeating_armor_" + id + "_armorActive",
-								   "repeating_armor_" + id + "_armorForceFieldCurr",
-								   "repeating_armor_" + id + "_armorBodyCurr");
+						let p = "repeating_armor_" + id + "_";
+						names.push(p + "armorActive", p + "armorForceFieldCurr", p + "armorForceField", p + "armorFFRegen",
+								   p + "armorBodyCurr", p + "armorBody", p + "armorBodyRegen");
 					});
 					getAttrs(names, function(av) {
 						let activeId = null;
@@ -4690,29 +4698,43 @@
 							let a = av["repeating_armor_" + armorIds[i] + "_armorActive"];
 							if(a === "on" || a === "1") { activeId = armorIds[i]; break; }
 						}
-						if(activeId === null) {
-							// no active armor -> bleeds hit the character's Body directly
-							setAttrs({ BodyCurr: Math.max(0, body - total) });
-							return;
-						}
-						let ffName = "repeating_armor_" + activeId + "_armorForceFieldCurr";
-						let abName = "repeating_armor_" + activeId + "_armorBodyCurr";
-						let ff = parseInt(av[ffName]) || 0;
-						let armorBody = parseInt(av[abName]) || 0;
 
-						if(ff > 0) {
-							// Force Field up: soaks the whole hit, no overflow (a dying FF eats it all).
-							let u = {};
-							u[ffName] = Math.max(0, ff - total);
-							setAttrs(u);
+						// No active armor: only the character's Body is in play.
+						if(activeId === null) {
+							setAttrs({ BodyCurr: Math.max(0, bodyReg - total) });
 							return;
 						}
-						// Force Field down: the armor's Body track absorbs first, overflow spilling to the character's Body.
-						let overflow = Math.max(0, total - armorBody);
-						let u = {};
-						u[abName] = Math.max(0, armorBody - total);
-						if(overflow > 0) { u.BodyCurr = Math.max(0, body - overflow); }
-						setAttrs(u);
+
+						let p = "repeating_armor_" + activeId + "_";
+						let ffCur = parseInt(av[p + "armorForceFieldCurr"]) || 0;
+						let ffMax = parseInt(av[p + "armorForceField"]) || 0;
+						let ffRegen = parseInt(av[p + "armorFFRegen"]) || 0;
+						let abCur = parseInt(av[p + "armorBodyCurr"]) || 0;
+						let abMax = parseInt(av[p + "armorBody"]) || 0;
+						let abRegen = parseInt(av[p + "armorBodyRegen"]) || 0;
+
+						let ffReg = Math.min(Math.max(ffMax, ffCur), ffCur + ffRegen);
+						let abReg = Math.min(Math.max(abMax, abCur), abCur + abRegen);
+
+						let update = {};
+						if(ffReg > 0) {
+							// Force Field runs first and eats the whole bleed - no overflow. Other tracks just regen.
+							update[p + "armorForceFieldCurr"] = Math.max(0, ffReg - total);
+							update[p + "armorBodyCurr"] = abReg;
+							update["BodyCurr"] = bodyReg;
+						} else if(abReg > 0) {
+							// Armor Body is the front line; overflow past it spills to the character's Body.
+							let overflow = Math.max(0, total - abReg);
+							update[p + "armorForceFieldCurr"] = ffReg;
+							update[p + "armorBodyCurr"] = Math.max(0, abReg - total);
+							update["BodyCurr"] = Math.max(0, bodyReg - overflow);
+						} else {
+							// Only the character's Body is left to take it.
+							update[p + "armorForceFieldCurr"] = ffReg;
+							update[p + "armorBodyCurr"] = abReg;
+							update["BodyCurr"] = Math.max(0, bodyReg - total);
+						}
+						setAttrs(update);
 					});
 				});
 			});
