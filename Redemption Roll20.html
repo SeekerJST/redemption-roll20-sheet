@@ -1228,9 +1228,11 @@
 				<input type="checkbox" class="plainCheckbox" name="attr_starshipShroudHull" value="0">
 			</span>
 			
-			<span class="Attribute" style="width:175px;">
-				Force Field 
-				<input type="number" name="attr_starshipForceField" value="0">
+			<span class="Attribute" style="width:220px;">
+				Force Field
+				<input type="number" name="attr_starshipForceFieldCurr" value="0" style="width:50px;">
+				/
+				<input type="number" name="attr_starshipForceField" value="0" style="width:50px;">
 			</span>
 			<span class="Attribute" style="width:200px;">
 				Force Field Regeneration 
@@ -1655,6 +1657,28 @@
 			</div>		
 		</div>		
 
+		<div class="bleedPanel" style="width:100%;clear:both;padding-top:25px;">
+			<label>Bleeds</label>
+			<button type="action" name="act_applyStarshipBleeds" style="margin-left:15px;">Apply Regen/Bleeds</button>
+			<button type="action" name="act_clearStarshipBleeds" style="margin-left:5px;">Clear All</button>
+			<span style="margin-left:15px;font-size:.9em;">Total / round: <input type="number" name="attr_starshipBleedTotal" value="0" readonly="true" style="width:45px;"></span>
+			<div style="border-radius:10px;border:1px solid black;padding:5px;margin-top:3px;">
+				<div>
+					<span style="font-size:.85em;display:inline-block;width:255px;">Source</span>
+					<span style="font-size:.85em;display:inline-block;width:60px;">Damage</span>
+					<span style="font-size:.85em;display:inline-block;">Severity (resolve difficulty)</span>
+				</div>
+				<fieldset class="repeating_starshipBleeds">
+					<input type="text" name="attr_bleedSource" style="width:250px;">
+					<input type="number" name="attr_bleedDamage" value="0" min="0" style="width:50px;">
+					<select name="attr_bleedSeverity" style="width:110px;">
+						<option value="Minor">Minor</option>
+						<option value="Moderate">Moderate</option>
+						<option value="Major">Major</option>
+					</select>
+				</fieldset>
+			</div>
+		</div>
 	</div>
 	</div>
 	<div style="display:flex;margin-top:25px;width:860px;">
@@ -4751,6 +4775,71 @@
 	on("clicked:clearBleeds", function() {
 		clearAllBleeds();
 	});
+
+	/* ---- Bleeds (Starship tab) ---- own repeating_starshipBleeds list. Cascade: Force Field
+	   (Current/Max, regens toward max by starshipFFRegen) runs FIRST and eats the whole bleed
+	   (no overflow), else the ship's Body (starshipCurrBodyHdn) takes it, capped at (max Body -
+	   Heat). No body regen for ships yet. Same current+regen-bleeds formula as the character tab. */
+	function recalcStarshipBleedTotal() {
+		getSectionIDs("starshipBleeds", function(ids) {
+			if(ids.length === 0) { setAttrs({ starshipBleedTotal: 0 }); return; }
+			let fields = ids.map(function(id) { return "repeating_starshipBleeds_" + id + "_bleedDamage"; });
+			getAttrs(fields, function(v) {
+				let total = 0;
+				fields.forEach(function(f) { total += parseInt(v[f]) || 0; });
+				setAttrs({ starshipBleedTotal: total });
+			});
+		});
+	}
+
+	on("change:repeating_starshipBleeds remove:repeating_starshipBleeds sheet:opened", function() {
+		recalcStarshipBleedTotal();
+	});
+
+	function clearAllStarshipBleeds() {
+		getSectionIDs("starshipBleeds", function(ids) {
+			ids.forEach(function(id) { removeRepeatingRow("repeating_starshipBleeds_" + id); });
+			setAttrs({ starshipBleedTotal: 0 });
+		});
+	}
+
+	on("clicked:clearStarshipBleeds", function() {
+		clearAllStarshipBleeds();
+	});
+
+	on("clicked:applyStarshipBleeds", function() {
+		getSectionIDs("starshipBleeds", function(bleedIds) {
+			let bleedFields = bleedIds.map(function(id) { return "repeating_starshipBleeds_" + id + "_bleedDamage"; });
+			getAttrs(bleedFields.concat(["starshipForceFieldCurr", "starshipForceField", "starshipFFRegen",
+										 "starshipCurrBodyHdn", "starshipBody", "starshipCurrHeatHdn"]), function(v) {
+				let total = 0;
+				bleedFields.forEach(function(f) { total += parseInt(v[f]) || 0; });
+
+				let ffCur = parseInt(v.starshipForceFieldCurr) || 0;
+				let ffMax = parseInt(v.starshipForceField) || 0;
+				let ffRegen = parseInt(v.starshipFFRegen) || 0;
+				let ffReg = Math.min(Math.max(ffMax, ffCur), ffCur + ffRegen);
+
+				if(ffReg > 0) {
+					// Force Field runs first and eats the whole bleed - no overflow to Body.
+					setAttrs({ starshipForceFieldCurr: Math.max(0, ffReg - total) });
+					return;
+				}
+
+				// Force Field down: Body takes it, capped at (max Body - Heat); no body regen.
+				let curBody = parseInt(v.starshipCurrBodyHdn) || 0;
+				let maxBody = parseInt(v.starshipBody) || 0;
+				let heat = parseInt(v.starshipCurrHeatHdn) || 0;
+				let cap = Math.max(0, maxBody - heat);
+				setAttrs({ starshipCurrBodyHdn: Math.max(0, Math.min(curBody, cap) - total) });
+			});
+		});
+	});
+
+	/* NOTE: no FF current/max migration on purpose. A worker-created attribute (setAttrs) reads
+	   stale on later getAttrs until a user edit commits the sheet, which made Apply read the old
+	   MAX instead of the live current. The Force Field current is a normal user-set field like
+	   armor's - set an existing ship's FF current once and it commits cleanly. */
 
 	on("clicked:btnRefresh", function() {
 		console.log("Refresh Activated");
