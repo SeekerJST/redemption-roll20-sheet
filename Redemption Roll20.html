@@ -2185,6 +2185,7 @@
 									<option value="Battlefield">Battlefield</option>
 									<option value="Hull">Hull</option>
 								</select>								
+								<span style="display:inline-block;width:45px;text-align:center;font-weight:bold;margin-left:10px;">Regen</span>
 								<span style="display: inline-block;width:90px">Armor Rating</span>
 								<input type="number" name="attr_armorValueCurr"  min="0">
 								/
@@ -2196,6 +2197,7 @@
 								<input type="number" name="attr_armorBodyCurr" value="0" min="0" >
 								/
 								<input type="number" name="attr_armorBody" value="0" min="0">
+								<input type="number" name="attr_armorBodyRegen" value="0" min="0" style="width:45px;margin-left:8px;">
 								 
 <!-- 								<button type="action" name="act_btnArmorRepair">
 									Repair
@@ -2206,6 +2208,7 @@
 								<input type="number" name="attr_armorForceFieldCurr" min="0">
 								/
 								<input type="number" name="attr_armorForceField" min="0">
+								<input type="number" name="attr_armorFFRegen" value="0" min="0" style="width:45px;margin-left:8px;">
 <!-- 								<button type="action" name="act_btnForceFieldRestore">
 									Restore
 								</button>  -->								
@@ -2415,6 +2418,28 @@
 					</div>
 				</fieldset>		
 			</div>		
+			<div class="bleedPanel" style="width:100%;clear:both;padding-top:25px;">
+				<label>Bleeds</label>
+				<button type="action" name="act_applyUnitBleeds" style="margin-left:15px;">Apply Regen/Bleeds</button>
+				<button type="action" name="act_clearUnitBleeds" style="margin-left:5px;">Clear All</button>
+				<span style="margin-left:15px;font-size:.9em;">Total / round: <input type="number" name="attr_unitBleedTotal" value="0" readonly="true" style="width:45px;"></span>
+				<div style="border-radius:10px;border:1px solid black;padding:5px;margin-top:3px;">
+					<div>
+						<span style="font-size:.85em;display:inline-block;width:255px;">Source</span>
+						<span style="font-size:.85em;display:inline-block;width:60px;">Damage</span>
+						<span style="font-size:.85em;display:inline-block;">Severity (resolve difficulty)</span>
+					</div>
+					<fieldset class="repeating_unitBleeds">
+						<input type="text" name="attr_bleedSource" style="width:250px;">
+						<input type="number" name="attr_bleedDamage" value="0" min="0" style="width:50px;">
+						<select name="attr_bleedSeverity" style="width:110px;">
+							<option value="Minor">Minor</option>
+							<option value="Moderate">Moderate</option>
+							<option value="Major">Major</option>
+						</select>
+					</fieldset>
+				</div>
+			</div>
 		</div>
 	</div>
 	</div>
@@ -4840,6 +4865,83 @@
 	   stale on later getAttrs until a user edit commits the sheet, which made Apply read the old
 	   MAX instead of the live current. The Force Field current is a normal user-set field like
 	   armor's - set an existing ship's FF current once and it commits cleanly. */
+
+	/* ---- Bleeds (Unit tab) ---- own repeating_unitBleeds list. A unit's Force Field and Body come
+	   from its active armor; the Armor track is a rating and is skipped by bleeds. Cascade: Force
+	   Field (unitForceField/unitMaxForceField, regens by the active unit-armor's FF regen) runs
+	   FIRST and eats the whole bleed (no overflow), else the unit Body (unitBody/unitMaxBody, regens
+	   by the active armor's Body regen). Same current+regen-bleeds formula as the other tabs. */
+	function recalcUnitBleedTotal() {
+		getSectionIDs("unitBleeds", function(ids) {
+			if(ids.length === 0) { setAttrs({ unitBleedTotal: 0 }); return; }
+			let fields = ids.map(function(id) { return "repeating_unitBleeds_" + id + "_bleedDamage"; });
+			getAttrs(fields, function(v) {
+				let total = 0;
+				fields.forEach(function(f) { total += parseInt(v[f]) || 0; });
+				setAttrs({ unitBleedTotal: total });
+			});
+		});
+	}
+
+	on("change:repeating_unitBleeds remove:repeating_unitBleeds sheet:opened", function() {
+		recalcUnitBleedTotal();
+	});
+
+	function clearAllUnitBleeds() {
+		getSectionIDs("unitBleeds", function(ids) {
+			ids.forEach(function(id) { removeRepeatingRow("repeating_unitBleeds_" + id); });
+			setAttrs({ unitBleedTotal: 0 });
+		});
+	}
+
+	on("clicked:clearUnitBleeds", function() {
+		clearAllUnitBleeds();
+	});
+
+	on("clicked:applyUnitBleeds", function() {
+		getSectionIDs("unitBleeds", function(bleedIds) {
+			let bleedFields = bleedIds.map(function(id) { return "repeating_unitBleeds_" + id + "_bleedDamage"; });
+			getAttrs(bleedFields.concat(["unitForceField", "unitMaxForceField", "unitBody", "unitMaxBody"]), function(v) {
+				let total = 0;
+				bleedFields.forEach(function(f) { total += parseInt(v[f]) || 0; });
+				let ffCur = parseInt(v.unitForceField) || 0;
+				let ffMax = parseInt(v.unitMaxForceField) || 0;
+				let bodyCur = parseInt(v.unitBody) || 0;
+				let bodyMax = parseInt(v.unitMaxBody) || 0;
+
+				// Regen comes from the unit's ACTIVE armor (its FF regen / Body regen).
+				getSectionIDs("unitArmor", function(armorIds) {
+					let names = [];
+					armorIds.forEach(function(id) {
+						let p = "repeating_unitArmor_" + id + "_";
+						names.push(p + "armorActive", p + "armorFFRegen", p + "armorBodyRegen");
+					});
+					getAttrs(names, function(av) {
+						let ffRegen = 0, bodyRegen = 0;
+						for(var i = 0; i < armorIds.length; i++) {
+							let p = "repeating_unitArmor_" + armorIds[i] + "_";
+							let a = av[p + "armorActive"];
+							if(a === "on" || a === "1") {
+								ffRegen = parseInt(av[p + "armorFFRegen"]) || 0;
+								bodyRegen = parseInt(av[p + "armorBodyRegen"]) || 0;
+								break;
+							}
+						}
+
+						let ffReg = Math.min(Math.max(ffMax, ffCur), ffCur + ffRegen);
+						if(ffReg > 0) {
+							// Force Field runs first and eats the whole bleed - no overflow to Body.
+							setAttrs({ unitForceField: Math.max(0, ffReg - total) });
+							return;
+						}
+						// Force Fields gone: the bleed ticks against the unit Body track.
+						let bodyReg = Math.min(Math.max(bodyMax, bodyCur), bodyCur + bodyRegen);
+						setAttrs({ unitBody: Math.max(0, bodyReg - total) });
+					});
+				});
+			});
+		});
+	});
 
 	on("clicked:btnRefresh", function() {
 		console.log("Refresh Activated");
