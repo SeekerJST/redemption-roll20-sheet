@@ -1136,6 +1136,7 @@
 							<option value="Moderate">Moderate</option>
 							<option value="Major">Major</option>
 						</select>
+						<button type="action" name="act_resolveBleed" style="margin-left:8px;">Resolve</button>
 					</fieldset>
 				</div>
 			</div>
@@ -1676,6 +1677,7 @@
 						<option value="Moderate">Moderate</option>
 						<option value="Major">Major</option>
 					</select>
+					<button type="action" name="act_resolveBleed" style="margin-left:8px;">Resolve</button>
 				</fieldset>
 			</div>
 		</div>
@@ -2437,6 +2439,7 @@
 							<option value="Moderate">Moderate</option>
 							<option value="Major">Major</option>
 						</select>
+						<button type="action" name="act_resolveBleed" style="margin-left:8px;">Resolve</button>
 					</fieldset>
 				</div>
 			</div>
@@ -4941,6 +4944,29 @@
 				});
 			});
 		});
+	});
+
+	/* Per-row Resolve = quick-delete of that one bleed (the heal/repair roll is made on the
+	   healer's own sheet - Medicine/Engineering/etc. - so nothing is rolled here). */
+	on("clicked:repeating_bleeds", function(eventInfo) {
+		if((eventInfo.sourceAttribute || "").indexOf("resolvebleed") !== -1) {
+			removeRepeatingRow(eventInfo.sourceAttribute.replace(/_resolvebleed$/i, ""));
+			recalcBleedTotal();
+		}
+	});
+
+	on("clicked:repeating_starshipBleeds", function(eventInfo) {
+		if((eventInfo.sourceAttribute || "").indexOf("resolvebleed") !== -1) {
+			removeRepeatingRow(eventInfo.sourceAttribute.replace(/_resolvebleed$/i, ""));
+			recalcStarshipBleedTotal();
+		}
+	});
+
+	on("clicked:repeating_unitBleeds", function(eventInfo) {
+		if((eventInfo.sourceAttribute || "").indexOf("resolvebleed") !== -1) {
+			removeRepeatingRow(eventInfo.sourceAttribute.replace(/_resolvebleed$/i, ""));
+			recalcUnitBleedTotal();
+		}
 	});
 
 	on("clicked:btnRefresh", function() {
