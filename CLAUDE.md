@@ -8,6 +8,7 @@ A custom character sheet for **Redemption**, a roll-under tabletop RPG, running 
 - **`Redemption Roll20.css`** — the sheet styling.
 - **`RedemptionTagSync.js`** — a Roll20 **Mod (API) script** (server-side, pasted into the game's Settings → API Scripts). Syncs the shared Tag Journal across characters. Requires Pro on the game.
 - **`RedemptionMissileDefense.js`** — a second **Mod (API) script**. The missile attack card's "Apply Salvo" button sends `!missiledrain <targetTokenId> <salvo>`; the script drains the targeted ship's Counter Missile Margin (`starshipIntercept`) first, overflow spilling into `DefMargin` (both floored at 0). Anyone may apply (toggle `ANYONE_MAY_APPLY`). Requires Pro.
+- **`RedemptionCharacterExport.js`** — a third **Mod (API) script** (GM only). `!exportchars [name] [json|md]` writes character sheets to a "Redemption Character Export" handout. Markdown (default) is a curated summary for a planning assistant; JSON is full flat-attribute + repeating-row fidelity (`{name, attributes, repeating}`) built to round-trip for the Phase 4 Export/Import tab. No name = all player-controlled characters. Requires Pro.
 - **`Original/`** — pristine pre-work reference copies of the HTML/CSS. Diff against these to see what changed / recover original behavior.
 - **`Phase 2/`** — the CSE-migration version of the sheet (see roadmap). **The live sheet is the Legacy version in the project root, NOT this.**
 - `Back ups/`, `Game Settings/`, `Character Comparison/` — captured artifacts from debugging sessions.
@@ -63,5 +64,6 @@ Art-deco / retro-futurist, matched to the game's cover: indigo-navy ground (`#1b
 **Phase 1** (in progress): sound in Legacy — done: JumpGate fixes, art-deco reskin, auto-calc→worker migration, `&{template:redemption}` roll template showing invoked/condemned tags. Both Mod scripts built and in live testing — **(1) Tag Journal sync** (`RedemptionTagSync.js`), **(2) missile-salvo drain** (`RedemptionMissileDefense.js`, Counter Missile Margin first then Defense margin, via an "Apply Salvo" card button).
 **Phase 2**: migrate Legacy → CSE (game-settings toggle; CSS/HTML prep parked in `Phase 2/`).
 **Phase 3**: submit as an official Roll20 community sheet (needs freely-redistributable assets — hence Google Fonts, not the licensed book fonts).
+**Phase 4** (future): an **Export/Import tab** on the sheet — paste the `RedemptionCharacterExport.js` JSON and have a worker fill the sheet from it (round-trip). Enables a web-based character creator on the Silent Spirits site.
 
 Detailed session history, decisions, and current status live in the auto-memory files (`MEMORY.md` + linked notes) and the plan file `~/.claude/plans/inherited-pondering-waffle.md`.
