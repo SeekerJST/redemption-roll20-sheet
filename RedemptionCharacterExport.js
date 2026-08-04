@@ -80,13 +80,14 @@ var RedemptionCharacterExport = (function () {
               "  **Strain:** " + num(f, "StrainCurr") + "/" + num(f, "StrainPermVisible") +
               "  **AP:** " + num(f, "APCount") + "  **Refresh:** " + num(f, "RefreshRating") + "\n\n";
 
+        // "SkillName rank (TN)" — TN is the sheet's computed target number (attr1 + attr2 + rank + mod)
         var skills = [];
         ["grp1", "grp2", "grp3"].forEach(function (p) {
             var name = attrCI(f, p + "SkillName");
-            if (name) skills.push(name + " " + num(f, p + "SkillRank"));
+            if (name) skills.push(name + " " + num(f, p + "SkillRank") + " (" + num(f, p + "SkillHidden") + ")");
         });
         (r.skills || []).forEach(function (row) {
-            if (row.skillName) skills.push(row.skillName + " " + (parseInt(row.skillRank) || 0) + (row.specialty ? " (" + row.specialty + ")" : ""));
+            if (row.skillName) skills.push(row.skillName + " " + (parseInt(row.skillRank) || 0) + " (" + (parseInt(row.skillHidden) || 0) + ")" + (row.specialty ? " [" + row.specialty + "]" : ""));
         });
         md += "**Skills:** " + (skills.length ? skills.join(", ") : "—") + "\n\n";
 
@@ -95,6 +96,21 @@ var RedemptionCharacterExport = (function () {
         if (!tags.length) md += "- —\n";
         tags.forEach(function (row) {
             md += "- " + (row.tagText || "(unnamed)") + " " + (parseInt(row.tagRank) || 0) + (row.tagType ? " · " + row.tagType : "") + "\n";
+        });
+        md += "\n";
+
+        md += "**Armor:**\n";
+        var armor = r.armor || [];
+        if (!armor.length) md += "- —\n";
+        armor.forEach(function (row) {
+            var active = (row.armorActive === "on" || row.armorActive === "1") ? " (active)" : "";
+            md += "- " + (row.armorName || "(unnamed)") + active + " — " + (row.armorType || "") +
+                  "; Rating " + (parseInt(row.armorValueCurr) || 0) + "/" + (parseInt(row.armorValue) || 0) +
+                  ", Body " + (parseInt(row.armorBodyCurr) || 0) + "/" + (parseInt(row.armorBody) || 0) +
+                  ", FF " + (parseInt(row.armorForceFieldCurr) || 0) + "/" + (parseInt(row.armorForceField) || 0);
+            var ffr = parseInt(row.armorFFRegen) || 0, bpr = parseInt(row.armorBodyRegen) || 0;
+            if (ffr || bpr) md += " (regen FF " + ffr + " / Body " + bpr + ")";
+            md += "\n";
         });
         md += "\n";
 
