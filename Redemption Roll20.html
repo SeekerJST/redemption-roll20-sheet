@@ -1,4 +1,5 @@
 <input type="hidden" class="sheet-tabstoggle" name="attr_sheetTab"  value="character"  />
+<input type="hidden" name="attr_bleedTick" value="0">
 <div>
     <button type="action" name="act_character" >Character</button>
     <button type="action" name="act_starship" >Starship</button>
@@ -4723,7 +4724,9 @@
 		recalcBleedTotal();
 	});
 
-	on("clicked:applyBleeds", function() {
+	/* Also fires on change:bleedTick - the RedemptionBleedRound Mod script bumps that attribute
+	   to run the start-of-round tick without a manual click (only on sheets with Use Automation on). */
+	on("clicked:applyBleeds change:bleedTick", function() {
 		getSectionIDs("bleeds", function(bleedIds) {
 			let bleedFields = bleedIds.map(function(id) { return "repeating_bleeds_" + id + "_bleedDamage"; });
 			getAttrs(bleedFields.concat(["BodyCurr", "BodyMaxHdn", "bodyRegen"]), function(bv) {
@@ -4738,6 +4741,11 @@
 				let bodyReg = Math.min(Math.max(bodyMax, body), body + bodyRegen);
 
 				getSectionIDs("armor", function(armorIds) {
+					if(armorIds.length === 0) {
+						// no armor rows at all -> only the character's Body is in play
+						setAttrs({ BodyCurr: Math.max(0, bodyReg - total) });
+						return;
+					}
 					let names = [];
 					armorIds.forEach(function(id) {
 						let p = "repeating_armor_" + id + "_";
@@ -4835,7 +4843,7 @@
 		clearAllStarshipBleeds();
 	});
 
-	on("clicked:applyStarshipBleeds", function() {
+	on("clicked:applyStarshipBleeds change:bleedTick", function() {
 		getSectionIDs("starshipBleeds", function(bleedIds) {
 			let bleedFields = bleedIds.map(function(id) { return "repeating_starshipBleeds_" + id + "_bleedDamage"; });
 			getAttrs(bleedFields.concat(["starshipForceFieldCurr", "starshipForceField", "starshipFFRegen",
@@ -4901,7 +4909,7 @@
 		clearAllUnitBleeds();
 	});
 
-	on("clicked:applyUnitBleeds", function() {
+	on("clicked:applyUnitBleeds change:bleedTick", function() {
 		getSectionIDs("unitBleeds", function(bleedIds) {
 			let bleedFields = bleedIds.map(function(id) { return "repeating_unitBleeds_" + id + "_bleedDamage"; });
 			getAttrs(bleedFields.concat(["unitForceField", "unitMaxForceField", "unitBody", "unitMaxBody"]), function(v) {
@@ -4914,6 +4922,12 @@
 
 				// Regen comes from the unit's ACTIVE armor (its FF regen / Body regen).
 				getSectionIDs("unitArmor", function(armorIds) {
+					if(armorIds.length === 0) {
+						// no unit armor -> no regen source; Force Field (if any) soaks, else unit Body
+						if(ffCur > 0) { setAttrs({ unitForceField: Math.max(0, ffCur - total) }); return; }
+						setAttrs({ unitBody: Math.max(0, bodyCur - total) });
+						return;
+					}
 					let names = [];
 					armorIds.forEach(function(id) {
 						let p = "repeating_unitArmor_" + id + "_";
