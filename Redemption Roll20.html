@@ -279,9 +279,13 @@
 					<input type="hidden" name="attr_EvasionTN value="0" class="evasion">
 					<input type="hidden" name="attr_HideTN value="0">
 					
-					<input type="hidden" name="attr_armorActiveBody">
-					<input type="hidden" name="attr_armorActiveRating">
+					<input type="hidden" name="attr_armorActiveBody" value="0">
+					<input type="hidden" name="attr_armorActiveBodyMax" value="0">
+					<input type="hidden" name="attr_armorActiveRating" value="0">
+					<input type="hidden" name="attr_armorActiveRatingMax" value="0">
 					<input type="hidden" name="attr_armorActiveType">
+					<input type="hidden" name="attr_armorActiveFF" value="0">
+					<input type="hidden" name="attr_armorActiveFFMax" value="0">
 				</label>
 				<button type="action" name="act_Cover">
 					Take Cover
@@ -4276,6 +4280,49 @@
 		}
 	});
 	
+	/* Mirror the ACTIVE armor's Force Field / Body / Rating (current+max) and Type to flat attrs
+	   (armorActiveFF/FFMax, armorActiveBody/BodyMax, armorActiveRating/RatingMax, armorActiveType)
+	   so token bars can track them. Fires on any repeating_armor change (incl. a bleed tick) and on
+	   sheet open. No active armor -> all zero/blank. */
+	on("change:repeating_armor sheet:opened", function() {
+		getSectionIDs("armor", function(ids) {
+			if(ids.length === 0) {
+				setAttrs({ armorActiveFF: 0, armorActiveFFMax: 0, armorActiveBody: 0, armorActiveBodyMax: 0,
+						   armorActiveRating: 0, armorActiveRatingMax: 0, armorActiveType: "" });
+				return;
+			}
+			let names = [];
+			ids.forEach(function(id) {
+				let p = "repeating_armor_" + id + "_";
+				names.push(p + "armorActive",
+						   p + "armorForceFieldCurr", p + "armorForceField",
+						   p + "armorBodyCurr", p + "armorBody",
+						   p + "armorValueCurr", p + "armorValue", p + "armorType");
+			});
+			getAttrs(names, function(v) {
+				let ffc = 0, ffm = 0, bc = 0, bm = 0, rc = 0, rm = 0, ty = "";
+				for(var i = 0; i < ids.length; i++) {
+					let p = "repeating_armor_" + ids[i] + "_";
+					let a = v[p + "armorActive"];
+					if(a === "on" || a === "1") {
+						ffc = parseInt(v[p + "armorForceFieldCurr"]) || 0;
+						ffm = parseInt(v[p + "armorForceField"]) || 0;
+						bc = parseInt(v[p + "armorBodyCurr"]) || 0;
+						bm = parseInt(v[p + "armorBody"]) || 0;
+						rc = parseInt(v[p + "armorValueCurr"]) || 0;
+						rm = parseInt(v[p + "armorValue"]) || 0;
+						ty = v[p + "armorType"] || "";
+						break;
+					}
+				}
+				setAttrs({ armorActiveFF: ffc, armorActiveFFMax: ffm,
+						   armorActiveBody: bc, armorActiveBodyMax: bm,
+						   armorActiveRating: rc, armorActiveRatingMax: rm,
+						   armorActiveType: ty });
+			});
+		});
+	});
+
 	on("change:repeating_unitArmor", function(eventInfo) {
 		console.log(eventInfo);
 		let id = "";
