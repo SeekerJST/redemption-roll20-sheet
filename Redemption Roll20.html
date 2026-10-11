@@ -999,7 +999,7 @@
 							<div class="weaponBlockFlex" >
 								<div style="float:left";>
 									<button type="roll" name="act_weaponAttack" class="weaponAttackButton"
-											value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Attack Roll at @{target|Defender|token_name}}}{{roll=[[@{weaponAttackTN} - (@{rollString})]] vs [[@{target|Defender|DefMargin}]]}}{{damage=@{weaponMultiplier}}}{{dtype=@{weaponType}}}{{scale=@{weaponScale}}}">
+											value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Attack Roll}}{{roll=[[@{weaponAttackTN} - (@{rollString})]]}}{{damage=@{weaponMultiplier}}}{{dtype=@{weaponType}}}{{scale=@{weaponScale}}}{{attackverdict=1}}{{attacker=@{character_id}}}{{apply=[Resolve vs Selected](!attackvs @{character_id})}}{{automation=@{useAutomationFlag}}}">
 										Attack
 									</button>
 
@@ -1052,7 +1052,7 @@
 							<div class="weaponBlockFlex" >
 								<div style="float:left";>
 									<button type="roll" name="act_weaponSecAttack" class="weaponAttackButton"
-											value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Second Attack Roll at @{target|Defender|token_name}}}{{roll=[[@{weaponSecAttackTN} - (@{rollString})]] vs [[@{target|Defender|DefMargin}]]}}{{damage=@{weaponSecMultiplier}}}{{dtype=@{weaponSecType}}}{{scale=@{weaponSecScale}}}">
+											value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Second Attack Roll}}{{roll=[[@{weaponSecAttackTN} - (@{rollString})]]}}{{damage=@{weaponSecMultiplier}}}{{dtype=@{weaponSecType}}}{{scale=@{weaponSecScale}}}{{attackverdict=1}}{{attacker=@{character_id}}}{{apply=[Resolve vs Selected](!attackvs @{character_id})}}{{automation=@{useAutomationFlag}}}">
 										Second<br>Attack
 									</button>
 
@@ -1568,7 +1568,7 @@
 					<div class="weaponBlockFlex" >
 						<div style="float:left";>
 							<button type="roll" name="act_starshipWeaponAttack" class="weaponStarshipAttackButton"
-							value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=@{starshipWeaponName} fired at @{target|Defender|token_name}}}{{roll=[[(@{weaponGunneryTN} - @{rollString})]] vs [[@{target|Defender|DefMargin}]]}}{{damage=@{starshipWeaponMultiplier}}}{{dtype=@{weaponType}}}{{scale=Space}} )">
+							value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=@{starshipWeaponName}}}{{roll=[[(@{weaponGunneryTN} - @{rollString})]]}}{{damage=@{starshipWeaponMultiplier}}}{{dtype=@{weaponType}}}{{scale=Space}}{{attackverdict=1}}{{attacker=@{character_id}}}{{apply=[Resolve vs Selected](!attackvs @{character_id})}}{{automation=@{useAutomationFlag}}} )">
 								Attack
 							</button>
 
@@ -2303,7 +2303,7 @@
 							<div class="weaponBlockFlex" >
 								<div style="float:left";>
 									<button type="roll" name="act_weaponAttack" class="weaponAttackButton"
-											value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Attack Roll at @{target|Defender|token_name}}}{{roll=[[@{weaponAttackTN} - (@{rollString})]] vs [[@{target|Defender|DefMargin}]]}}{{damage=@{weaponMultiplier}}}{{dtype=@{weaponType}}}{{scale=@{weaponScale}}}">
+											value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Attack Roll}}{{roll=[[@{weaponAttackTN} - (@{rollString})]]}}{{damage=@{weaponMultiplier}}}{{dtype=@{weaponType}}}{{scale=@{weaponScale}}}{{attackverdict=1}}{{attacker=@{character_id}}}{{apply=[Resolve vs Selected](!attackvs @{character_id})}}{{automation=@{useAutomationFlag}}}">
 										Attack
 									</button>
 
@@ -2356,7 +2356,7 @@
 							<div class="weaponBlockFlex" >
 								<div style="float:left";>
 									<button type="roll" name="act_weaponSecAttack" class="weaponAttackButton"
-											value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Second Attack Roll at @{target|Defender|token_name}}}{{roll=[[@{weaponSecAttackTN} - (@{rollString})]] vs [[@{target|Defender|DefMargin}]]}}{{damage=@{weaponSecMultiplier}}}{{dtype=@{weaponSecType}}}{{scale=@{weaponSecScale}}}">
+											value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Second Attack Roll}}{{roll=[[@{weaponSecAttackTN} - (@{rollString})]]}}{{damage=@{weaponSecMultiplier}}}{{dtype=@{weaponSecType}}}{{scale=@{weaponSecScale}}}{{attackverdict=1}}{{attacker=@{character_id}}}{{apply=[Resolve vs Selected](!attackvs @{character_id})}}{{automation=@{useAutomationFlag}}}">
 										Second Attack
 									</button>
 
@@ -2533,6 +2533,7 @@
 	<div class="sheet-rt-outer">
 		<div class="sheet-rt-title">{{title}}</div>
 		<div class="sheet-rt-roll">{{roll}}</div>
+		{{#result}}<div class="sheet-rt-meta">{{result}}</div>{{/result}}
 		{{#damage}}<div class="sheet-rt-meta"><span class="sheet-rt-metalabel">Damage</span> &#215;{{damage}} {{dtype}} &#183; {{scale}}</div>{{/damage}}
 		{{#invoked}}<div class="sheet-rt-tags sheet-rt-invoked"><span class="sheet-rt-taglabel">&#9650; Invoked</span> {{invoked}}</div>{{/invoked}}
 		{{#condemned}}<div class="sheet-rt-tags sheet-rt-condemned"><span class="sheet-rt-taglabel">&#9660; Condemned</span> {{condemned}}</div>{{/condemned}}
