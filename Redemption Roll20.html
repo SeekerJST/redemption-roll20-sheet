@@ -1627,7 +1627,7 @@
 						</span>
 						<br>
 						<button type="roll" name="act_starshipMissileAttack" class="weaponStarshipAttackButton" style="float:right;"
-						value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Missiles (@{starshipMissileSalvo}) launched at @{target|Defender|token_name}}}{{roll=[[(@{weaponGunneryTN} - @{rollString})]] vs [[@{target|Defender|DefMargin} + @{target|Defender|starshipIntercept} - @{starshipMissileSalvo} ]]}}{{apply=[Apply Salvo](!missiledrain @{target|Defender|token_id} @{starshipMissileSalvo})}}{{automation=@{useAutomationFlag}}} )">
+						value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Missiles (@{starshipMissileSalvo}) launched}}{{roll=[[(@{weaponGunneryTN} - @{rollString})]]}}{{apply=[Apply Salvo vs Selected](!missiledrain @{starshipMissileSalvo} @{character_id})}}{{automation=@{useAutomationFlag}}}">
 							Attack
 						</button>
 					</div>
