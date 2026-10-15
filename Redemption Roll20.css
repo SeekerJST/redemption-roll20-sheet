@@ -196,6 +196,7 @@
 .charsheet .sheet-tabstoggle[value="starship"] ~ div button[name="act_starship"],
 .charsheet .sheet-tabstoggle[value="unit"] ~ div button[name="act_unit"],
 .charsheet .sheet-tabstoggle[value="configuration"] ~ div button[name="act_configuration"],
+.charsheet .sheet-tabstoggle[value="import"] ~ div button[name="act_import"],
 .charsheet .sheet-tabsBottomtoggle[value="tabSkills"] ~ div button[name="act_tabSkills"],
 .charsheet .sheet-tabsBottomtoggle[value="tabEquipment"] ~ div button[name="act_tabEquipment"],
 .charsheet .sheet-tabsBottomtoggle[value="tabCombat"] ~ div button[name="act_tabCombat"],
@@ -687,6 +688,7 @@ input:checked + .sheet-slider:before {
 .charsheet .sheet-character,
 .charsheet .sheet-starship,
 .charsheet .sheet-unit,
+.charsheet .sheet-import,
 .charsheet .sheet-config {
     display: none;
 }
@@ -701,6 +703,7 @@ input:checked + .sheet-slider:before {
 .charsheet .sheet-tabstoggle[value="character"] ~ div.sheet-character,
 .charsheet .sheet-tabstoggle[value="starship"] ~ div.sheet-starship,
 .charsheet .sheet-tabstoggle[value="unit"] ~ div.sheet-unit,
+.charsheet .sheet-tabstoggle[value="import"] ~ div.sheet-import,
 .charsheet .sheet-tabstoggle[value="configuration"] ~ div.sheet-config {
     display: flow-root;
 }

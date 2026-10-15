@@ -5,6 +5,7 @@
     <button type="action" name="act_starship" >Starship</button>
 	<button type="action" name="act_unit" >Unit</button>
     <button type="action" name="act_configuration" >Tag Journal</button>
+    <button type="action" name="act_import" >Import</button>
     <div class="automationToggle" title="Master switch for optional Mod (API) script features, like the missile 'Apply Salvo' button. Leave OFF unless your game has the Redemption Mod scripts installed (they need Pro).">
         <span class="Attribute" style="width:auto;margin-right:5px;">Use Automation</span>
         <label class="switch">
@@ -2529,6 +2530,22 @@
     
 </div>
 
+<div class="sheet-import">
+	<div style="padding:16px;max-width:820px;">
+		<h3 style="color:var(--gold-bright);font-family:Asimovian,sans-serif;">Import Character</h3>
+		<p style="font-size:.9em;line-height:1.4;">
+			Paste a character export (JSON from the character generator) below and click <b>Import Character</b>.
+			<br><b>Use a fresh sheet:</b> skills and tags are <i>added</i> to the sheet, so re-importing the same character duplicates rows. The character's name is set by renaming the journal entry (the import can't change it).
+		</p>
+		<textarea name="attr_importJSON" style="width:100%;max-width:800px;height:220px;font-family:'Share Tech Mono',monospace;font-size:12px;" placeholder="Paste character JSON here..."></textarea>
+		<div style="margin:8px 0;">
+			<button type="action" name="act_importChar">Import Character</button>
+		</div>
+		<label style="font-size:.85em;display:block;margin-bottom:4px;">Status</label>
+		<textarea name="attr_importStatus" readonly="true" style="width:100%;max-width:800px;height:70px;font-size:12px;" placeholder="(import results appear here)"></textarea>
+	</div>
+</div>
+
 <rolltemplate class="sheet-rolltemplate-redemption">
 	<div class="sheet-rt-outer">
 		<div class="sheet-rt-title">{{title}}</div>
@@ -2589,7 +2606,7 @@
 	let unitStealthFlag = 0;
 	
 	
-    const tablist = ["character","starship","configuration","unit"];
+    const tablist = ["character","starship","configuration","unit","import"];
     const tabRollDiffSource = {
         character: "rollDifficulty",
         starship: "starshipRollDifficulty",
@@ -2608,6 +2625,67 @@
         });
     });
 	
+    /* ---- Character JSON import (Import tab) ----
+       Parses a "redemption-roll20-sheet" export (from the online character generator) and
+       fills the sheet: flat attributes via setAttrs, plus new repeating_skills/repeating_tags
+       rows. Sheet workers can CREATE rows but NOT delete them, so import onto a FRESH sheet -
+       existing skills/tags are added to, not replaced. Derived displays (BodyMax, RefreshRating,
+       task numbers) are left to the sheet's own formulas, which recompute from the imported
+       stats. The Roll20 character NAME is a journal property, not an attribute, so it can't be
+       set here - the user renames the journal entry. */
+    on("clicked:importChar", function() {
+        getAttrs(["importJSON"], function(v) {
+            var raw = (v.importJSON || "").trim();
+            if(!raw) { setAttrs({ importStatus: "Paste a character export into the box above, then click Import Character." }); return; }
+
+            var data;
+            try { data = JSON.parse(raw); }
+            catch(e) { setAttrs({ importStatus: "ERROR: that isn't valid JSON (" + e.message + ")." }); return; }
+
+            if(!data || data.format !== "redemption-roll20-sheet") {
+                setAttrs({ importStatus: "ERROR: expected format \"redemption-roll20-sheet\" but got \"" + (data && data.format) + "\". Is this a character export?" });
+                return;
+            }
+
+            var update = {};
+
+            // flat attributes - set as-is; the sheet's own workers recompute derived displays
+            var attrs = data.attributes || {};
+            var fieldCount = 0, k;
+            for(k in attrs) {
+                if(attrs.hasOwnProperty(k)) { update[k] = attrs[k]; fieldCount++; }
+            }
+
+            var rep = data.repeating || {};
+
+            // repeating_skills rows (skillName values are the sheet's lowercase select values)
+            var skillCount = 0;
+            (rep.skills || []).forEach(function(s) {
+                var p = "repeating_skills_" + generateRowID() + "_";
+                update[p + "skillName"] = s.skillName || "";
+                update[p + "specialty"] = s.specialty || "";
+                update[p + "skillRank"] = (s.skillRank != null ? s.skillRank : 0);
+                skillCount++;
+            });
+
+            // repeating_tags rows
+            var tagCount = 0;
+            (rep.tags || []).forEach(function(t) {
+                var p = "repeating_tags_" + generateRowID() + "_";
+                update[p + "tagText"] = t.tagText || "";
+                update[p + "tagRank"] = (t.tagRank != null ? t.tagRank : 1);
+                update[p + "tagType"] = t.tagType || "";
+                tagCount++;
+            });
+
+            update.importStatus = "Imported \"" + (data.name || "character") + "\": " +
+                fieldCount + " fields, " + skillCount + " skills, " + tagCount + " tags. " +
+                "Review the Character tab, then rename the journal entry to the character's name.";
+
+            setAttrs(update);
+        });
+    });
+
     const buttonlist = ["tabSkills","tabEquipment","tabCombat"];
     buttonlist.forEach(button => {
         on(`clicked:${button}`, function() {
