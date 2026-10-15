@@ -3164,504 +3164,98 @@
 		buildTagLists();
 	});
 
+	/* Race-free rewrite (2026-10-14). The previous version accumulated invokeMod / MaxStrain /
+	   Personal+Group counts in SHARED module-level vars across per-row async getAttrs callbacks.
+	   When several triggers fired at once (e.g. a bulk JSON import creating many tag rows, or a
+	   multi-attribute setAttrs) the overlapping calls reset and re-accumulated the same shared
+	   state, double-counting - a single rank-1 Psionic tag could land StrainPerm at 40 instead of
+	   10, and the tag pools/refresh read worse than reality. This computes everything in per-call
+	   LOCALS with ONE getAttrs per section (the buildTagLists pattern) and writes once, so it is
+	   correct no matter how many times (or how concurrently) it fires.
+	   invokeMod is global across tabs by design; StrainPerm = 10 * sum of Psionic/Psigear ranks;
+	   PersonalTagsUsed/GroupTagsUsed feed the FP-pool displays; a refresh (RefreshFlag==1) clears
+	   each typed tag's status. */
 	function calcTagModifier() {
-	
-		
-		invokeMod = 0;
-		PersonalTagCount = 0;
-		GroupTagCount = 0;
-		MaxStrain = 0;
+		getAttrs(["ConceptRank","ConceptUse","ConceptStatus","TroubleRank","TroubleUse","TroubleStatus","RaceRank","RaceUse","RaceStatus","PsionicDiscount"], function(bi) {
+			var psionicDiscount = (bi.PsionicDiscount == "on") ? -1 : 0;
 
-		tagCounter = 0;
-		let sectionsRemaining = 4;
+			// accumulate into per-call locals - no shared module state, so concurrent calls can't contaminate each other
+			var invoke = 0, personalCount = 0, groupCount = 0, maxStrain = 0;
+			var statusResets = {};   // on a refresh (RefreshFlag==1) each typed tag's status -> 0
+			var woundUpdate = {};    // a Wound tag sets WoundLevelHdn / WoundRankID
 
-		function maybeSetRollString() {
-			if(tagCounter == 0 && sectionsRemaining == 0) {
-				setRollString();
+			// built-in Concept / Trouble / Race contribute to invokeMod (rank * use when active/unlocked)
+			if(parseInt(bi.ConceptStatus) === 0) invoke += (parseInt(bi.ConceptRank)||0) * (parseInt(bi.ConceptUse)||0);
+			if(parseInt(bi.TroubleStatus) === 0) invoke += (parseInt(bi.TroubleRank)||0) * (parseInt(bi.TroubleUse)||0);
+			if(parseInt(bi.RaceStatus)    === 0) invoke += (parseInt(bi.RaceRank)||0)    * (parseInt(bi.RaceUse)||0);
+
+			// typed character tag sections: Personal/Group counts, Psionic/Psigear strain, invoke, Wound.
+			// Psigear strain counts only on the character "tags" section (original behaviour).
+			var typedSections = ["tags","starshipTags","unitTags"];
+			var remaining = typedSections.length + 1;   // +1 for the Tag Journal pass
+
+			function finish() {
+				remaining -= 1;
+				if(remaining > 0) return;
+				// mirror into the module vars (in case anything reads them) and write the sheet attributes once
+				invokeMod = invoke; PersonalTagCount = personalCount; GroupTagCount = groupCount; MaxStrain = maxStrain;
+				var update = { invokeMod: invoke, StrainPerm: maxStrain, PersonalTagsUsed: personalCount, GroupTagsUsed: groupCount };
+				var k;
+				for(k in statusResets) if(statusResets.hasOwnProperty(k)) update[k] = statusResets[k];
+				for(k in woundUpdate)  if(woundUpdate.hasOwnProperty(k))  update[k] = woundUpdate[k];
+				setAttrs(update, {}, function() { setRollString(); });
 			}
-		}
 
-		
-		//RefreshFlag = RefreshUnlock;
-		
-		
-		getAttrs(["ConceptRank", "ConceptUse", "ConceptStatus", "TroubleRank", "TroubleUse", "TroubleStatus", "RaceRank", "RaceUse", "RaceStatus", "PsionicDiscount"], 
-				function(values) {
-					console.log(JSON.stringify(values));
-					
-					if(values.PsionicDiscount == "on") {
-						PsionicDiscountFlag = -1;
-					} else {
-						PsionicDiscountFlag = 0;
-					}
-					
-					
-					if(values.ConceptStatus == 0) {
-						invokeMod = invokeMod + (values.ConceptRank * values.ConceptUse);
-					}
-					if(values.TroubleStatus == 0) {
-						invokeMod = invokeMod + (values.TroubleRank * values.TroubleUse);
-					}
-					if(values.RaceStatus == 0) {
-						invokeMod = invokeMod + (values.RaceRank * values.RaceUse);
-					}
-					
-					console.log(invokeMod);
-					
-					let update = {};
-					update["invokeMod"] = invokeMod;
-					
-					
-					console.log(update);
-					setAttrs(update);	
-					console.log("set invokeMod");						
-				
-	
-					getSectionIDs("tags", function(idarray) {
-						let tagRankID = "";
-						let tagUseID = "";
-						let tagLockedID = "";
-						let tagTypeID = "";
+			typedSections.forEach(function(sec) {
+				getSectionIDs(sec, function(ids) {
+					if(ids.length === 0) { finish(); return; }
+					var names = [];
+					ids.forEach(function(id) {
+						var p = "repeating_" + sec + "_" + id + "_";
+						names.push(p+"tagRank", p+"tagUse", p+"tagStatus", p+"tagType");
+					});
+					getAttrs(names, function(v) {
+						ids.forEach(function(id) {
+							var p = "repeating_" + sec + "_" + id + "_";
+							var rank = parseInt(v[p+"tagRank"]) || 0;
+							var use  = parseInt(v[p+"tagUse"])  || 0;
+							var locked = parseInt(v[p+"tagStatus"]);   // 0 = active / unlocked
+							var type = v[p+"tagType"];
 
-						
-						let update = {};
-					
-						console.log("RefreshUnlock:");
-						console.log(RefreshUnlock);
-					
-						
-						for(var i=0; i < idarray.length; i++) {
-							console.log(idarray[i]);
-							console.log("RefreshUnlock:");
-							console.log(RefreshUnlock);							
-							
-							tagRankID = "repeating_tags_" + idarray[i] + "_tagRank";
-							tagUseID = "repeating_tags_" + idarray[i] + "_tagUse";
-							tagLockedID = "repeating_tags_" + idarray[i] + "_tagStatus";
-							tagTypeID = "repeating_tags_" + idarray[i] + "_tagType";
-							
-							tagCounter += 1;
-							getAttrs([tagRankID, tagUseID, tagLockedID, tagTypeID, "invokeMod"], function(values) {
-								console.log(JSON.stringify(values));
-								
-								let tagRankMod = 0;
-								let tagUseMod = 0;
-								let lockedFlag = 1;
-								let personalFlag = 0;
-								let groupFlag = 0;
-								let psionicFlag = 0;
-								let psigearFlag = 0;
-								let woundFlag = 0;
-								
-								console.log("Refresh Flag:");
-								console.log(RefreshFlag);
-								 
-								//invokeMod = values.invokeMod;
-								
-								Object.keys(values).forEach(element => {
-									if(element.includes("tagRank")) {
-										tagRankMod = parseInt(values[element]);
-									}
-									if(element.includes("tagUse")) {
-										tagUseMod = parseInt(values[element]);
-									}
-									if(element.includes("tagStatus")) {
-										lockedFlag = parseInt(values[element]);
-										
-										if(RefreshFlag == 1) {
-											update[element] = 0;
-										}
-									}
-									if(element.includes("tagType")) {
-										console.log("Tag Type Triggered");
-										if(values[element] == "Personal") {
-											personalFlag = 1;
-										}
-										if(values[element] == "Group") {
-											groupFlag = 1;
-										}					
-										if(values[element] == "Psionic") {
-											personalFlag = 1; 
-											psionicFlag = 1;
-										}
-										if(values[element] == "Psigear") {
-											psigearFlag = 1;
-										}										
-										if(values[element] == "Wound") {
-											//update[WoundLevelHdn] = 
-											woundFlag = 1;
-										}
-									}
-								});
-								
-														
-								if(personalFlag == 1) {
-									PersonalTagCount = PersonalTagCount + tagRankMod;
-									//console.log(PersonalTagCount);
-								}
-								if(groupFlag == 1) {
-									GroupTagCount = GroupTagCount + tagRankMod;
-									//console.log(GroupTagCount);
-								}
-								if(psionicFlag == 1) {
-									MaxStrain = MaxStrain + (tagRankMod*10);
-									console.log(MaxStrain);
-									PersonalTagCount = PersonalTagCount + PsionicDiscountFlag;
-								}
-								if(psigearFlag == 1) {
-									MaxStrain = MaxStrain + (tagRankMod*10);
-									console.log(MaxStrain);
-									//PersonalTagCount = PersonalTagCount + PsionicDiscountFlag;
-								}								
-								if(lockedFlag == 0) {
-									invokeMod = invokeMod + (tagRankMod * tagUseMod);
-									console.log(invokeMod);
-								}
-								if(woundFlag == 1) {
-									update["WoundLevelHdn"] = tagRankMod;
-									update["WoundRankID"] = tagRankID;
-								}
+							if(RefreshFlag == 1) statusResets[p+"tagStatus"] = 0;
 
-								console.log(invokeMod);
-							
-								tagCounter = tagCounter - 1;
-								update["invokeMod"] = invokeMod;
-								
-								if(tagCounter == 0) { 
-									update["PersonalTagsUsed"] = PersonalTagCount;
-									update["GroupTagsUsed"] = GroupTagCount;
-								} 
-								update["StrainPerm"] = MaxStrain;
+							if(type == "Personal" || type == "Psionic") personalCount += rank;
+							if(type == "Group") groupCount += rank;
+							if(type == "Psionic") { maxStrain += rank*10; personalCount += psionicDiscount; }
+							if(type == "Psigear" && sec == "tags") maxStrain += rank*10;
+							if(locked === 0) invoke += rank * use;
+							if(type == "Wound") { woundUpdate["WoundLevelHdn"] = rank; woundUpdate["WoundRankID"] = p+"tagRank"; }
+						});
+						finish();
+					});
+				});
+			});
 
-
-								
-								console.log(update);
-								setAttrs(update);
-								console.log("set Personal invokeMod");
-								maybeSetRollString();
-							});
-
-
-						}
-
-						sectionsRemaining -= 1;
-						maybeSetRollString();
-				   });
-				   
-				   
-				getSectionIDs("starshipTags", function(idarray) {
-						let tagRankID = "";
-						let tagUseID = "";
-						let tagLockedID = "";
-						let tagTypeID = "";
-
-						
-						let update = {};
-					
-						console.log("RefreshUnlock:");
-						console.log(RefreshUnlock);
-					
-						
-						for(var i=0; i < idarray.length; i++) {
-							console.log(idarray[i]);
-							console.log("RefreshUnlock:");
-							console.log(RefreshUnlock);							
-							
-							tagRankID = "repeating_starshipTags_" + idarray[i] + "_tagRank";
-							tagUseID = "repeating_starshipTags_" + idarray[i] + "_tagUse";
-							tagLockedID = "repeating_starshipTags_" + idarray[i] + "_tagStatus";
-							tagTypeID = "repeating_starshipTags_" + idarray[i] + "_tagType";
-							
-							tagCounter += 1;
-							getAttrs([tagRankID, tagUseID, tagLockedID, tagTypeID, "invokeMod"], function(values) {
-								console.log(JSON.stringify(values));
-								
-								let tagRankMod = 0;
-								let tagUseMod = 0;
-								let lockedFlag = 1;
-								let personalFlag = 0;
-								let groupFlag = 0;
-								let psionicFlag = 0;
-								let woundFlag = 0;
-								
-								console.log("Refresh Flag:");
-								console.log(RefreshFlag);
-								 
-								//invokeMod = values.invokeMod;
-								
-								Object.keys(values).forEach(element => {
-									if(element.includes("tagRank")) {
-										tagRankMod = parseInt(values[element]);
-									}
-									if(element.includes("tagUse")) {
-										tagUseMod = parseInt(values[element]);
-									}
-									if(element.includes("tagStatus")) {
-										lockedFlag = parseInt(values[element]);
-										
-										if(RefreshFlag == 1) {
-											update[element] = 0;
-										}
-									}
-									if(element.includes("tagType")) {
-										console.log("Tag Type Triggered");
-										if(values[element] == "Personal") {
-											personalFlag = 1;
-										}
-										if(values[element] == "Group") {
-											groupFlag = 1;
-										}					
-										if(values[element] == "Psionic") {
-											personalFlag = 1; 
-											psionicFlag = 1;
-										}
-										if(values[element] == "Wound") {
-											//update[WoundLevelHdn] = 
-											woundFlag = 1;
-										}
-									}
-								});
-								
-														
-								if(personalFlag == 1) {
-									PersonalTagCount = PersonalTagCount + tagRankMod;
-									//console.log(PersonalTagCount);
-								}
-								if(groupFlag == 1) {
-									GroupTagCount = GroupTagCount + tagRankMod;
-									//console.log(GroupTagCount);
-								}
-								if(psionicFlag == 1) {
-									MaxStrain = MaxStrain + (tagRankMod*10);
-									console.log(MaxStrain);
-									PersonalTagCount = PersonalTagCount + PsionicDiscountFlag;
-								}
-								if(lockedFlag == 0) {
-									invokeMod = invokeMod + (tagRankMod * tagUseMod);
-									console.log(invokeMod);
-								}
-								if(woundFlag == 1) {
-									update["WoundLevelHdn"] = tagRankMod;
-									update["WoundRankID"] = tagRankID;
-								}
-
-								console.log(invokeMod);
-							
-								tagCounter = tagCounter - 1;
-								update["invokeMod"] = invokeMod;
-								
-								if(tagCounter == 0) { 
-									update["PersonalTagsUsed"] = PersonalTagCount;
-									update["GroupTagsUsed"] = GroupTagCount;
-								} 
-								update["StrainPerm"] = MaxStrain;
-
-
-								
-								console.log(update);
-								setAttrs(update);
-								console.log("set Starship invokeMod");
-								maybeSetRollString();
-							});
-
-
-						}
-
-						sectionsRemaining -= 1;
-						maybeSetRollString();
-				   });
-
-				   
-				getSectionIDs("unitTags", function(idarray) {
-						let tagRankID = "";
-						let tagUseID = "";
-						let tagLockedID = "";
-						let tagTypeID = "";
-
-						
-						let update = {};
-					
-						console.log("RefreshUnlock:");
-						console.log(RefreshUnlock);
-					
-						
-						for(var i=0; i < idarray.length; i++) {
-							console.log(idarray[i]);
-							console.log("RefreshUnlock:");
-							console.log(RefreshUnlock);							
-							
-							tagRankID = "repeating_unitTags_" + idarray[i] + "_tagRank";
-							tagUseID = "repeating_unitTags_" + idarray[i] + "_tagUse";
-							tagLockedID = "repeating_unitTags_" + idarray[i] + "_tagStatus";
-							tagTypeID = "repeating_unitTags_" + idarray[i] + "_tagType";
-							
-							tagCounter += 1;
-							getAttrs([tagRankID, tagUseID, tagLockedID, tagTypeID, "invokeMod"], function(values) {
-								console.log(JSON.stringify(values));
-								
-								let tagRankMod = 0;
-								let tagUseMod = 0;
-								let lockedFlag = 1;
-								let personalFlag = 0;
-								let groupFlag = 0;
-								let psionicFlag = 0;
-								let woundFlag = 0;
-								
-								console.log("Refresh Flag:");
-								console.log(RefreshFlag);
-								 
-								//invokeMod = values.invokeMod;
-								
-								Object.keys(values).forEach(element => {
-									if(element.includes("tagRank")) {
-										tagRankMod = parseInt(values[element]);
-									}
-									if(element.includes("tagUse")) {
-										tagUseMod = parseInt(values[element]);
-									}
-									if(element.includes("tagStatus")) {
-										lockedFlag = parseInt(values[element]);
-										
-										if(RefreshFlag == 1) {
-											update[element] = 0;
-										}
-									}
-									if(element.includes("tagType")) {
-										console.log("Tag Type Triggered");
-										if(values[element] == "Personal") {
-											personalFlag = 1;
-										}
-										if(values[element] == "Group") {
-											groupFlag = 1;
-										}					
-										if(values[element] == "Psionic") {
-											personalFlag = 1; 
-											psionicFlag = 1;
-										}
-										if(values[element] == "Wound") {
-											//update[WoundLevelHdn] = 
-											woundFlag = 1;
-										}
-									}
-								});
-								
-														
-								if(personalFlag == 1) {
-									PersonalTagCount = PersonalTagCount + tagRankMod;
-									//console.log(PersonalTagCount);
-								}
-								if(groupFlag == 1) {
-									GroupTagCount = GroupTagCount + tagRankMod;
-									//console.log(GroupTagCount);
-								}
-								if(psionicFlag == 1) {
-									MaxStrain = MaxStrain + (tagRankMod*10);
-									console.log(MaxStrain);
-									PersonalTagCount = PersonalTagCount + PsionicDiscountFlag;
-								}
-								if(lockedFlag == 0) {
-									invokeMod = invokeMod + (tagRankMod * tagUseMod);
-									console.log(invokeMod);
-								}
-								if(woundFlag == 1) {
-									update["WoundLevelHdn"] = tagRankMod;
-									update["WoundRankID"] = tagRankID;
-								}
-
-								console.log(invokeMod);
-							
-								tagCounter = tagCounter - 1;
-								update["invokeMod"] = invokeMod;
-								
-								if(tagCounter == 0) { 
-									update["PersonalTagsUsed"] = PersonalTagCount;
-									update["GroupTagsUsed"] = GroupTagCount;
-								} 
-								update["StrainPerm"] = MaxStrain;
-
-
-								
-								console.log(update);
-								setAttrs(update);
-								console.log("set unit invokeMod");
-								maybeSetRollString();
-							});
-
-
-						}
-
-						sectionsRemaining -= 1;
-						maybeSetRollString();
-				   });
-
-				getSectionIDs("tagJournal", function(idarray) {
-						/* Scene/Free tags from the shared Tag Journal contribute to invokeMod exactly
-						   like personal tags (rank * use when unlocked). They have no Personal/Group/
-						   Psionic/Wound type, so none of that flag logic applies; and a character
-						   refresh does not unlock shared scene tags. */
-						let tagRankID = "";
-						let tagUseID = "";
-						let tagLockedID = "";
-
-						let update = {};
-
-						for(var i=0; i < idarray.length; i++) {
-							tagRankID = "repeating_tagJournal_" + idarray[i] + "_tagRank";
-							tagUseID = "repeating_tagJournal_" + idarray[i] + "_tagUse";
-							tagLockedID = "repeating_tagJournal_" + idarray[i] + "_tagStatus";
-
-							tagCounter += 1;
-							getAttrs([tagRankID, tagUseID, tagLockedID, "invokeMod"], function(values) {
-								let tagRankMod = 0;
-								let tagUseMod = 0;
-								let lockedFlag = 1;
-
-								Object.keys(values).forEach(element => {
-									if(element.includes("tagRank")) {
-										tagRankMod = parseInt(values[element]);
-									}
-									if(element.includes("tagUse")) {
-										tagUseMod = parseInt(values[element]);
-									}
-									if(element.includes("tagStatus")) {
-										lockedFlag = parseInt(values[element]);
-									}
-								});
-
-								if(lockedFlag == 0) {
-									invokeMod = invokeMod + (tagRankMod * tagUseMod);
-								}
-
-								tagCounter = tagCounter - 1;
-								update["invokeMod"] = invokeMod;
-
-								if(tagCounter == 0) {
-									update["PersonalTagsUsed"] = PersonalTagCount;
-									update["GroupTagsUsed"] = GroupTagCount;
-								}
-								update["StrainPerm"] = MaxStrain;
-
-								setAttrs(update);
-								maybeSetRollString();
-							});
-						}
-
-						sectionsRemaining -= 1;
-						maybeSetRollString();
-				   });
-
-
-			/*
-			console.log("Personal Tag Count:");
-			console.log(PersonalTagCount);
-			console.log("Group Tag Count:");
-			console.log(GroupTagCount);
-			*/
-	   });
-	   
-
+			// Tag Journal (shared scene/free tags): invoke only (rank * use when active). No type, strain
+			// or count logic, and a character refresh never unlocks shared scene tags.
+			getSectionIDs("tagJournal", function(ids) {
+				if(ids.length === 0) { finish(); return; }
+				var names = [];
+				ids.forEach(function(id) {
+					var p = "repeating_tagJournal_" + id + "_";
+					names.push(p+"tagRank", p+"tagUse", p+"tagStatus");
+				});
+				getAttrs(names, function(v) {
+					ids.forEach(function(id) {
+						var p = "repeating_tagJournal_" + id + "_";
+						if(parseInt(v[p+"tagStatus"]) === 0) invoke += (parseInt(v[p+"tagRank"])||0) * (parseInt(v[p+"tagUse"])||0);
+					});
+					finish();
+				});
+			});
+		});
 	}
-	
+
 	on("change:BodyCurr", function(eventInfo) {
 		let DamagePenaltyNumber = 0;
 		let update = {};
