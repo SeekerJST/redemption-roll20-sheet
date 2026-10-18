@@ -853,6 +853,142 @@ input:checked + .sheet-slider:before {
 	display:inline;
 }
 
+/* Moderate Power Slot Style Settings */
+.charsheet .sheet-PowerSlotModOne,
+.charsheet .sheet-PowerSlotModTwo,
+.charsheet .sheet-PowerSlotModThree,
+.charsheet .sheet-PowerSlotModFour,
+.charsheet .sheet-PowerSlotModFive,
+.charsheet .sheet-PowerSlotModSix,
+.charsheet .sheet-PowerSlotModSeven,
+.charsheet .sheet-PowerSlotModEight,
+.charsheet .sheet-PowerSlotModNine,
+.charsheet .sheet-PowerSlotModTen,
+.charsheet .sheet-PowerSlotModEleven,
+.charsheet .sheet-PowerSlotModTwelve {
+	float:left;
+	display:none;
+	margin-left:5px;
+	text-align: center;
+	padding-top:5px;
+	padding-bottom:2px;
+}
+
+.charsheet .sheet-starshippowerslotsmod[value="One"] ~ div.sheet-PowerSlotModOne,
+.charsheet .sheet-starshippowerslotsmod[value="Two"] ~ div.sheet-PowerSlotModOne,
+.charsheet .sheet-starshippowerslotsmod[value="Three"] ~ div.sheet-PowerSlotModOne,
+.charsheet .sheet-starshippowerslotsmod[value="Four"] ~ div.sheet-PowerSlotModOne,
+.charsheet .sheet-starshippowerslotsmod[value="Five"] ~ div.sheet-PowerSlotModOne,
+.charsheet .sheet-starshippowerslotsmod[value="Six"] ~ div.sheet-PowerSlotModOne,
+.charsheet .sheet-starshippowerslotsmod[value="Seven"] ~ div.sheet-PowerSlotModOne,
+.charsheet .sheet-starshippowerslotsmod[value="Eight"] ~ div.sheet-PowerSlotModOne,
+.charsheet .sheet-starshippowerslotsmod[value="Nine"] ~ div.sheet-PowerSlotModOne,
+.charsheet .sheet-starshippowerslotsmod[value="Ten"] ~ div.sheet-PowerSlotModOne,
+.charsheet .sheet-starshippowerslotsmod[value="Eleven"] ~ div.sheet-PowerSlotModOne,
+.charsheet .sheet-starshippowerslotsmod[value="Twelve"] ~ div.sheet-PowerSlotModOne {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslotsmod[value="Two"] ~ div.sheet-PowerSlotModTwo,
+.charsheet .sheet-starshippowerslotsmod[value="Three"] ~ div.sheet-PowerSlotModTwo,
+.charsheet .sheet-starshippowerslotsmod[value="Four"] ~ div.sheet-PowerSlotModTwo,
+.charsheet .sheet-starshippowerslotsmod[value="Five"] ~ div.sheet-PowerSlotModTwo,
+.charsheet .sheet-starshippowerslotsmod[value="Six"] ~ div.sheet-PowerSlotModTwo,
+.charsheet .sheet-starshippowerslotsmod[value="Seven"] ~ div.sheet-PowerSlotModTwo,
+.charsheet .sheet-starshippowerslotsmod[value="Eight"] ~ div.sheet-PowerSlotModTwo,
+.charsheet .sheet-starshippowerslotsmod[value="Nine"] ~ div.sheet-PowerSlotModTwo,
+.charsheet .sheet-starshippowerslotsmod[value="Ten"] ~ div.sheet-PowerSlotModTwo,
+.charsheet .sheet-starshippowerslotsmod[value="Eleven"] ~ div.sheet-PowerSlotModTwo,
+.charsheet .sheet-starshippowerslotsmod[value="Twelve"] ~ div.sheet-PowerSlotModTwo {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslotsmod[value="Three"] ~ div.sheet-PowerSlotModThree,
+.charsheet .sheet-starshippowerslotsmod[value="Four"] ~ div.sheet-PowerSlotModThree,
+.charsheet .sheet-starshippowerslotsmod[value="Five"] ~ div.sheet-PowerSlotModThree,
+.charsheet .sheet-starshippowerslotsmod[value="Six"] ~ div.sheet-PowerSlotModThree,
+.charsheet .sheet-starshippowerslotsmod[value="Seven"] ~ div.sheet-PowerSlotModThree,
+.charsheet .sheet-starshippowerslotsmod[value="Eight"] ~ div.sheet-PowerSlotModThree,
+.charsheet .sheet-starshippowerslotsmod[value="Nine"] ~ div.sheet-PowerSlotModThree,
+.charsheet .sheet-starshippowerslotsmod[value="Ten"] ~ div.sheet-PowerSlotModThree,
+.charsheet .sheet-starshippowerslotsmod[value="Eleven"] ~ div.sheet-PowerSlotModThree,
+.charsheet .sheet-starshippowerslotsmod[value="Twelve"] ~ div.sheet-PowerSlotModThree {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslotsmod[value="Four"] ~ div.sheet-PowerSlotModFour,
+.charsheet .sheet-starshippowerslotsmod[value="Five"] ~ div.sheet-PowerSlotModFour,
+.charsheet .sheet-starshippowerslotsmod[value="Six"] ~ div.sheet-PowerSlotModFour,
+.charsheet .sheet-starshippowerslotsmod[value="Seven"] ~ div.sheet-PowerSlotModFour,
+.charsheet .sheet-starshippowerslotsmod[value="Eight"] ~ div.sheet-PowerSlotModFour,
+.charsheet .sheet-starshippowerslotsmod[value="Nine"] ~ div.sheet-PowerSlotModFour,
+.charsheet .sheet-starshippowerslotsmod[value="Ten"] ~ div.sheet-PowerSlotModFour,
+.charsheet .sheet-starshippowerslotsmod[value="Eleven"] ~ div.sheet-PowerSlotModFour,
+.charsheet .sheet-starshippowerslotsmod[value="Twelve"] ~ div.sheet-PowerSlotModFour {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslotsmod[value="Five"] ~ div.sheet-PowerSlotModFive,
+.charsheet .sheet-starshippowerslotsmod[value="Six"] ~ div.sheet-PowerSlotModFive,
+.charsheet .sheet-starshippowerslotsmod[value="Seven"] ~ div.sheet-PowerSlotModFive,
+.charsheet .sheet-starshippowerslotsmod[value="Eight"] ~ div.sheet-PowerSlotModFive,
+.charsheet .sheet-starshippowerslotsmod[value="Nine"] ~ div.sheet-PowerSlotModFive,
+.charsheet .sheet-starshippowerslotsmod[value="Ten"] ~ div.sheet-PowerSlotModFive,
+.charsheet .sheet-starshippowerslotsmod[value="Eleven"] ~ div.sheet-PowerSlotModFive,
+.charsheet .sheet-starshippowerslotsmod[value="Twelve"] ~ div.sheet-PowerSlotModFive {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslotsmod[value="Six"] ~ div.sheet-PowerSlotModSix,
+.charsheet .sheet-starshippowerslotsmod[value="Seven"] ~ div.sheet-PowerSlotModSix,
+.charsheet .sheet-starshippowerslotsmod[value="Eight"] ~ div.sheet-PowerSlotModSix,
+.charsheet .sheet-starshippowerslotsmod[value="Nine"] ~ div.sheet-PowerSlotModSix,
+.charsheet .sheet-starshippowerslotsmod[value="Ten"] ~ div.sheet-PowerSlotModSix,
+.charsheet .sheet-starshippowerslotsmod[value="Eleven"] ~ div.sheet-PowerSlotModSix,
+.charsheet .sheet-starshippowerslotsmod[value="Twelve"] ~ div.sheet-PowerSlotModSix {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslotsmod[value="Seven"] ~ div.sheet-PowerSlotModSeven,
+.charsheet .sheet-starshippowerslotsmod[value="Eight"] ~ div.sheet-PowerSlotModSeven,
+.charsheet .sheet-starshippowerslotsmod[value="Nine"] ~ div.sheet-PowerSlotModSeven,
+.charsheet .sheet-starshippowerslotsmod[value="Ten"] ~ div.sheet-PowerSlotModSeven,
+.charsheet .sheet-starshippowerslotsmod[value="Eleven"] ~ div.sheet-PowerSlotModSeven,
+.charsheet .sheet-starshippowerslotsmod[value="Twelve"] ~ div.sheet-PowerSlotModSeven {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslotsmod[value="Eight"] ~ div.sheet-PowerSlotModEight,
+.charsheet .sheet-starshippowerslotsmod[value="Nine"] ~ div.sheet-PowerSlotModEight,
+.charsheet .sheet-starshippowerslotsmod[value="Ten"] ~ div.sheet-PowerSlotModEight,
+.charsheet .sheet-starshippowerslotsmod[value="Eleven"] ~ div.sheet-PowerSlotModEight,
+.charsheet .sheet-starshippowerslotsmod[value="Twelve"] ~ div.sheet-PowerSlotModEight {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslotsmod[value="Nine"] ~ div.sheet-PowerSlotModNine,
+.charsheet .sheet-starshippowerslotsmod[value="Ten"] ~ div.sheet-PowerSlotModNine,
+.charsheet .sheet-starshippowerslotsmod[value="Eleven"] ~ div.sheet-PowerSlotModNine,
+.charsheet .sheet-starshippowerslotsmod[value="Twelve"] ~ div.sheet-PowerSlotModNine {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslotsmod[value="Ten"] ~ div.sheet-PowerSlotModTen,
+.charsheet .sheet-starshippowerslotsmod[value="Eleven"] ~ div.sheet-PowerSlotModTen,
+.charsheet .sheet-starshippowerslotsmod[value="Twelve"] ~ div.sheet-PowerSlotModTen {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslotsmod[value="Eleven"] ~ div.sheet-PowerSlotModEleven,
+.charsheet .sheet-starshippowerslotsmod[value="Twelve"] ~ div.sheet-PowerSlotModEleven {
+	display:inline;
+}
+
+.charsheet .sheet-starshippowerslotsmod[value="Twelve"] ~ div.sheet-PowerSlotModTwelve {
+	display:inline;
+}
+
+
 
 /*** END of Power Slot Section ***/
 

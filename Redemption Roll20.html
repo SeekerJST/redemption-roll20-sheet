@@ -1358,6 +1358,100 @@
 			</div> 		
 		</div>
 
+		<div style="display:flex;float:left;width:804px;height:100%;">
+			<div style="float:left;display:inline;margin-right:25px;">
+				<span style="font-size:1.25em;display:inline;margin-right:0px;">
+					Power Slots (Moderate)
+					<input type="number" min="0" max="12" value="0" name="attr_starshipPowerSlotsModerate" >
+					<input type="hidden" name="attr_starshipPowerSlotsModerateUsed">
+				</span>
+			</div>
+			<input type="hidden" class="sheet-starshippowerslotsmod" value="One" name="attr_starshipPowerSlotsModerateHdn">
+			<div class="PowerSlotModOne">
+				<div>
+					<label>
+						<input type="checkbox" class="plainCheckbox" name="attr_starshipPowerSlotModOne">
+					</label>
+				</div>
+			</div>
+			<div class="PowerSlotModTwo">
+				<div>
+					<label>
+						<input type="checkbox" class="plainCheckbox" name="attr_starshipPowerSlotModTwo">
+					</label>
+				</div>
+			</div>
+			<div class="PowerSlotModThree">
+				<div>
+					<label>
+						<input type="checkbox" class="plainCheckbox" name="attr_starshipPowerSlotModThree">
+					</label>
+				</div>
+			</div>
+			<div class="PowerSlotModFour">
+				<div>
+					<label>
+						<input type="checkbox" class="plainCheckbox" name="attr_starshipPowerSlotModFour">
+					</label>
+				</div>
+			</div>
+			<div class="PowerSlotModFive">
+				<div>
+					<label>
+						<input type="checkbox" class="plainCheckbox" name="attr_starshipPowerSlotModFive">
+					</label>
+				</div>
+			</div>
+			<div class="PowerSlotModSix">
+				<div>
+					<label>
+						<input type="checkbox" class="plainCheckbox" name="attr_starshipPowerSlotModSix">
+					</label>
+				</div>
+			</div>
+			<div class="PowerSlotModSeven">
+				<div>
+					<label>
+						<input type="checkbox" class="plainCheckbox" name="attr_starshipPowerSlotModSeven">
+					</label>
+				</div>
+			</div>
+			<div class="PowerSlotModEight">
+				<div>
+					<label>
+						<input type="checkbox" class="plainCheckbox" name="attr_starshipPowerSlotModEight">
+					</label>
+				</div>
+			</div>
+			<div class="PowerSlotModNine">
+				<div>
+					<label>
+						<input type="checkbox" class="plainCheckbox" name="attr_starshipPowerSlotModNine">
+					</label>
+				</div>
+			</div>
+			<div class="PowerSlotModTen">
+				<div>
+					<label>
+						<input type="checkbox" class="plainCheckbox" name="attr_starshipPowerSlotModTen">
+					</label>
+				</div>
+			</div>
+			<div class="PowerSlotModEleven">
+				<div>
+					<label>
+						<input type="checkbox" class="plainCheckbox" name="attr_starshipPowerSlotModEleven">
+					</label>
+				</div>
+			</div>
+			<div class="PowerSlotModTwelve">
+				<div>
+					<label>
+						<input type="checkbox" class="plainCheckbox" name="attr_starshipPowerSlotModTwelve">
+					</label>
+				</div>
+			</div>
+		</div>
 		<div style="display:flex;float:left;width:804px;height:100%;margin-bottom:5px;">
 			<div style="float:left;display:inline;margin-right:20px;">
 				<span style="font-size:1.25em;display:inline;">
@@ -4868,6 +4962,27 @@ on("change:starshipPowerSlotsUsed", function(eventInfo) {
 	}
 	
 	console.log(JSON.stringify(update));
+	setAttrs(update);
+});
+
+on("change:starshipPowerSlotsModerate", function(eventInfo) {
+	let slotString = "One";
+	let update = {};
+	let slotNumber = parseInt(eventInfo.newValue);
+	if(slotNumber > 12) { slotNumber = 12; update["starshipPowerSlotsModerate"] = 12; }
+	if(slotNumber < 0) { slotNumber = 0; update["starshipPowerSlotsModerate"] = 0; }
+	slotString = PowerSlotList[slotNumber];
+	update["starshipPowerSlotsModerateHdn"] = slotString;
+	setAttrs(update);
+});
+
+on("change:starshipPowerSlotsModerateUsed", function(eventInfo) {
+	let update = {};
+	for(var i = 1; i < PowerSlotList.length; i++) {
+		let powerSlotNumber = "starshipPowerSlotMod" + PowerSlotList[i];
+		if(i <= eventInfo.newValue) { update[powerSlotNumber] = "on"; }
+		else { update[powerSlotNumber] = "0"; }
+	}
 	setAttrs(update);
 });
 
