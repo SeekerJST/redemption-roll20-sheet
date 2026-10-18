@@ -5,8 +5,9 @@ export so it can be imported into the Roll20 sheet's **Import** tab. This is the
 contract: the generators must key everything by the **sheet's own attribute + repeating-row
 field names** listed here.
 
-Status (2026-10-18): Character import **done + verified**. Starship import **built, pending
-live test**. Weapons/Armor **planned** (fields listed below; the gear creator still needs to add
+Status (2026-10-18): Character import **done + verified**. Starship import **done + verified**
+(live import of the Corsair — structure/power/combat flats, weapons/drives/comms/tasks/limitation/
+tags rows). Weapons/Armor **planned** (fields listed below; the gear creator still needs to add
 a resolved `stats` block).
 
 ---
@@ -78,24 +79,26 @@ equipment `EquipmentListOne..Four` + `EquipmentCCOne..Four` + `EquipmentCROne..F
 
 ---
 
-## 4. Starship contract (format: redemption-roll20-sheet) — BUILT, pending live test
+## 4. Starship contract (format: redemption-roll20-sheet) — DONE + VERIFIED
 
 A starship imports onto its own (fresh) ship character, filling the **Starship** tab.
 
 **Flat `attributes`:**
-`starshipSize`; `starshipBody`(+`starshipCurrBody`,`starshipCurrBodyHdn`); `starshipHull`
+`starshipSize` (**numeric 1–5**: 1 Small, 2 Medium, 3 Large, 4 Huge, 5 Colossal — NOT a string);
+`starshipBody`(+`starshipCurrBody`,`starshipCurrBodyHdn`); `starshipHull`
 (Hull/Armor Rating); `starshipForceField`(+`starshipForceFieldCurr`),`starshipFFRegen`;
 `starshipPowerSlots` (0–12 count; `starshipPowerSlotOne..Twelve` are the per-slot used
 checkboxes); `starshipLifeSupport`; `starshipMaxFuel`(+`starshipCurrFuel`,`starshipCurrFuelHdn`);
 `starshipCompRank`,`starshipCompScope` (Minor/Moderate/Major); `starshipEvasion` (Evasive
 Margin); `starshipIntercept` (Counter Missile Margin); `starshipInitMod`;
-direct-fire weapon `starshipWeaponName`,`starshipWeaponMultiplier`,`weaponType`,
-`starshipWeaponBleed`; missiles `starshipMissileSalvo`,`starshipMissileLaunchers`,
-`starshipMissileMagazine`.
+missiles (flat) `starshipMissileSalvo`,`starshipMissileLaunchers`,`starshipMissileMagazine`.
+(The **direct-fire weapon is a REPEATING section** — `starshipWeapons` below — not flat.)
 
 **Repeating:**
 | Section | Row fields |
 |---|---|
+| `starshipWeapons` | `starshipWeaponName`, `starshipWeaponMultiplier`, `weaponType` (Energy/Kinetic/Melee/Exotic), `starshipWeaponBleed`, `weaponBleedType` (Minor/Moderate/Major); optional `starhshipWeaponAmmo` (sic — pre-existing sheet typo), `starshipWeaponHungry` |
+| `starshipMissileInventory` | `starshipMissileInventoryName`, `starshipMissileInventoryCount` |
 | `starshipDrives` | `starshipDriveName`, `starshipDriveScale` (Minor/Moderate/Major), `starshipDriveManeuver` (0–4), `starshipDriveLim` |
 | `starshipComms` | `starshipCommsName`, `starshipCommsScale`, `starshipCommsResource` |
 | `starshipTasks` | `starshipTaskName`, `starshipTaskRank` |
@@ -104,6 +107,10 @@ direct-fire weapon `starshipWeaponName`,`starshipWeaponMultiplier`,`weaponType`,
 | `starshipCapabilities` | `starshipCapabilitiesName`, `starshipCapabilitiesScale`, `starshipCapabilitiesRank`, `starshipCapabilitiesResource`, `starshipCapabilitiesPowerSlots` |
 
 **Gotchas for the generator:**
+- `starshipSize` is a **number 1–5**, not the word.
+- The **direct-fire weapon is a repeating row** (`starshipWeapons`), not flat fields; **missiles
+  are flat** (`starshipMissileSalvo`/`Launchers`/`Magazine`). Ammo's attr is misspelled
+  `starhshipWeaponAmmo` on the sheet — match it exactly if you set it.
 - Starship tags key the type as **`starshipTagType`** (not `tagType`); the other tag fields are
   the shared `tagText`/`tagRank`.
 - Limitation rows store **name only** — the sheet has no limitation-scale field (build `LimitScale`
