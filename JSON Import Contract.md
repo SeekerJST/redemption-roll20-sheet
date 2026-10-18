@@ -87,10 +87,10 @@ A starship imports onto its own (fresh) ship character, filling the **Starship**
 `starshipSize` (**numeric 1–5**: 1 Small, 2 Medium, 3 Large, 4 Huge, 5 Colossal — NOT a string);
 `starshipBody`(+`starshipCurrBody`,`starshipCurrBodyHdn`); `starshipHull`
 (Hull/Armor Rating); `starshipForceField`(+`starshipForceFieldCurr`),`starshipFFRegen`;
-`starshipPowerSlots` (**Major** slots only, per the sheet's "Power Slots (Major)" label; 0–12 count,
-capped at 12; `starshipPowerSlotOne..Twelve` are the per-slot used checkboxes);
-**`starshipPowerSlotsModerate`** (Moderate slot count — **PROPOSED 2026-10-18, NO SHEET FIELD YET**;
-the gear creator exports it now; the sheet side still has to add a Moderate tier — see TODO below);
+`starshipPowerSlots` (**Major** slot count, 0–12; reveals that many `starshipPowerSlotOne..Twelve`
+used-checkboxes, and `starshipPowerSlotsUsed` checks the used ones);
+**`starshipPowerSlotsModerate`** (**Moderate** slot count, 0–12; reveals `starshipPowerSlotModOne..Twelve`
+checkboxes, and `starshipPowerSlotsModerateUsed` checks the used ones — parallel tier added 2026-10-18);
 `starshipLifeSupport`; `starshipMaxFuel`(+`starshipCurrFuel`,`starshipCurrFuelHdn`);
 `starshipCompRank`,`starshipCompScope` (Minor/Moderate/Major); `starshipEvasion` (Evasive
 Margin); `starshipIntercept` (Counter Missile Margin); `starshipInitMod`;
@@ -117,10 +117,9 @@ missiles (flat) `starshipMissileSalvo`,`starshipMissileLaunchers`,`starshipMissi
 - Starship tags key the type as **`starshipTagType`** (not `tagType`); the other tag fields are
   the shared `tagText`/`tagRank`. A ship's tags are **`Equipment`**, or **`Free`** for a free tag
   (decided by PJ 2026-10-18; **not `Group`**).
-- Power Slots: `starshipPowerSlots` is the **Major** count; Moderate slots go in the proposed
-  `starshipPowerSlotsModerate`. Minor slots aren't exported. **TODO (sheet side): add a Moderate
-  tier** — the sheet currently has only a Major count + 12 `starshipPowerSlot*` checkboxes, so
-  `starshipPowerSlotsModerate` imports as an orphan attribute until a field/checkbox row exists.
+- Power Slots: `starshipPowerSlots` = **Major** count, `starshipPowerSlotsModerate` = **Moderate**
+  count — each now has its own checkbox row on the sheet. Minor slots aren't exported. Major can
+  borrow down to fill a Moderate need (the player tracks it by which row's box they check).
 - Limitation rows store **name only** — the sheet has no limitation-scale field (build `LimitScale`
   is dropped). Add a field later if needed.
 - Drive `starshipDriveScale`/`starshipDriveManeuver` were just given `name` attributes so they
