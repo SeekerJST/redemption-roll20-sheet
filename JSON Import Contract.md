@@ -87,8 +87,11 @@ A starship imports onto its own (fresh) ship character, filling the **Starship**
 `starshipSize` (**numeric 1–5**: 1 Small, 2 Medium, 3 Large, 4 Huge, 5 Colossal — NOT a string);
 `starshipBody`(+`starshipCurrBody`,`starshipCurrBodyHdn`); `starshipHull`
 (Hull/Armor Rating); `starshipForceField`(+`starshipForceFieldCurr`),`starshipFFRegen`;
-`starshipPowerSlots` (0–12 count; `starshipPowerSlotOne..Twelve` are the per-slot used
-checkboxes); `starshipLifeSupport`; `starshipMaxFuel`(+`starshipCurrFuel`,`starshipCurrFuelHdn`);
+`starshipPowerSlots` (**Major** slots only, per the sheet's "Power Slots (Major)" label; 0–12 count,
+capped at 12; `starshipPowerSlotOne..Twelve` are the per-slot used checkboxes);
+**`starshipPowerSlotsModerate`** (Moderate slot count — **PROPOSED 2026-10-18, NO SHEET FIELD YET**;
+the gear creator exports it now; the sheet side still has to add a Moderate tier — see TODO below);
+`starshipLifeSupport`; `starshipMaxFuel`(+`starshipCurrFuel`,`starshipCurrFuelHdn`);
 `starshipCompRank`,`starshipCompScope` (Minor/Moderate/Major); `starshipEvasion` (Evasive
 Margin); `starshipIntercept` (Counter Missile Margin); `starshipInitMod`;
 missiles (flat) `starshipMissileSalvo`,`starshipMissileLaunchers`,`starshipMissileMagazine`.
@@ -103,7 +106,7 @@ missiles (flat) `starshipMissileSalvo`,`starshipMissileLaunchers`,`starshipMissi
 | `starshipComms` | `starshipCommsName`, `starshipCommsScale`, `starshipCommsResource` |
 | `starshipTasks` | `starshipTaskName`, `starshipTaskRank` |
 | `starshipLimitation` | `starshipLimitationName` |
-| `starshipTags` | `tagText`, `tagRank`, **`starshipTagType`** |
+| `starshipTags` | `tagText`, `tagRank` (1–3), **`starshipTagType`** (`Equipment`, or `Free` for a free tag — NOT `Group`) |
 | `starshipCapabilities` | `starshipCapabilitiesName`, `starshipCapabilitiesScale`, `starshipCapabilitiesRank`, `starshipCapabilitiesResource`, `starshipCapabilitiesPowerSlots` |
 
 **Gotchas for the generator:**
@@ -112,7 +115,12 @@ missiles (flat) `starshipMissileSalvo`,`starshipMissileLaunchers`,`starshipMissi
   are flat** (`starshipMissileSalvo`/`Launchers`/`Magazine`). Ammo's attr is misspelled
   `starhshipWeaponAmmo` on the sheet — match it exactly if you set it.
 - Starship tags key the type as **`starshipTagType`** (not `tagType`); the other tag fields are
-  the shared `tagText`/`tagRank`.
+  the shared `tagText`/`tagRank`. A ship's tags are **`Equipment`**, or **`Free`** for a free tag
+  (decided by PJ 2026-10-18; **not `Group`**).
+- Power Slots: `starshipPowerSlots` is the **Major** count; Moderate slots go in the proposed
+  `starshipPowerSlotsModerate`. Minor slots aren't exported. **TODO (sheet side): add a Moderate
+  tier** — the sheet currently has only a Major count + 12 `starshipPowerSlot*` checkboxes, so
+  `starshipPowerSlotsModerate` imports as an orphan attribute until a field/checkbox row exists.
 - Limitation rows store **name only** — the sheet has no limitation-scale field (build `LimitScale`
   is dropped). Add a field later if needed.
 - Drive `starshipDriveScale`/`starshipDriveManeuver` were just given `name` attributes so they
