@@ -65,7 +65,7 @@ Export **source/input fields only**, never computed ones. Verified importing "Ca
 **Flat `attributes`:** `Concept`/`ConceptRank`, `Trouble`/`TroubleRank`, `Race`/`RaceRank`;
 the six attributes `Kinestetic`,`Logical`,`Spatial`,`Interpersonal`,`Introspection`,`Verbal`;
 FP pools `AttribFP`,`SkillsFP`,`TagsFP`,`BodyFP`,`GearFP`,`IncomeFP`,`IncomeLimFP`;
-`BodyMaxHdn` (NOT `BodyMax`), `BodyCurr`, `StrainPerm`?/`StrainCurr`, `XP`;
+`BodyMaxHdn` (NOT `BodyMax`), `BodyCurr`, `StrainCurr` (NOT `StrainPerm` — it's derived from Psionic tags), `XP`;
 skill groups `grp1SkillName`/`grp1SkillRank`/`grp1Specialty` (and grp2, grp3);
 equipment `EquipmentListOne..Four` + `EquipmentCCOne..Four` + `EquipmentCROne..Four`
 (**4 fixed slots**, not a list — a 5th+ item overflows).
