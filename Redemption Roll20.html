@@ -856,6 +856,27 @@
 					
 				</div>
 			
+			<div style="clear:both;width:100%;padding-top:8px;">
+				<label style="display:inline;">Equipment Effects</label>
+				<span style="font-size:.8em;margin-left:8px;">modifiers &amp; tags from weapons/armor &#8212; an armor effect is Active only while that armor is In Use</span>
+				<div style="margin-top:3px;">
+					<span style="font-size:.85em;display:inline-block;width:150px;">Source</span>
+					<span style="font-size:.85em;display:inline-block;width:78px;">Kind</span>
+					<span style="font-size:.85em;display:inline-block;width:200px;">Effect</span>
+					<span style="font-size:.85em;display:inline-block;width:40px;">Rank</span>
+					<span style="font-size:.85em;display:inline-block;width:50px;">Active</span>
+				</div>
+				<fieldset class="repeating_equipmentEffects">
+					<input type="text" name="attr_eqSource" style="width:145px;">
+					<select name="attr_eqKind" style="width:75px;">
+						<option value="Modifier">Modifier</option>
+						<option value="Tag">Tag</option>
+					</select>
+					<input type="text" name="attr_eqName" style="width:195px;">
+					<input type="number" name="attr_eqValue" min="0" style="width:38px;">
+					<input type="text" name="attr_eqActive" readonly="true" value="On" style="width:48px;text-align:center;">
+				</fieldset>
+			</div>
 		</div>
 	
 		<div class="tabCombat">
@@ -4987,6 +5008,42 @@ on("change:starshipPowerSlotsModerateUsed", function(eventInfo) {
 });
 
 
+
+	/* Equipment Effects active-gating (DISPLAY ONLY). Each repeating_equipmentEffects row names its
+	   source item in eqSource; its eqActive readout follows the source: if eqSource matches an armor's
+	   name, eqActive = that armor's In Use (armorActive) state; otherwise (weapons, misc) it is always
+	   "On". Race-safe: one getAttrs per section, write once. This is tracking only - it does NOT change
+	   skill TNs or add invokable tags (that is a later pass). */
+	on("change:repeating_armor change:repeating_equipmentEffects sheet:opened", function() {
+		getSectionIDs("armor", function(armorIds) {
+			var names = [];
+			armorIds.forEach(function(id) { var p = "repeating_armor_" + id + "_"; names.push(p + "armorName", p + "armorActive"); });
+			getAttrs(names, function(av) {
+				var armorActiveByName = {};
+				armorIds.forEach(function(id) {
+					var p = "repeating_armor_" + id + "_";
+					var nm = (av[p + "armorName"] || "").trim().toLowerCase();
+					if(!nm) return;
+					var on = (av[p + "armorActive"] === "on" || av[p + "armorActive"] === "1");
+					armorActiveByName[nm] = armorActiveByName[nm] || on;
+				});
+				getSectionIDs("equipmentEffects", function(effIds) {
+					if(effIds.length === 0) return;
+					var enames = [];
+					effIds.forEach(function(id) { enames.push("repeating_equipmentEffects_" + id + "_eqSource"); });
+					getAttrs(enames, function(ev) {
+						var update = {};
+						effIds.forEach(function(id) {
+							var src = (ev["repeating_equipmentEffects_" + id + "_eqSource"] || "").trim().toLowerCase();
+							var on = armorActiveByName.hasOwnProperty(src) ? armorActiveByName[src] : true;
+							update["repeating_equipmentEffects_" + id + "_eqActive"] = on ? "On" : "Off";
+						});
+						setAttrs(update);
+					});
+				});
+			});
+		});
+	});
 
 on("change:starshipBody", function(eventInfo) {
 	let update = {}; 

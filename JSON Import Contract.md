@@ -68,8 +68,8 @@ the six attributes `Kinestetic`,`Logical`,`Spatial`,`Interpersonal`,`Introspecti
 FP pools `AttribFP`,`SkillsFP`,`TagsFP`,`BodyFP`,`GearFP`,`IncomeFP`,`IncomeLimFP`;
 `BodyMaxHdn` (NOT `BodyMax`), `BodyCurr`, `StrainCurr` (NOT `StrainPerm` — it's derived from Psionic tags), `XP`;
 skill groups `grp1SkillName`/`grp1SkillRank`/`grp1Specialty` (and grp2, grp3);
-equipment `EquipmentListOne..Four` + `EquipmentCCOne..Four` + `EquipmentCROne..Four`
-(**4 fixed slots**, not a list — a 5th+ item overflows).
+equipment `EquipmentListOne..Ten` + `EquipmentCCOne..Ten` + `EquipmentCROne..Ten`
+(**10 fixed slots** on the Character tab, not a list — an 11th+ item overflows).
 
 **Repeating:**
 | Section | Row fields | Notes |
@@ -147,6 +147,26 @@ row to the character's weapon/armor section. Target fields (to finalize when bui
   `armorBodyRegen`, `armorActive` (checkbox; set only if it should be the active armor).
 
 These sections may need sheet tweaks (like the drive fix) before import is complete — TBD.
+
+### 5a. Equipment Effects (modifiers & item-tags) — BUILT (display/tracking), 2026-10-18
+
+Weapons and armor carry **modifiers** (skill bonuses) and **item tags**. These import into a
+dedicated **`equipmentEffects`** repeating section on the Character tab's Equipment panel — one
+row per modifier/tag — so you can see what each came from and (for armor) which are live.
+
+| Section | Row fields |
+|---|---|
+| `equipmentEffects` | `eqSource` (the item's name — **for armor, must equal the armor row's `armorName`**), `eqKind` (`Modifier` or `Tag`), `eqName` (skill/effect name, or tag text), `eqValue` (rank) |
+
+Rules:
+- **Do NOT send `eqActive`** — a worker computes it: if `eqSource` matches an armor's name, `eqActive`
+  follows that armor's **In Use** (`armorActive`) state; otherwise (weapons, misc) it's always `On`.
+  So armor effects auto-toggle when you switch active armor. (This is display/tracking only right
+  now — it does **not** yet change skill TNs or add invokable tags; that's a later pass.)
+- For an **armor** export: emit `armor` row(s) **and** one `equipmentEffects` row per entry in the
+  item's `modifierList` (`eqKind:"Modifier"`) and `tagList` (`eqKind:"Tag"`), all with
+  `eqSource = <the armor's name>` so they gate correctly.
+- For a **weapon** export: same, with `eqSource = <the weapon's name>` (always `On`).
 
 ---
 
