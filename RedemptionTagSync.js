@@ -35,7 +35,7 @@ var RedemptionTagSync = (function () {
 
     // lowercase canonical forms - all name matching is done case-insensitively
     var SECTION_LC = "repeating_tagjournal";
-    var IDENTITY_LC = ["tagtext", "tagrank", "tagtype"];    // synced from master
+    var IDENTITY_LC = ["tagtext", "tagrank", "tagtype", "tagjournalnotes"];    // synced from master (notes are shared scene info)
     var PERSONAL_LC = ["taguse", "tagstatus"];              // left per-character
     var ALLFIELDS_LC = IDENTITY_LC.concat(PERSONAL_LC);
     var MASTER_ATTR_LC = "tagjournalmaster";                // the per-sheet switch

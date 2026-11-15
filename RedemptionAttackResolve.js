@@ -29,14 +29,26 @@
  *   net  < 0  -> MISS
  *   net == 0  -> MEET: success, no damage, may apply a tag
  *   net  > 0  -> HIT:  damage, OR apply a tag instead (attacker's choice)
- *   Force Field UP (armorActiveFF > 0): the hit lands on the FF at FULL FORCE -
- *     target armor Rating is IGNORED, and depleting the FF does NOT spill to Body.
- *       damage = net * max(1, weaponMultiplier)
- *   No Force Field: armor Rating reduces the multiplier (floored at 1).
- *       damage = net * max(1, weaponMultiplier - armorActiveRating)
+ *
+ *   WHICH DEFENSE: the attack card carries {{scale=...}}. Space scale resolves
+ *   against the defender's STARSHIP defense (starshipForceFieldCurr / starshipHull);
+ *   any other scale uses the PERSONAL active-armor mirrors (armorActiveFF /
+ *   armorActiveRating, maintained by the sheet worker). DefMargin is shared.
+ *
+ *   Force Field UP (ff > 0): the hit lands on the FF at FULL FORCE - the target's
+ *     Rating/Hull is IGNORED and the FF does NOT spill to Body.
+ *       damage = net * max(1, weaponMultiplier [+2 if the weapon Counters Force Field])
+ *   No Force Field: Rating/Hull reduces the multiplier (floored at 1).
+ *       damage = net * max(1, weaponMultiplier - max(0, Rating [-1 if the weapon Counters Armor]))
+ *
+ *   COUNTERS: the weapon's free-text Counters field ({{counters=...}} on the card,
+ *   e.g. "Force Field", "Armor", "Force Field, Armor") is rank-1 flat: Counter
+ *   Force Field = +2 to the multiplier when the target's FF is up; Counter Armor =
+ *   -1 to the target's effective Rating/Hull. (Aimed-Shot's extra Counter-Armor
+ *   pick needs a roll/resolve-time toggle - still a later pass.)
+ *
  *   Damage is DISPLAYED only - the attacker/GM applies it (keeps the damage-OR-tag
- *   choice manual). armorActiveFF / armorActiveRating are the active-armor mirrors
- *   maintained by the sheet worker.
+ *   choice manual).
  *
  * PERMISSION: anyone may resolve (matches the sheet's collaborative model). Set
  * ANYONE_MAY_RESOLVE = false for GM only.
@@ -56,6 +68,10 @@ var RedemptionAttackResolve = (function () {
     var DEFMARGIN = "DefMargin";              // sheet label: "Defensive margin"
     var FF        = "armorActiveFF";          // active armor's current Force Field (mirror)
     var RATING    = "armorActiveRating";      // active armor's Rating (mirror)
+    var SHIP_FF   = "starshipForceFieldCurr"; // ship defender: current Force Field
+    var SHIP_HULL = "starshipHull";           // ship defender: Hull Rating (ship "armor")
+    var COUNTER_FF_BONUS   = 2;               // Counter Force Field: + to multiplier when the target's FF is up
+    var COUNTER_ARMOR_STEP = 1;               // Counter Armor: - to the target's effective Rating/Hull, per source
     var ANYONE_MAY_RESOLVE = true;            // false = GM only
 
     // attackerCharId -> { margin, mult } ; the attacker's most recent attack roll
@@ -91,10 +107,26 @@ var RedemptionAttackResolve = (function () {
         return null;
     }
 
-    // resolve a known margin + multiplier (from the cache) vs the selected defender
-    function resolve(margin, multiplier, attackerId, msg) {
+    // Parse the weapon's free-text Counters field. Rank is always 1, so these are booleans:
+    //   "Force Field" / "Shields" -> counters a force field ; "Armor" -> counters armor Rating/Hull.
+    function parseCounters(text) {
+        var t = (text || "");
+        return {
+            ff:    /force\s*field|shield/i.test(t),
+            armor: /armou?r/i.test(t)
+        };
+    }
+
+    // resolve a cached attack (info = {margin, mult, scale, counters}) vs the selected defender
+    function resolve(info, attackerId, msg) {
+        info = info || {};
+        var margin     = info.margin;
+        var multiplier = info.mult;
         if (isNaN(margin))     { whisperTo(msg, "Attack resolve: no valid margin cached - roll the attack again."); return; }
         if (isNaN(multiplier)) multiplier = 1;
+
+        var isSpace  = ((info.scale || "").toLowerCase() === "space");  // Space scale -> ship defender
+        var counters = parseCounters(info.counters);
 
         var defToken = firstSelectedGraphic(msg);
         if (!defToken) {
@@ -132,16 +164,30 @@ var RedemptionAttackResolve = (function () {
             return;
         }
 
-        // net > 0 -> HIT
-        var ff     = readNum(defId, FF);
-        var rating = readNum(defId, RATING);
+        // net > 0 -> HIT. Space scale reads the ship's FF/Hull; otherwise personal active-armor mirrors.
+        var ff     = isSpace ? readNum(defId, SHIP_FF)   : readNum(defId, FF);
+        var rating = isSpace ? readNum(defId, SHIP_HULL) : readNum(defId, RATING);
+        var ratingLabel = isSpace ? "Hull" : "armor Rating";
         var factor, note;
         if (ff > 0) {
-            factor = Math.max(1, multiplier);
-            note = "hits Force Field (" + ff + ") at full force - armor Rating ignored, no spillover to Body";
+            // FF up: hit lands on the Force Field at full force, Rating/Hull ignored, no spillover to Body.
+            // A Counter-Force-Field weapon raises the multiplier by COUNTER_FF_BONUS.
+            var ffBonus = counters.ff ? COUNTER_FF_BONUS : 0;
+            factor = Math.max(1, multiplier + ffBonus);
+            note = "hits Force Field (" + ff + ") at full force" +
+                   (ffBonus ? ", counter-FF +" + ffBonus + " to multiplier" : ", " + ratingLabel + " ignored") +
+                   ", no spillover to Body";
         } else {
-            factor = Math.max(1, multiplier - rating);
-            note = (rating > 0 ? "armor Rating " + rating + " applied" : "no armor");
+            // No FF: Rating/Hull reduces the multiplier. A Counter-Armor weapon lowers the effective Rating by COUNTER_ARMOR_STEP.
+            var armorCut  = counters.armor ? COUNTER_ARMOR_STEP : 0;
+            var effRating = Math.max(0, rating - armorCut);
+            factor = Math.max(1, multiplier - effRating);
+            if (rating > 0) {
+                note = ratingLabel + " " + rating +
+                       (armorCut ? " minus counter-armor " + armorCut + " = " + effRating : "") + " applied";
+            } else {
+                note = "no " + (isSpace ? "Hull" : "armor");
+            }
         }
         var dmg = net * factor;
         card("HIT - " + dmg + " dmg", "margin " + margin + " vs Def " + defMargin + " (net +" + net + ") - " + note + ". Or apply a tag instead.");
@@ -156,13 +202,20 @@ var RedemptionAttackResolve = (function () {
         var mult = 1, mm = msg.content.match(/\{\{damage=(-?\d+)\}\}/);
         if (mm) mult = parseInt(mm[1]);
 
+        var scale = "", sm = msg.content.match(/\{\{scale=([^}]*)\}\}/);
+        if (sm) scale = sm[1].trim();
+
+        var counters = "", cm = msg.content.match(/\{\{counters=([^}]*)\}\}/);
+        if (cm) counters = cm[1].trim();
+
         var atk = "", am = msg.content.match(/\{\{attacker=([^}]*)\}\}/);
         if (am) atk = am[1].trim();
 
-        if (atk) lastAttack[atk] = { margin: margin, mult: mult };
+        var info = { margin: margin, mult: mult, scale: scale, counters: counters };
+        if (atk) lastAttack[atk] = info;
 
         // one-step: a defender already selected at roll time -> resolve immediately
-        if (msg.selected && msg.selected.length) resolve(margin, mult, atk, msg);
+        if (msg.selected && msg.selected.length) resolve(info, atk, msg);
     }
 
     // the "Resolve vs Selected" button: !attackvs <attackerCharId>
@@ -175,7 +228,7 @@ var RedemptionAttackResolve = (function () {
             whisperTo(msg, "No recent attack found to resolve. Roll the attack first, then SELECT the defender token and click \"Resolve vs Selected\".");
             return;
         }
-        resolve(last.margin, last.mult, atk, msg);
+        resolve(last, atk, msg);
     }
 
     return {

@@ -1019,7 +1019,7 @@
 								</span>
 							</div>
 							<div class="weaponBlockFlex" >
-								<div style="float:left";>
+								<div style="float:left;">
 									<button type="roll" name="act_weaponAttack" class="weaponAttackButton"
 											value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Attack Roll}}{{roll=[[@{weaponAttackTN} - (@{rollString})]]}}{{damage=@{weaponMultiplier}}}{{dtype=@{weaponType}}}{{scale=@{weaponScale}}}{{attackverdict=1}}{{attacker=@{character_id}}}{{apply=[Resolve vs Selected](!attackvs @{character_id})}}{{automation=@{useAutomationFlag}}}">
 										Attack
@@ -1072,7 +1072,7 @@
 								
 							</div>
 							<div class="weaponBlockFlex" >
-								<div style="float:left";>
+								<div style="float:left;">
 									<button type="roll" name="act_weaponSecAttack" class="weaponAttackButton"
 											value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Second Attack Roll}}{{roll=[[@{weaponSecAttackTN} - (@{rollString})]]}}{{damage=@{weaponSecMultiplier}}}{{dtype=@{weaponSecType}}}{{scale=@{weaponSecScale}}}{{attackverdict=1}}{{attacker=@{character_id}}}{{apply=[Resolve vs Selected](!attackvs @{character_id})}}{{automation=@{useAutomationFlag}}}">
 										Second<br>Attack
@@ -1387,7 +1387,19 @@
 					<input type="hidden" name="attr_starshipPowerSlotsModerateUsed">
 				</span>
 			</div>
-			<input type="hidden" class="sheet-starshippowerslotsmod" value="One" name="attr_starshipPowerSlotsModerateHdn">
+			<input type="hidden" class="sheet-starshippowerslotsmod" value="" name="attr_starshipPowerSlotsModerateHdn">
+			<input type="hidden" class="sheet-modvisOne" value="" name="attr_modVisOne">
+			<input type="hidden" class="sheet-modvisTwo" value="" name="attr_modVisTwo">
+			<input type="hidden" class="sheet-modvisThree" value="" name="attr_modVisThree">
+			<input type="hidden" class="sheet-modvisFour" value="" name="attr_modVisFour">
+			<input type="hidden" class="sheet-modvisFive" value="" name="attr_modVisFive">
+			<input type="hidden" class="sheet-modvisSix" value="" name="attr_modVisSix">
+			<input type="hidden" class="sheet-modvisSeven" value="" name="attr_modVisSeven">
+			<input type="hidden" class="sheet-modvisEight" value="" name="attr_modVisEight">
+			<input type="hidden" class="sheet-modvisNine" value="" name="attr_modVisNine">
+			<input type="hidden" class="sheet-modvisTen" value="" name="attr_modVisTen">
+			<input type="hidden" class="sheet-modvisEleven" value="" name="attr_modVisEleven">
+			<input type="hidden" class="sheet-modvisTwelve" value="" name="attr_modVisTwelve">
 			<div class="PowerSlotModOne">
 				<div>
 					<label>
@@ -1681,15 +1693,15 @@
 							<input type="number" name="attr_starhshipWeaponAmmo">
 						</span>							
 					</div>
-					<div class="weaponBlockFlex" >
-						<div style="float:left";>
+					<div class="weaponBlockFlex weaponBlockFlexShip" >
+						<div style="float:left;">
 							<button type="roll" name="act_starshipWeaponAttack" class="weaponStarshipAttackButton"
-							value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=@{starshipWeaponName}}}{{roll=[[(@{weaponGunneryTN} - @{rollString})]]}}{{damage=@{starshipWeaponMultiplier}}}{{dtype=@{weaponType}}}{{scale=Space}}{{attackverdict=1}}{{attacker=@{character_id}}}{{apply=[Resolve vs Selected](!attackvs @{character_id})}}{{automation=@{useAutomationFlag}}} )">
+							value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=@{starshipWeaponName}}}{{roll=[[(@{weaponGunneryTN} - @{rollString})]]}}{{damage=@{starshipWeaponMultiplier}}}{{dtype=@{weaponType}}}{{scale=Space}}{{counters=@{starshipWeaponCounters}}}{{attackverdict=1}}{{attacker=@{character_id}}}{{apply=[Resolve vs Selected](!attackvs @{character_id})}}{{automation=@{useAutomationFlag}}}">
 								Attack
 							</button>
 
 						</div>		
-						<div style="border: 1px solid gray;border-radius:10px;padding:5px;float:left;width:400px;">											
+						<div class="weaponShipBox" style="border: 1px solid gray;border-radius:10px;padding:5px;float:left;width:400px;">											
 							<span> 
 								Damage Multiplier
 								<input type="number" name="attr_starshipWeaponMultiplier" value="1" min="1">							
@@ -1725,6 +1737,12 @@
 									<option value="Medium">Medium</option>
 									<option value="Large">Large</option>
 								</select>
+							</span>
+							<br>
+							<span>
+								Counters
+								<input type="text" name="attr_starshipWeaponCounters" style="width:300px">
+							</span>
 						</div>						
 					</div>
 				</div>
@@ -2417,7 +2435,7 @@
 								</span>
 							</div>
 							<div class="weaponBlockFlex" >
-								<div style="float:left";>
+								<div style="float:left;">
 									<button type="roll" name="act_weaponAttack" class="weaponAttackButton"
 											value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Attack Roll}}{{roll=[[@{weaponAttackTN} - (@{rollString})]]}}{{damage=@{weaponMultiplier}}}{{dtype=@{weaponType}}}{{scale=@{weaponScale}}}{{attackverdict=1}}{{attacker=@{character_id}}}{{apply=[Resolve vs Selected](!attackvs @{character_id})}}{{automation=@{useAutomationFlag}}}">
 										Attack
@@ -2470,7 +2488,7 @@
 								
 							</div>
 							<div class="weaponBlockFlex" >
-								<div style="float:left";>
+								<div style="float:left;">
 									<button type="roll" name="act_weaponSecAttack" class="weaponAttackButton"
 											value="&{template:redemption}{{invoked=@{invokedTags}}}{{condemned=@{condemnedTags}}}{{title=Second Attack Roll}}{{roll=[[@{weaponSecAttackTN} - (@{rollString})]]}}{{damage=@{weaponSecMultiplier}}}{{dtype=@{weaponSecType}}}{{scale=@{weaponSecScale}}}{{attackverdict=1}}{{attacker=@{character_id}}}{{apply=[Resolve vs Selected](!attackvs @{character_id})}}{{automation=@{useAutomationFlag}}}">
 										Second Attack
@@ -2667,6 +2685,7 @@
 		<div class="sheet-rt-roll">{{roll}}</div>
 		{{#result}}<div class="sheet-rt-meta">{{result}}</div>{{/result}}
 		{{#damage}}<div class="sheet-rt-meta"><span class="sheet-rt-metalabel">Damage</span> &#215;{{damage}} {{dtype}} &#183; {{scale}}</div>{{/damage}}
+		{{#counters}}<div class="sheet-rt-meta"><span class="sheet-rt-metalabel">Counters</span> {{counters}}</div>{{/counters}}
 		{{#invoked}}<div class="sheet-rt-tags sheet-rt-invoked"><span class="sheet-rt-taglabel">&#9650; Invoked</span> {{invoked}}</div>{{/invoked}}
 		{{#condemned}}<div class="sheet-rt-tags sheet-rt-condemned"><span class="sheet-rt-taglabel">&#9660; Condemned</span> {{condemned}}</div>{{/condemned}}
 		{{#automation}}{{#apply}}<div class="sheet-rt-apply">{{apply}}</div>{{/apply}}{{/automation}}
@@ -4987,13 +5006,14 @@ on("change:starshipPowerSlotsUsed", function(eventInfo) {
 });
 
 on("change:starshipPowerSlotsModerate", function(eventInfo) {
-	let slotString = "One";
 	let update = {};
 	let slotNumber = parseInt(eventInfo.newValue);
+	if(isNaN(slotNumber)) { slotNumber = 0; }
 	if(slotNumber > 12) { slotNumber = 12; update["starshipPowerSlotsModerate"] = 12; }
 	if(slotNumber < 0) { slotNumber = 0; update["starshipPowerSlotsModerate"] = 0; }
-	slotString = PowerSlotList[slotNumber];
-	update["starshipPowerSlotsModerateHdn"] = slotString;
+	// Reveal slots 1..N: set each slot's visibility flag; CSS matches value="show" exactly.
+	let modW = ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Eleven","Twelve"];
+	for(let k = 1; k <= 12; k++) { update["modVis" + modW[k-1]] = (k <= slotNumber) ? "show" : ""; }
 	setAttrs(update);
 });
 
